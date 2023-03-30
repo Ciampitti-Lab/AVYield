@@ -1,0 +1,15 @@
+/*Colour of nav bar Title*/
+.navbar-default .navbar-brand .navbar-nav {
+	font-family: "Roboto", sans-serif;
+	font-weight: medium;
+}
+
+.navbar-default .navbar-brand {
+	font-size: 24px;
+	color: black;
+	pointer-events: none;
+}
+
+.navbar-nav {
+	font-size: 20px;
+}
