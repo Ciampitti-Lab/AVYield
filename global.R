@@ -1,6 +1,6 @@
 library(shiny)
-library(shiny)
+library(flexdashboard)
+library(shinydashboard)
 library(dplyr)
-library(htmlwidgets)
 
 # data should be loaded here

@@ -1,0 +1,43 @@
+---
+title: "Maize and Soybean dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme:
+      version: 4
+      bg: "#f4f4f6"
+      fg: "#010101" 
+      primary: "#e6e6e9"
+      navbar-bg: "#f4f4f6"
+      base_font: 
+        google: Roboto
+      heading_font:
+        google: Sen
+      code_font:
+        google: 
+          # arguments to sass::font_google() 
+          family: JetBrains Mono
+          local: false
+runtime: shiny
+---
+
+```{r setup = 'setup.Rmd'}
+library(bslib)
+library(shiny)
+library(flexdashboard)
+library(shinydashboard)
+library(dplyr)
+```
+
+# Instructions
+
+## Column {data-width="700"}
+
+### Instructions
+
+# Data
+
+## Column {data-width="700"}
+
+### Data

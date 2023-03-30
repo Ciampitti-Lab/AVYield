@@ -1,15 +1,28 @@
-/*Colour of nav bar Title*/
-.navbar-default .navbar-brand .navbar-nav {
-	font-family: "Roboto", sans-serif;
-	font-weight: medium;
+:root {
+	--atwhite: #f4f4f6;
+	--plat: #e6e6e9;
+	--tgray: #9999a1;
+	--dgray: #66666e;
+	--black1: #111111;
+	--black2: #010101;
 }
 
-.navbar-default .navbar-brand {
-	font-size: 24px;
-	color: black;
-	pointer-events: none;
+.navbar-brand .navbar-nav {
+	font-family: "Roboto", sans-serif;
+}
+
+.navbar-brand {
+  color: var(--black1) !important;
+  background-color: green;
+  font-size: 24px;
+  font-weight: medium;
 }
 
 .navbar-nav {
-	font-size: 20px;
+  font-size: 20px;
+  font-weight: thin;
+}
+
+.navbar-nav a:hover {
+	transform: translateY(-3px);
 }
