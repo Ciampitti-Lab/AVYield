@@ -9,7 +9,7 @@
 
 
 
-
+* Mudar metodo de load dos arquivos, carregar diretamente da documentacao.
 * relacionar os datasets utilizando de input o ano, county water, regime retornar informacoes do genotipo brand
 * analisar water regime com produtividade
 

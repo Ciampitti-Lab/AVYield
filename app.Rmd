@@ -25,10 +25,15 @@ library(shiny)
 library(flexdashboard)
 library(shinydashboard)
 library(dplyr)
+library(DT)
 
 source("R/data_loader.r")
 ```
-
+# Tests
+```{r}
+#maizeSites$harvest_date
+str(maizeSites)
+```
 
 # Data
 ## Column {data-width="700"}
