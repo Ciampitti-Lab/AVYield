@@ -30,27 +30,19 @@ library(DT)
 source("R/data_loader.r")
 ```
 # Tests
+## test
 ```{r}
-#maizeSites$harvest_date
+# maizeSites$harvest_date
+
 str(maizeSites)
 ```
 
 # Data
-## Column {data-width="700"}
 ### Crop Data
 
 ```{r}
-selectInput('crop_select', 'Dataset Selection', c("Maize", "Soybean"))
-renderTable(df_list[input$crop_select])
-```
-
-
-## Column {data-width="700"}
-### Sites Data
-
-```{r}
-selectInput('sites_select', 'Dataset Selection', c("Maize Sites", "Soybean Sites"))
-renderTable(df_list[input$sites_select])
+selectInput("crop_select", "Dataset Selection", c("Maize Sites", "Soybean Sites", "Maize", "Soybean"))
+renderTable(df_list[input$crop_select], striped = TRUE, align = "l", na = "-")
 ```
 
 # About
