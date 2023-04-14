@@ -24,25 +24,36 @@ library(bslib)
 library(shiny)
 library(flexdashboard)
 library(shinydashboard)
+library(shinyWidgets)
 library(dplyr)
 library(DT)
 
 source("R/data_loader.r")
 ```
+
 # Tests
 ## test
 ```{r}
-# maizeSites$harvest_date
-
 str(maizeSites)
+str(soybeanSites)
+str(maize)
+str(soybean)
 ```
 
 # Data
-### Crop Data
+### Table Data
 
 ```{r}
 selectInput("crop_select", "Dataset Selection", c("Maize Sites", "Soybean Sites", "Maize", "Soybean"))
-renderTable(df_list[input$crop_select], striped = TRUE, align = "l", na = "-")
+DTOutput("table")
+
+output$table <- renderDT(
+  df_list[[input$crop_select]],
+  options = list(
+    columnDefs = list(list(className = 'dt-left', targets = '_all')), 
+    pageLength = 25
+    )
+  )
 ```
 
 # About

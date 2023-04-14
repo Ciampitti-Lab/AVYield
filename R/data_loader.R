@@ -6,18 +6,23 @@ maizeSites <- readr::read_csv("data/Data_Comparison_MS_1991_2021_Maize_Sites.csv
 soybean <- readr::read_csv("data/Data_Comparison_MS_1991_2021_Soybean.csv")
 soybeanSites <- readr::read_csv("data/Data_Comparison_MS_1991_2021_Soybean_Sites.csv")
 
+# Not needed anymore, remove later
 # The function renderTable() uses xtable to create a html table,
 # xtable only can deal with three different classes of columns: logical; character; and numeric
 # so it is necessary that "Date" attributes are converted to characters.
 
-convert_dates_to_char <- function(df) {
-  df %>%
-    mutate_if(~class(.) == "Date", as.character)
-}
+#convert_dates_to_char <- function(df) {
+#  df %>%
+#    mutate_if(~class(.) == "Date", as.character)
+#}
 
-maizeSites <- convert_dates_to_char(maizeSites)
-soybeanSites <- convert_dates_to_char(soybeanSites)
+# Converting dates to string so it can be used with xtable
+#maizeSites <- convert_dates_to_char(maizeSites)
+#soybeanSites <- convert_dates_to_char(soybeanSites)
 
+# Ordering Sites datasets by planting_date and year.
+maizeSites <- maizeSites[order(maizeSites$planting_date, maizeSites$year ),]
+soybeanSites <- soybeanSites[order(soybeanSites$planting_date, maizeSites$year ),]
 
 df_list = list(
   "Maize" = maize,
