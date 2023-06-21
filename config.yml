@@ -1,0 +1,12 @@
+dash:
+  app_title: Crop Trials Visualization Tool
+  update_title: Updating...
+  theme: LUMEN
+  debug: True
+
+template:
+  logo_scr:
+
+version: v0.0.1
+github_url: https://github.com/sprmbng
+github_repo: sprmbng/

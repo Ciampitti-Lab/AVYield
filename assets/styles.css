@@ -1,0 +1,18 @@
+/* styles.css */
+
+/* Add margin to the left of the title */
+.navbar-brand {
+  margin-left: 20px;
+}
+
+/* Create space for the logo */
+.logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.dropdown {
+  width: 100px; /* Adjust the width as needed */
+  margin-right: 30px;
+}
