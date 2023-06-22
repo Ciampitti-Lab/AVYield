@@ -4,7 +4,7 @@ from config import config
 
 title = config.dash.app_title
 
-university_names = ["Purdue", "KState", "MIT"]
+crops = ["Corn", "Soybean", "Sunflower", "Wheat"]
 
 header = html.Div(
     [
@@ -14,13 +14,13 @@ header = html.Div(
                 html.A(
                     [
                         html.Img(
-                            src="../assets/logo4.png",
+                            src=config.template.logo_src,
                             className="logo",
                         ),
                         html.Span(title, className="navbar-brand-title"),
                     ],
                     className="navbar-brand",
-                    href="#",
+                    href="/",
                 ),
                 html.Div(
                     id="navbarNav",
@@ -56,9 +56,9 @@ header = html.Div(
                             className="nav-item dropdown",
                             children=[
                                 dcc.Dropdown(
-                                    id="uni-dropdown",
-                                    options=university_names,
-                                    value=university_names[0],
+                                    id="crops-dropdown",
+                                    options=crops,
+                                    value=crops[0],
                                     clearable=False,
                                     className="dropdown-item",
                                 ),
@@ -70,7 +70,7 @@ header = html.Div(
         ),
         html.Br(),
         html.Div(id="content"),
-        html.Div(id="selected-university", style={"display": "none"}),
+        html.Div(id="selected-crop", style={"display": "none"}),
     ]
 )
 

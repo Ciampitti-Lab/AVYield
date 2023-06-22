@@ -1,0 +1,362 @@
+YEAR,LOC,COUNTY,CITY,LOCATION
+1995,SUD,SUMNER,Caldwell,
+1995,RND,RENO,Hutchinson,
+1995,FNI,FINNEY,Garden City,
+1995,STI,STAFFORD,St. John,
+1995,THI,THOMAS,Colby,
+1995,GRI,GREELEY,Tribune,
+1995,RPD,REPUBLIC,Belleville,
+1995,GRD,GREELEY,Tribune,
+1995,RLD,RILEY,Manhattan,
+1995,FRD,FRANKLIN,Ottawa,
+1995,LBD,LABETTE,Parsons,
+1995,HVD,HARVEY,Hesston,
+1995,STD,STAFFORD,St. John,
+1995,ELDF,ELLIS,Hays,
+1995,THD,THOMAS,Colby,
+1995,BRD,BROWN,Powhattan,Cornbelt Experiment Field (BR)
+1995,FND,FINNEY,Garden City,
+1996,GRI,GREELEY,Tribune,SW Res-Ext Ctr (GI)
+1996,THI,THOMAS,Colby,NW Res-Ext Ctr (TI)
+1996,THD,THOMAS,Colby,NW Res-Ext Cter (TD)
+1996,RND,RENO,Hutchinson,SC KS Experiment Field (RN)
+1996,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+1996,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+1997,LBD,LABETTE,Parsons,SE Agric Res Ctr (LB)
+1997,BRD,BROWN,Powhattan,Cornbelt Experiment Field (BR)
+1997,GRD,GREELEY,Tribune,SW Res-Ext Ctr (GD)
+1997,THI,THOMAS,Colby,NW Res-Ext Ctr (TI)
+1997,THD,THOMAS,Colby,NW Res-Ext Cter (TD)
+1997,RND,RENO,Hutchinson,SC KS Experiment Field (RN)
+1997,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+1997,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+1997,FRD,FRANKLIN,Ottawa,EC KS Experiment Field (FR)
+1997,GRI,GREELEY,Tribune,SW Res-Ext Ctr (GI)
+1997,FND,FINNEY,Garden City,SW Res-Ext Ctr (FD)
+1997,ELDF,ELLIS,Hays,Agric Res Ctr - Hays
+1998,FNI,FINNEY,Garden City,SW Res-Ext Ctr (FI)
+1998,STD,STAFFORD,St. John,Sandyland Expt Field (SD)
+1998,SVI,STEVENS,Hugoton,Jim Kramer Farm
+1998,FND,FINNEY,Garden City,SW Res-Ext Ctr (FD)
+1998,GRD,GREELEY,Tribune,SW Res-Ext Ctr (GD)
+1998,THI,THOMAS,Colby,NW Res-Ext Ctr (TI)
+1998,SUD,SUMNER,Caldwell,Max Kolarik Farm (SU)
+1998,RND,RENO,Hutchinson,SC KS Experiment Field (RN)
+1998,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+1998,ELDF,ELLIS,Hays,Agric Res Ctr - Hays
+1998,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+1998,LBD,LABETTE,Parsons,SE Agric Res Ctr (LB)
+1998,FRD,FRANKLIN,Ottawa,EC KS Experiment Field (FR)
+1998,RLD,RILEY,Manhattan,Ashland Agronomy Farm (RL)
+1998,BRD,BROWN,Powhattan,Cornbelt Experiment Field (BR)
+1998,THD,THOMAS,Colby,NW Res-Ext Cter (TD)
+1999,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+1999,LBD,LABETTE,Parsons,SE Agric Res Ctr (LB)
+1999,ELDF,ELLIS,Hays,Agric Res Ctr - Hays
+1999,SMD,SMITH,Smith Center,Farmer's Field
+1999,STD,STAFFORD,St. John,Sandyland Expt Field (SD)
+1999,RLD,RILEY,Manhattan,Ashland Agronomy Farm (RL)
+1999,THD,THOMAS,Colby,NW Res-Ext Cter (TD)
+1999,GRD,GREELEY,Tribune,SW Res-Ext Ctr (GD)
+1999,FND,FINNEY,Garden City,SW Res-Ext Ctr (FD)
+1999,STI,STAFFORD,St. John,Sandyland Expt Field (SI)
+1999,SVI,STEVENS,Hugoton,Jim Kramer Farm
+1999,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+1999,BRD,BROWN,Powhattan,Cornbelt Experiment Field (BR)
+1999,RND,RENO,Hutchinson,SC KS Experiment Field (RN)
+2000,FRD,FRANKLIN,Ottawa,EC KS Experiment Field (FR)
+2000,FNI,FINNEY,Garden City,SW Res-Ext Ctr (FI)
+2000,THI,THOMAS,Colby,NW Res-Ext Ctr (TI)
+2000,STI,STAFFORD,St. John,Sandyland Expt Field (SI)
+2000,FND,FINNEY,Garden City,SW Res-Ext Ctr (FD)
+2000,GRD,GREELEY,Tribune,SW Res-Ext Ctr (GD)
+2000,THD,THOMAS,Colby,NW Res-Ext Cter (TD)
+2000,ELDF,ELLIS,Hays,Agric Res Ctr - Hays (EL)
+2000,SUD,SUMNER,Caldwell,Max Kolarik Farm (SU)
+2000,STD,STAFFORD,St. John,Sandyland Expt Field (SD)
+2000,RND,RENO,Hutchinson,SC KS Experiment Field (RN)
+2000,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+2000,SMD,SMITH,Smith Center,Farmer's Field (SM)
+2000,LBD,LABETTE,Parsons,SE Agric Res Ctr (LB)
+2000,RLD,RILEY,Manhattan,Ashland Agronomy Farm (RL)
+2000,BRD,BROWN,Powhattan,Cornbelt Experiment Field (BR)
+2000,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+2001,THD,THOMAS,Colby,NW Res-Ext Ctr (TD)
+2001,FNI,FINNEY,Garden City,SW Res-Ext Ctr (FI)
+2001,FRD,FRANKLIN,Ottawa,EC KS Experiment Field (FR)
+2001,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+2001,LBD,LABETTE,Parsons,SE Agric Res Ctr (LB)
+2001,RLD,RILEY,Manhattan,Ashland Agronomy Farm (RL)
+2001,RND,RENO,Hutchinson,SC KS Experiment Field (RN)
+2001,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+2001,SMD,SMITH,Smith Center,Farmer's Field (SM)
+2001,SVI,STEVENS,Hugoton,Jim Kramer Farm
+2001,THI,THOMAS,Colby,NW Res-Ext Ctr (TI)
+2001,BRD,BROWN,Everest,Bunck Seed Farms
+2001,GRD,GREELEY,Tribune,SW Res-Ext Ctr (GD)
+2001,FND,FINNEY,Garden City,SW Res-Ext Ctr (FD)
+2002,THI,THOMAS,Colby,NW Res-Ext Ctr (TI)
+2002,FNI,FINNEY,Garden City,SW Res-Ext Ctr (FI)
+2002,FRD,FRANKLIN,Ottawa,EC KS Experiment Field (FR)
+2002,GRD,GREELEY,Tribune,SW Res-Ext Ctr (GD)
+2002,HVD,HARVEY,Hesston,Harvey Co Expt Field (HV)
+2002,CRDS,CRAWFORD,Pittsburg,4-State Farm Show (CS)
+2002,FND,FINNEY,Garden City,SW Res-Ext Ctr (FD)
+2002,RPD,REPUBLIC,Belleville,NC KS Experiment Field (RP)
+2002,BRD,BROWN,Everest,Bunck Seed Farms (BR)
+2002,STD,STAFFORD,St. John,Sandyland Expt Field (SD)
+2002,STI,STAFFORD,St. John,Sandyland Expt Field (SI)
+2002,SUD,SUMNER,Caldwell,Max Kolarik Farm (SU)
+2002,LBD,LABETTE,Parsons,SE Agric Res Ctr (LB)
+2002,THD,THOMAS,Colby,NW Res-Ext Ctr (TD)
+2002,ELDF,ELLIS,Hays,Agric Res Ctr - Hays (EL)
+2002,PHD,PHILLIPS,Phillipsburg,Farmer's Field (PH)
+2002,JWD,JEWELL,Mankato,Farmer's Field (JW)
+2003,RND,Reno,Hutchinson,SC KS Experiment Field
+2003,FRD,Franklin,Ottawa,EC KS Experiment Field
+2003,GRD,Greeley,Tribune,SW Res-Ext Ctr
+2003,HVD,Harvey,Hesston,Harvey Co Expt Field
+2003,LBD,Labette,Parsons,SE Agric Res Ctr
+2003,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2003,RPD,Republic,Belleville,NC KS Experiment Field
+2003,STD,Stafford,St. John,Sandyland Expt Field
+2003,THD,Thomas,Colby,NW Res-Ext Ctr
+2003,LBDS,Labette,Parsons,SE Agric Res Ctr
+2003,FNI,Finney,Garden City,SW Res-Ext Ctr
+2003,GRI,Greeley,Tribune,SW Res-Ext Ctr
+2003,FRDS,Franklin,Ottawa,EC KS Experiment Field
+2003,CRD,Crawford,Pittsburg,4-State Farm Show
+2003,FDD,Ford,Dodge City,Farmer's Field
+2003,PHD,Phillips,Phillipsburg,Farmer's Field
+2003,CRDS,Crawford,Pittsburg,4-State Farm Show
+2003,THI,Thomas,Colby,NW Res-Ext Ctr
+2003,FND,Finney,Garden City,SW Res-Ext Ctr
+2003,BRD,Brown,Everest,Bunck Seed Farms
+2003,ELDF,Ellis,Hays,Agric Res Ctr - Hays
+2003,SMD,Smith,Smith Center,Farmer's Field
+2003,SUD,Sumner,Caldwell,Max Kolarik Farm
+2004,SVI,Stevens,Hugoton,Jim Kramer Farm
+2004,LBD,Labette,Parsons,SE Agric Res Ctr
+2004,RPD,Republic,Belleville,NC KS Experiment Field
+2004,GRI,Greeley,Tribune,SW Res-Ext Ctr
+2004,SUD,Sumner,Caldwell,Max Kolarik Farm
+2004,STDG,Stafford,St. John,Sandyland Expt Field
+2004,FRD,Franklin,Ottawa,EC KS Experiment Field
+2004,HVD,Harvey,Hesston,Harvey Co Expt Field
+2004,STD,Stafford,St. John,Sandyland Expt Field
+2004,THD,Thomas,Colby,NW Res-Ext Ctr
+2004,FND,Finney,Garden City,SW Res-Ext Ctr
+2004,ELDF,Ellis,Hays,Agric Res Ctr - Hays
+2004,LBDS,Labette,Parsons,SE Agric Res Ctr
+2004,CRD,Cherokee,Columbus,Farmer's field
+2004,FDD,Ford,Dodge City,Farmer's Field
+2004,PHD,Phillips,Phillipsburg,Farmer's Field
+2004,SMD,Smith,Smith Center,Farmer's Field
+2004,CRDS,Cherokee,Columbus,Farmer's field
+2004,RND,Reno,Hutchinson,SC KS Experiment Field
+2004,FNI,Finney,Garden City,SW Res-Ext Ctr
+2005,HVD,Harvey,Hesston,Harvey Co Expt Field
+2005,THD,Thomas,Colby,NW Res-Ext Ctr
+2005,ELDF,Ellis,Hays,Agric Res Ctr - Hays
+2005,GRI,Greeley,Tribune,SW Res-Ext Ctr
+2005,FNI,Finney,Garden City,SW Res-Ext Ctr
+2005,CDD,Cloud,Concordia,Farmer's field
+2005,THI,Thomas,Colby,NW Res-Ext Ctr
+2005,FRD,Franklin,Ottawa,EC KS Experiment Field
+2005,FDD,Ford,Dodge City,Farmer's Field
+2005,SMD,Smith,Smith Center,Farmer's Field
+2005,RPD,Republic,Belleville,NC KS Experiment Field
+2005,CRDS,Cherokee,Columbus,SE Agric Res Ctr
+2005,LBD,Labette,Parsons,SE Agric Res Ctr
+2005,LBDS,Labette,Parsons,SE Agric Res Ctr
+2005,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2005,BRD,Brown,Everest,Bunck Seed Farms
+2005,GRD,Greeley,Tribune,SW Res-Ext Ctr
+2005,CRD,Cherokee,Columbus,SE Agric Res Ctr
+2005,FND,Finney,Garden City,SW Res-Ext Ctr
+2005,RND,Reno,Hutchinson,SC KS Experiment Field
+2006,RNDH,Reno,Hutchinson,"South Central Kansas Experiment Field, Hutchinson"
+2006,GRD,Greeley,Tribune,"Southwest Research-Extension Center, Tribune"
+2006,THI,Thomas,Colby,"Northwest Research-Extension Center, Colby"
+2006,FNI,Finney,Garden City,"Southwest Research-Extension Center, Garden City"
+2006,PND,Pawnee,Larned,"Southwest, Ks Farmer's Field, Larned"
+2006,THD,Thomas,Colby,"Northwest Research-Extension Center, Colby"
+2006,ELDF,Ellis,Hays,"Agricultural Research Center, Hays"
+2006,RND,Reno,Hutchinson,"South Central Kansas Experiment Field, Hutchinson"
+2006,HVD,Harvey,Hesston,"Harvey County Experiment Field, Hesston"
+2006,RLD,Riley,Manhattan,"Ashland Agronomy Farm, Manhattan"
+2006,MTD,Mitchell,Beloit,"North Central, Ks Farmer's Field, Beloit"
+2006,RPD,Republic,Belleville,"North Central Kansas Exp. Field, Belleville"
+2006,CRDS,Cherokee,Columbus,Southeast Agricultural Res-Ext Center Columbus
+2006,LBD,Labette,Parsons,"Southeast Agricultural Research Center, Parsons"
+2006,CRD,Cherokee,Columbus,Southeast Agricultural Res-Ext Center Columbus
+2006,LBDS,Labette,Parsons,"Southeast Agricultural Research Center, Parsons"
+2006,FRD,Franklin,Ottawa,"East Central Kansas Experiment Field, Ottawa"
+2006,CDD,Cloud,Concordia,"Southeast Agricultural Res-Ext Center, Columbus"
+2006,FND,Finney,Garden City,"Southwest Research-Extension Center, Garden City"
+2006,BRD,Brown,Everest,"Northeast, Ks Bunck Seed Farms, Everest"
+2007,THD,Thomas,Colby,"Northwest Research-Extension Center, Colby"
+2007,FRD,Franklin,Ottawa,"East Central Kansas Experiment Field, Ottawa"
+2007,CRD,Cherokee,Columbus,"Southeast Agricultural Res-Ext Center, Columbus"
+2007,RPD,Republic,Belleville,"North Central Kansas Exp. Field, Belleville"
+2007,PND,Pawnee,Larned,"Southwest, Ks Farmer's Field, Larned"
+2007,FDI,Ford,Dodge City,"Southwest, Ks Farmer's Field, Dodge City"
+2007,BRD,Brown,Everest,"Northeast, Ks Bunck Seed Farms, Everest"
+2007,FNI,Finney,Garden City,"Southwest Research-Extension Center, Garden City"
+2007,THI,Thomas,Colby,"Northwest Research-Extension Center, Colby"
+2007,GRD,Greeley,Tribune,"Southwest Research-Extension Center, Tribune"
+2007,MTD,Mitchell,Beloit,"North Central, Ks Farmer's Field, Beloit"
+2007,CRDS,Cherokee,Columbus,Southeast Agricultural Res-Ext Center Columbus
+2007,SUD,Sumner,Caldwell,"South Central, Ks Max Kolarik Farm, Conway Springs"
+2007,FND,Finney,Garden City,"Southwest Research-Extension Center, Garden City"
+2007,HVD,Harvey,Hesston,"Harvey County Experiment Field, Hesston"
+2008,CRDS,Cherokee,Columbus,Southeast Agricultural Research Center
+2008,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2008,RPD,Republic,Belleville,North Central Kansas Exp. Field
+2008,MTD,Mitchell,Beloit,"North Central, KS Farmer's Field"
+2008,RND,Reno,Hutchinson,South Central Kansas Exp. Field
+2008,BRD,Brown,Everest,"Northeast, KS Bunck Seed Farms"
+2008,ELDF,Ellis,Hays,Agricultural Research Center
+2008,THD,Thomas,Colby,Northwest Research-Extension Center
+2008,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2008,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2008,THI,Thomas,Colby,Northwest Research-Extension Center
+2008,FDD,Ford,Dodge City,"Southwest, KS Farmer's Field"
+2008,FRD,Franklin,Ottawa,East Central Kansas Exp. Field
+2008,HVD,Harvey,Hesston,Harvey County Exp. Field
+2008,SUD,Sumner,Conway Springs,"South Central, KS Farmer's Field"
+2008,CRD,Cherokee,Columbus,Southeast Agricultural Research Center
+2009,MTD,Mitchell,Beloit,North Central KS Farmer's Field
+2009,THI,Thomas,Colby,Northwest Research-Extension Center
+2009,FND,Finney,Garden City,Southwest Research-Extension Center
+2009,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2009,THD,Thomas,Colby,Northwest Research-Extension Center
+2009,RND,Reno,Hutchinson,South Central Kansas Exp. Field
+2009,RPD,Republic,Belleville,North Central Kansas Exp. Field
+2009,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2009,ELDF,Ellis,Hays,Agricultural Research Center
+2009,HVD,Harvey,Hesston,Harvey County Exp. Field
+2009,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2009,FRD,Franklin,Ottawa,East Central Kansas Exp. Field
+2009,CRD,Cherokee,Columbus,Southeast Agricultural Research Center
+2009,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2009,CRDS,Cherokee,Columbus,Southeast Agricultural Research Center
+2009,SUD,Sumner,Caldwell,South Central KS Farmer's Field
+2010,THD,Thomas,Colby,Northwest Research-Extension Center
+2010,SAD,Saline,Gypsum,Central KS Farmer's Field Farm
+2010,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2010,SUD,Sumner,Caldwell,South Central KS Farmer's Field
+2010,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2010,FNI,Finney,Garden City,Southwest Research-Extension Center
+2010,FND,Finney,Garden City,Southwest Research-Extension Center
+2010,ELDF,Ellis,Hays,Agricultural Research Center
+2010,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2010,RND,Reno,Hutchinson,South Central KS Experiment Field
+2010,FDD,Ford,Dodge City,Southwest KS Farmer's Field
+2010,THI,Thomas,Colby,Northwest Research-Extension Center
+2010,ELI,Ellis,Hays,Agricultural Research Center
+2010,PND,Pawnee,Larned,Southwest KS Farmer's Field
+2010,RPD,Republic,Belleville,North Central KS Experiment Field
+2010,MTD,Mitchell,Beloit,North Central KS Farmer's Field
+2011,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2011,SCI,Scott,Scott City,Southwest KS Farmer's Field
+2011,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2011,MCD,McPherson,Moundridge,South Central KS Framer's Field
+2011,EWD,Ellsworth,Ellsworth,Central KS Farmer's Field
+2011,ELDF,Ellis,Hays,Agricultural Research Center
+2011,THD,Thomas,Colby,Northwest Research-Extension Center
+2011,ELI,Ellis,Hays,Agricultural Research Center
+2011,RND,Reno,Hutchinson,South Central KS Experiment Field
+2011,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2011,FNI,Finney,Garden City,Southwest Research-Extension Center
+2011,FRD,Franklin,Ottawa,East Central KS Experiment Field
+2011,RPD,Republic,Belleville,North Central KS Experiment Field
+2011,SUD,Sumner,Caldwell,South Central KS Farmer's Field
+2011,THI,Thomas,Colby,Northwest Research-Extension Center
+2011,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2011,FDD,Ford,Dodge City,Southwest KS Farmer's Field
+2011,SAD,Saline,Gypsum,Central KS Farmer's Field Farm
+2012,ELDF,Ellis,Hays,Agricultural Research Center
+2012,FDD,Ford,Dodge City,Southwest KS Farmer's Field
+2012,SCI,Scott,Scott City,Southwest KS Farmer's Field
+2012,EWD,Ellsworth,Ellsworth,Central KS Farmer's Field
+2012,THD,Thomas,Colby,Northwest Research-Extension Center
+2012,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2012,RND,Reno,Hutchinson,South Central KS Experiment Field
+2012,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2012,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2012,SAD,Saline,Gypsum,Central KS Farmer's Field Farm
+2012,FRD,Franklin,Ottawa,East Central KS Experiment Field
+2012,MCD,McPherson,Moundridge,South Central KS Framer's Field
+2012,RPD,Republic,Belleville,North Central KS Experiment Field
+2012,MTD,Mitchell,Beloit,North Central KS Farmer's Field
+2012,FNI,Finney,Garden City,Southwest Research-Extension Center
+2012,SUD,Sumner,Conway Springs,South Central KS Farmer's Field
+2012,PND,Pawnee,Larned,Southwest KS Farmer's Field
+2012,ELI,Ellis,Hays,Agricultural Research Center
+2012,THI,Thomas,Colby,Northwest Research-Extension Center
+2012,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2013,THI,Thomas,Colby,Northwest Research-Extension Center
+2013,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2013,THD,Thomas,Colby,Northwest Research-Extension Center
+2013,FRD,Franklin,Ottawa,East Central KS Experiment Field
+2013,PND,Pawnee,Larned,Southwest KS Farmer's Field
+2013,MTD,Mitchell,Beloit,North Central KS Farmer's Field
+2013,RPD,Republic,Belleville,North Central KS Experiment Field
+2013,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2013,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2013,ELDF,Ellis,Hays,Agricultural Research Center
+2014,TRD,Trego,Wakeeney,Northwest Farmer's Field
+2014,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2014,RND,Reno,Hutchinson,South Central KS Experiment Field
+2014,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2014,THD,Thomas,Colby,Northwest Research-Extension Center
+2014,ELDF,Ellis,Hays,Agricultural Research Center
+2014,MCD,McPherson,Moundridge,South Central KS Framer's Field
+2014,FNI,Finney,Garden City,Southwest Research-Extension Center
+2014,EWD,Ellsworth,Ellsworth,Central KS Farmer's Field
+2014,SCI,Scott,Scott City,Southwest KS Farmer's Field
+2014,THI,Thomas,Colby,Northwest Research-Extension Center
+2014,SAD,Saline,Gypsum,Central KS Farmer's Field Farm
+2014,PND,Pawnee,Larned,Southwest KS Farmer's Field
+2014,SUD,Sumner,Conway Springs,South Central KS Farmer's Field
+2014,RPD,Republic,Belleville,North Central KS Experiment Field
+2014,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2014,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2014,FRD,Franklin,Ottawa,East Central KS Experiment Field
+2015,FRD,Franklin,Ottawa,East Central KS Experiment Field
+2015,MCD,McPherson,Moundridge,South Central KS Framer's Field
+2015,ELDF,Ellis,Hays,Agricultural Research Center
+2015,THD,Thomas,Colby,Northwest Research-Extension Center
+2015,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2015,TRD,Trego,Wakeeney,Northwest Farmer's Field
+2015,FDD,Ford,Dodge City,Southwest KS Farmer's Field
+2015,RPD,Republic,Belleville,North Central KS Experiment Field
+2015,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2015,RND,Reno,Hutchinson,South Central KS Experiment Field
+2015,THI,Thomas,Colby,Northwest Research-Extension Center
+2015,EWD,Ellsworth,Ellsworth,Central KS Farmer's Field
+2015,PND,Pawnee,Larned,Southwest KS Farmer's Field
+2015,MTD,Mitchell,Beloit,North Central KS Farmer's Field
+2015,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2015,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2015,FNI,Finney,Garden City,Southwest Research-Extension Center
+2015,SCI,Scott,Scott City,Southwest KS Farmer's Field
+2015,SAD,Saline,Gypsum,Central KS Farmer's Field Farm
+2015,SUD,Sumner,Conway Springs,South Central KS Farmer's Field
+2016,MCD,McPherson,Moundridge,South Central KS Framer's Field
+2016,THD,Thomas,Colby,Northwest Research-Extension Center
+2016,GRD,Greeley,Tribune,Southwest Research-Extension Center
+2016,FDD,Ford,Dodge City,Southwest KS Farmer's Field
+2016,RPD,Republic,Belleville,North Central KS Experiment Field
+2016,RLD,Riley,Manhattan,Ashland Agronomy Farm
+2016,RND,Reno,Hutchinson,South Central KS Experiment Field
+2016,THI,Thomas,Colby,Northwest Research-Extension Center
+2016,EWD,Ellsworth,Ellsworth,Central KS Farmer's Field
+2016,PND,Pawnee,Larned,Southwest KS Farmer's Field
+2016,LBD,Labette,Parsons,Southeast Agricultural Research Center
+2016,LBDS,Labette,Parsons,Southeast Agricultural Research Center
+2016,FNI,Finney,Garden City,Southwest Research-Extension Center
+2016,SCI,Scott,Scott City,Southwest KS Farmer's Field
+2016,SAD,Saline,Gypsum,Central KS Farmer's Field Farm
+2016,SUD,Sumner,Conway Springs,South Central KS Farmer's Field
