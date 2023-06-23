@@ -5,10 +5,10 @@ dash:
   debug: True
 
 data:
-  corn_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/1982-2020_corn.csv
-  soybean_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/1991-2022_soybean.csv
-  sunflower_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/1998-2019_sunflower.csv
-  wheat_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/1982-2022_wheat.csv
+  corn_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/corn.csv
+  soybean_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/soybean.csv
+  sunflower_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/sunflower.csv
+  wheat_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/wheat.csv
 
 template:
   logo_src: ../assets/KSU-Crops-logo.png
