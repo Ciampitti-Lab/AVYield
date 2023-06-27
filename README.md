@@ -21,6 +21,7 @@ Lots of work to do =/
 - [ ] Store only a fixed set of columns. Setup this columns in config.
 - [ ] <s>Add year selection and filter datasets initially.</s>
 - [x] Create home, about and data pages.
+- [ ] Create compare page.
 - [x] Collect Kansas geo data.
 - [ ] Create pages layout for home, about and data.
 - [ ] Change pre_processing.py to get the datasets from the documentation repo.
