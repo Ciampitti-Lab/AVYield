@@ -4,10 +4,11 @@ import dash_bootstrap_components as dbc
 
 from config import config
 from components import hf
-from callbacks import hf_callbacks, main_callbacks
+from callbacks import register
 
 app = Dash(
     config.dash.app_title,
+    suppress_callback_exceptions=True,
     external_stylesheets=[
         getattr(dbc.themes, config.dash.theme), "styles.css"],
 )
@@ -21,8 +22,8 @@ app.layout = html.Div(
     ],
 )
 
-hf_callbacks.register_header_callbacks(app)
-main_callbacks.register_main_callbacks(app)
+register.main_callbacks(app)
+register.home_callbacks(app)
 
 if __name__ == "__main__":
     app.run_server(debug=True)

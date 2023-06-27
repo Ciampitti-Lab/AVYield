@@ -19,19 +19,26 @@ Lots of work to do =/
 - [x] Fix, LOC, WATER_REGIME and COUNTY fields
 - [x] Pre-pre-process the datasets outside the app to maintain high performance. 
 - [ ] Store only a fixed set of columns. Setup this columns in config.
-- [ ] Add year selection and filter datasets initially.
+- [ ] <s>Add year selection and filter datasets initially.</s>
 - [x] Create home, about and data pages.
 - [x] Collect Kansas geo data.
 - [ ] Create pages layout for home, about and data.
 - [ ] Change pre_processing.py to get the datasets from the documentation repo.
-- [ ] CHECK UNITS IN THE xlsx FILES!
 - [x] Fix harvest_date unit.
 - [x] Figure site/loc acronyms: The location "code" is the 2-letter county abbreviation and "D" for dryland or "I" for irrigated for all crops. A "S" in wheat or corn is a soft test or a short season test and "C" and "O" are confectionary and oilseed respectively for sunflower. 
 
 * Visualizations:
-- [ ] Explore the datasets relation using as input: year, county, water regime and return: yield per genotype and brand.
-- [ ] Water regime and yield.
+- [ ] Implement exclusive visualizations for each dataset to account for data mismatching.
+- [ ] Add units (see in the xlsx files).
+- [ ] <s>County selection using a map</s>.
+- [x] Yield per brand
+  - [ ] Add Year selector (currently hardcoded). 
+  - [ ] Add option to search from specific brand.
+- [x] Yield per year.
+  - [ ] Add option to filter by county
+- [ ] Yield/Water regime.
 - [ ] Add climate data.
+  - [ ] Yield - temperature (add water regime and use parallel coordinates?).
 
 
 ## Project structure

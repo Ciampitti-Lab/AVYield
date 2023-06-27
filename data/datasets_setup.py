@@ -54,7 +54,9 @@ def split_LOC(df, c_dict):
 
     df['WATER_REGIME'] = df['LOC'].str[2].map(
         {'I': 'Irrigated',
-         'D': 'Dryland'
+         'i': 'Irrigated',
+         'D': 'Dryland',
+         'd': 'Dryland'
          }
     )
     return df
