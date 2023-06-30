@@ -17,7 +17,7 @@ def get_year_interval(selected_crop):
 def yield_brand(selected_crop, selected_year):
     df = datasets[selected_crop]
     yield_brand = df[df['YEAR'] == selected_year]
-    color_map = {'Irrigated': 'darkblue', 'Dryland': 'brown'}
+    color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     swarm = px.strip(yield_brand, x='BRAND', y='YIELD', title='Yield per Brand', color='WATER_REGIME',
                      color_discrete_map=color_map, hover_data=sorted(list(yield_brand.columns)))
     return swarm
