@@ -6,9 +6,11 @@ soybean = pd.read_csv(config.data.soybean_path)
 sunflower = pd.read_csv(config.data.sunflower_path)
 wheat = pd.read_csv(config.data.wheat_path)
 county_data = pd.read_csv(config.data.county_path)
+
+corn.YEAR = corn.YEAR.astype(int)
 datasets = {
     "Corn": corn,
     "Soybean": soybean,
     "Sunflower": sunflower,
-    "Wheat": wheat, 
+    "Wheat": wheat,
 }

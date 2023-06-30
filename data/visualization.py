@@ -9,9 +9,14 @@ def print_data(selected_crop):
     print(datasets[selected_crop].head())
 
 
-def yield_brand(selected_crop):
+def get_year_interval(selected_crop):
+    dataset = datasets[selected_crop]
+    return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()]
+
+
+def yield_brand(selected_crop, selected_year):
     df = datasets[selected_crop]
-    yield_brand = df[df['YEAR'] == 2019]
+    yield_brand = df[df['YEAR'] == selected_year]
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'brown'}
     swarm = px.strip(yield_brand, x='BRAND', y='YIELD', title='Yield per Brand', color='WATER_REGIME',
                      color_discrete_map=color_map, hover_data=sorted(list(yield_brand.columns)))
@@ -31,14 +36,14 @@ def yield_year(selected_crop):
         color_col = 'YIELD'
         labels_dict = {'YIELD': 'Yield', 'YEAR': 'Year'}
         color_cont_scale = px.colors.sequential.Bluered
-        
+
     year_yield_bar = px.bar(
-            median_yield_year,
-            x='YEAR',
-            y='YIELD',
-            color=color_col,
-            title='Yield per Year',
-            labels=labels_dict,
-            color_continuous_scale=list(reversed(color_cont_scale))
-        )
+        median_yield_year,
+        x='YEAR',
+        y='YIELD',
+        color=color_col,
+        title='Yield per Year',
+        labels=labels_dict,
+        color_continuous_scale=list(reversed(color_cont_scale))
+    )
     return year_yield_bar
