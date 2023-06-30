@@ -11,7 +11,13 @@ layout = html.Div(
         #     value=county_data['COUNTY'].iloc[0]
         # ),
         html.H1('Yield per Brand'),
+        html.H3('Year'),
+        dcc.Dropdown(
+            id='yield-brand-dropdown',
+            value=2019
+        ),
         dcc.Graph(id='yield-brand-graph'),
+
         html.H1('Yield per Year'),
         dcc.Graph(id='yield-year-graph'),
     ]

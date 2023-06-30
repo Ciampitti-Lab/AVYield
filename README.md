@@ -29,11 +29,11 @@ Lots of work to do =/
 - [x] Figure site/loc acronyms: The location "code" is the 2-letter county abbreviation and "D" for dryland or "I" for irrigated for all crops. A "S" in wheat or corn is a soft test or a short season test and "C" and "O" are confectionary and oilseed respectively for sunflower. 
 
 * Visualizations:
-- [ ] Implement exclusive visualizations for each dataset to account for data mismatching.
+- [x] Implement exclusive visualizations for each dataset to account for data mismatching.
 - [ ] Add units (see in the xlsx files).
 - [ ] <s>County selection using a map</s>.
 - [x] Yield per brand
-  - [ ] Add Year selector (currently hardcoded). 
+  - [x] Add Year selector (currently hardcoded). 
   - [ ] Add option to search from specific brand.
 - [x] Yield per year.
   - [ ] Add option to filter by county

@@ -6,10 +6,19 @@ from data import visualization as vis
 def home_callbacks(app):
     @app.callback(
         Output('yield-brand-graph', 'figure'),
-        Input('crops-dropdown', 'value')
+        [Input('crops-dropdown', 'value'),
+         Input('yield-brand-dropdown', 'value')]
     )
-    def update_yield_brand_graph(value):
-        return vis.yield_brand(value)
+    def update_yield_brand_graph(crops_value, year_value):
+        return vis.yield_brand(crops_value, year_value)
+
+    @app.callback(
+        Output('yield-brand-dropdown', 'options'),
+        [Input('crops-dropdown', 'value')]
+    )
+    def update_yield_brand_dropdown(value):
+        return vis.get_year_interval(value)
+
     @app.callback(
         Output('yield-year-graph', 'figure'),
         Input('crops-dropdown', 'value')
