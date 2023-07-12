@@ -3,7 +3,10 @@ from data.pre_processing import county_data
 
 layout = html.Div(
     [
-        html.H1('Median Brand Yield per Year'),
+        html.H1('Mean Yield per County'),
+        dcc.Graph(id='yield-county-graph'),
+
+        html.H1('Mean Brand Yield per Year'),
         html.Div([
             html.H3('Brand:', style={'margin-right': '10px'}),
             dcc.Dropdown(

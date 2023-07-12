@@ -1,9 +1,11 @@
 from data.pre_processing import datasets
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
 
+# General methods
 def print_data(selected_crop):
     print("Selected crop: ", selected_crop)
     print(datasets[selected_crop].head())
@@ -48,7 +50,7 @@ def set_mean_yield_bar_graph(df, crop, title):
     )
 
 
-# Brand Yield per year
+# Bar - Brand Yield per year
 def brand_year(selected_crop, selected_brand):
     df = datasets[selected_crop]
     brand = df[df['BRAND'] == selected_brand]
@@ -56,7 +58,7 @@ def brand_year(selected_crop, selected_brand):
     return set_mean_yield_bar_graph(brand, selected_crop, 'Mean Brand Yield Per Year')
 
 
-# Yield per brand
+# Swarm - Yield per brand
 def yield_brand(selected_crop, selected_year):
     df = datasets[selected_crop]
     yield_brand = df[df['YEAR'] == selected_year]
@@ -68,6 +70,32 @@ def yield_brand(selected_crop, selected_year):
     return swarm
 
 
-# Mean Yield per year
+# Lollipop - Mean Yield per Location
+def yield_county(selected_crop):
+    df = datasets[selected_crop]
+    mean_yield_county = df.groupby('COUNTY').agg(
+        {'YIELD': lambda x: round(x.mean(), 2)}).reset_index()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=mean_yield_county["COUNTY"],
+        y=mean_yield_county["YIELD"],
+        mode='markers',
+        marker=dict(
+            color='darkblue',
+            size=10
+        )
+    ))
+    for i in range(0, len(mean_yield_county)):
+        fig.add_shape(type='line',
+                      x0=i, y0=0,
+                      x1=i,
+                      y1=mean_yield_county["YIELD"][i],
+                      line=dict(color='darkblue', width=3))
+    fig.update_layout(title_text="Median Yield per County")
+
+    return fig
+
+
+# Bar - Mean Yield per year
 def yield_year(selected_crop):
     return set_mean_yield_bar_graph(datasets[selected_crop], selected_crop, 'Mean Yield per Year')
