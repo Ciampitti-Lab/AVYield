@@ -13,6 +13,10 @@ def home_callbacks(app):
     )
     def update_brand_year_dropdown(crops_value):
         dataset = vis.get_dataset(crops_value)
+        brands = dataset['BRAND'].unique()
+        brands = [brand for brand in brands if not pd.isna(brand)]
+        brands.sort()
+
         default = ''
         if crops_value == 'Corn':
             default = 'GOLDEN HARVEST'
@@ -22,8 +26,7 @@ def home_callbacks(app):
             default = 'Syngenta'
         elif crops_value == 'Wheat':
             default = 'AGSECO'
-
-        return [{'label': str(brand), 'value': brand} for brand in dataset['BRAND'].unique() if not pd.isna(brand)], default
+        return [{'label': str(brand), 'value': brand} for brand in brands], default
 
     @app.callback(
         Output('brand-year-graph', 'figure'),
