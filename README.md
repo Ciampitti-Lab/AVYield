@@ -16,10 +16,10 @@ Lots of work to do =/
 - [x] Add datasets from ignacio email.
 - [x] Fix new datasets.
 - [x] Pre-process the datasets.
+- [ ] Change all string cols to uppercase in the datasets.
 - [x] Fix, LOC, WATER_REGIME and COUNTY fields
 - [x] Pre-pre-process the datasets outside the app to maintain high performance. 
 - [ ] Store only a fixed set of columns. Setup this columns in config.
-- [ ] <s>Add year selection and filter datasets initially.</s>
 - [x] Create home, about and data pages.
 - [ ] Create compare page.
 - [x] Collect Kansas geo data.
@@ -31,15 +31,16 @@ Lots of work to do =/
 * Visualizations:
 - [x] Implement exclusive visualizations for each dataset to account for data mismatching.
 - [ ] Add units (see in the xlsx files).
-- [ ] <s>County selection using a map</s>.
-- [x] Yield per brand
-  - [x] Add Year selector (currently hardcoded). 
-  - [ ] Add option to search from specific brand.
-- [x] Yield per year.
-  - [ ] Add option to filter by county
-- [ ] Yield/Water regime.
-- [ ] Add climate data.
-  - [ ] Yield - temperature (add water regime and use parallel coordinates?).
+- [x] Mean Brand Yield per Year:
+  - [x] Better default dropdown selection;
+- [x] Yield per brand:
+  - [x] Add Year selector;
+  - [x] Better default dropdown selection;
+  - [ ] Set better hover options;
+- [x] Mean Yield per year:
+  - [ ] Add option to filter by county;
+- [ ] Add climate data:
+  - [ ] Yield - temperature (add water regime and use parallel coordinates?);
 
 
 ## Project structure
