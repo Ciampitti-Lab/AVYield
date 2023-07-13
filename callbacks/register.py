@@ -72,7 +72,6 @@ def home_callbacks(app):
     def update_yield_county_graph(crops_value, year_value):
         return vis.yield_county(crops_value, year_value)
 
-
 # Mean Yield per year
     @app.callback(
         Output('yield-year-graph', 'figure'),
@@ -80,6 +79,14 @@ def home_callbacks(app):
     )
     def update_yield_year_graph(crops_value):
         return vis.yield_year(crops_value)
+
+# Table
+    @app.callback(
+        Output('table-data', 'data'),
+        Input('crops-dropdown', 'value')
+    )
+    def update_table(crops_value):
+        return vis.table(crops_value)
 
 
 def main_callbacks(app):

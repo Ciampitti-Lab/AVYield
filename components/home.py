@@ -1,8 +1,23 @@
-from dash import dcc, html
+from dash import dcc, html, dash_table
 from data.pre_processing import county_data
 
 layout = html.Div(
     [
+        html.H1('Table'),
+        dash_table.DataTable(
+            id='table-data',
+            page_size=5,
+            style_data_conditional=[
+                {
+                    'if': {'row_index': 'even'},
+                    'backgroundColor': 'rgb(220, 220, 220)',
+                }
+            ],
+            style_cell={
+                'text-align': 'left'
+            }
+        ),
+
         html.H1('Mean Yield per County by Year'),
         html.Div([
             html.H3('Year:', style={'margin-right': '10px'}),

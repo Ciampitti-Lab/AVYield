@@ -1,4 +1,5 @@
 from data.pre_processing import datasets
+from dash import dash_table
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -73,7 +74,7 @@ def yield_brand(selected_crop, selected_year):
 # Lollipop - Mean Yield per Location by Year
 def yield_county(selected_crop, year_value):
     df = datasets[selected_crop]
-    mean_yield_county = df[df.YEAR==year_value].groupby('COUNTY').agg(
+    mean_yield_county = df[df.YEAR == year_value].groupby('COUNTY').agg(
         {'YIELD': lambda x: round(x.mean(), 2)}).reset_index()
     fig = go.Figure()
     fig.add_trace(go.Scatter(
@@ -99,3 +100,18 @@ def yield_county(selected_crop, year_value):
 # Bar - Mean Yield per year
 def yield_year(selected_crop):
     return set_mean_yield_bar_graph(datasets[selected_crop], selected_crop, 'Mean Yield per Year')
+
+
+# Table data
+def table(selected_crop):
+    df = datasets[selected_crop]
+
+    columns_to_select = ['YEAR', 'YIELD', 'COUNTY', 'BRAND', 'NAME']
+    if 'PCODE' in df.columns:
+        columns_to_select.append('PCODE')
+    df = df[columns_to_select]
+
+    df.loc[:, 'YIELD'] = df['YIELD'].round(2)
+    df = df.sort_values('YEAR', ascending=False)
+
+    return df.to_dict('records')
