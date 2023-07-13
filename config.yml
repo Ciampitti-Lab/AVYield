@@ -13,6 +13,7 @@ data:
 
 template:
   logo_src: ../assets/KSU-Crops-logo.png
+  about_img_src: ../assets/cg-kansasstate-farm.jpg
 
 version: v0.0.1
 github_url: https://github.com/sprmbng

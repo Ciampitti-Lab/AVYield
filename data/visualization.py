@@ -70,10 +70,10 @@ def yield_brand(selected_crop, selected_year):
     return swarm
 
 
-# Lollipop - Mean Yield per Location
-def yield_county(selected_crop):
+# Lollipop - Mean Yield per Location by Year
+def yield_county(selected_crop, year_value):
     df = datasets[selected_crop]
-    mean_yield_county = df.groupby('COUNTY').agg(
+    mean_yield_county = df[df.YEAR==year_value].groupby('COUNTY').agg(
         {'YIELD': lambda x: round(x.mean(), 2)}).reset_index()
     fig = go.Figure()
     fig.add_trace(go.Scatter(
@@ -91,7 +91,7 @@ def yield_county(selected_crop):
                       x1=i,
                       y1=mean_yield_county["YIELD"][i],
                       line=dict(color='darkblue', width=3))
-    fig.update_layout(title_text="Median Yield per County")
+    fig.update_layout(title_text="Median Yield per County by Year")
 
     return fig
 

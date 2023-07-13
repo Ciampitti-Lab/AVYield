@@ -56,11 +56,21 @@ def home_callbacks(app):
 
 # Mean Yield per County
     @app.callback(
-        Output('yield-county-graph', 'figure'),
-        Input('crops-dropdown', 'value')
+        [Output('yield-county-year-dropdown', 'options'),
+         Output('yield-county-year-dropdown', 'value')],
+        [Input('crops-dropdown', 'value')]
     )
-    def update_yield_county_graph(crops_value):
-        return vis.yield_county(crops_value)
+    def update_yield_county_year_dropdown(crops_value):
+        dataset = vis.get_dataset(crops_value)
+        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+
+    @app.callback(
+        Output('yield-county-graph', 'figure'),
+        [Input('crops-dropdown', 'value'),
+         Input('yield-county-year-dropdown', 'value')]
+    )
+    def update_yield_county_graph(crops_value, year_value):
+        return vis.yield_county(crops_value, year_value)
 
 
 # Mean Yield per year
