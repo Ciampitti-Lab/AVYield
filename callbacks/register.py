@@ -1,7 +1,78 @@
 import pandas as pd
-from dash.dependencies import Input, Output
+import dash
+from dash import dcc
+from dash.dependencies import Input, Output, State
 from components import home, data, about
 from data import visualization as vis
+
+
+def data_callbacks(app):
+    # Title
+    @app.callback(
+        Output('data-selected-crop', 'children'),
+        Input('crops-dropdown', 'value')
+    )
+    def update_data_selected_crop(crop_value):
+        return "You are about to download --" + crop_value + "-- dataset."
+
+# Start year
+    @app.callback(
+        [Output('data-start-year-dropdown', 'options'),
+         Output('data-start-year-dropdown', 'value')],
+        Input('crops-dropdown', 'value')
+    )
+    def update_data_start_year_dropdown(crops_value):
+        dataset = vis.get_dataset(crops_value)
+        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[0]['YEAR']
+
+# End year
+    @app.callback(
+        [Output('data-end-year-dropdown', 'options'),
+         Output('data-end-year-dropdown', 'value')],
+        [Input('crops-dropdown', 'value'),
+         Input('data-start-year-dropdown', 'value')]
+    )
+    def update_data_end_year_dropdown(crops_value, start_year):
+        dataset = vis.get_dataset(crops_value)
+        available_years = dataset['YEAR'].unique()
+        filtered_years = [
+            year for year in available_years if year >= start_year
+        ]
+        end_year_value = filtered_years[-1] if filtered_years else None
+        return [{'label': str(year), 'value': year} for year in filtered_years], end_year_value
+
+# Download
+    @app.callback(
+        Output('data-download', 'data'),
+        [Input('data-download-btn', 'n_clicks')],
+        [State('crops-dropdown', 'value'),
+         State('data-start-year-dropdown', 'value'),
+         State('data-end-year-dropdown', 'value')],
+        prevent_initial_call=True,
+    )
+    def download_dataset(n_clicks, crops_value, start_year, end_year):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        if trigger_id == 'data-download-btn':
+            dataset = vis.get_dataset(crops_value)
+            dataset = dataset[(dataset['YEAR'] >= start_year)
+                              & (dataset['YEAR'] <= end_year)]
+            return dcc.send_data_frame(dataset.to_csv, crops_value.lower()+'_dataset.csv', index=False)
+        return None
+
+# Preview Table
+    @app.callback(
+        Output('data-preview-table', 'data'),
+        [Input('crops-dropdown', 'value'),
+         Input('data-start-year-dropdown', 'value'),
+         Input('data-end-year-dropdown', 'value')],
+    )
+    def update_data_preview_table(crops_value, start_year, end_year):
+        dataset = vis.get_dataset(crops_value)
+        dataset = dataset[(dataset['YEAR'] >= start_year)
+                          & (dataset['YEAR'] <= end_year)]
+        return dataset.to_dict('records')
 
 
 def home_callbacks(app):

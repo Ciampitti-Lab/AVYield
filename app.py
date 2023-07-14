@@ -23,6 +23,7 @@ app.layout = html.Div(
 )
 
 register.main_callbacks(app)
+register.data_callbacks(app)
 register.home_callbacks(app)
 
 if __name__ == "__main__":
