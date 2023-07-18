@@ -126,7 +126,42 @@ def compare_yield_brand(selected_crop, selected_year, brand, legend_flag):
         'YIELD'].mean().reset_index()
 
     fig = px.bar(df, x='NAME', y='YIELD',
-                 color='WATER_REGIME', barmode='group')
+                 color='WATER_REGIME', barmode='group',
+                 labels={'NAME': 'Name', 'YIELD': 'Yield',
+                                 'WATER_REGIME': 'Water Regime'})
     fig.update_layout(showlegend=legend_flag)
 
+    return fig
+
+
+# Compare Moist Yield Scatter graph
+def compare_moist_yield(selected_crop, selected_year, brand):
+    df = datasets[selected_crop]
+    df = df[df.YEAR == selected_year]
+    df = df[df['BRAND'] == brand]
+
+    xcol = ''
+    hdata = {}
+    if selected_crop == "Sunflower":
+        xcol = "DAYS"
+        hdata = {'NAME': True, 'DAYS': ':.2f', 'YIELD': ':.2f'}
+    else:
+        xcol = 'MOIST'
+        hdata = {'NAME': True, 'MOIST': ':.2f', 'YIELD': ':.2f'}
+
+    fig = px.scatter(
+        df,
+        x=xcol,
+        y='YIELD',
+        color='NAME',
+        facet_col='WATER_REGIME',
+        facet_col_wrap=1,
+        labels={'MOIST': 'Moist', 'YIELD': 'Yield',
+                'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
+        hover_data=hdata
+    )
+    fig.update_traces(marker=dict(size=10))
+
+    for annotation in fig['layout']['annotations']:  # type: ignore
+        annotation['text'] = annotation['text'].split('=')[1]  # type: ignore
     return fig

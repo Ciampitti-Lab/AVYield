@@ -1,6 +1,6 @@
 import pandas as pd
 import dash
-from dash import dcc
+from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from components import home, compare, data, about
 from data import visualization as vis
@@ -86,10 +86,10 @@ def compare_callbacks(app):
         dataset = vis.get_dataset(crops_value)
         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
 
-    # Brand 1 dropdown
     @app.callback(
         [Output('compare-brand-1-dropdown', 'options'),
-         Output('compare-brand-1-dropdown', 'value')],
+         Output('compare-brand-1-dropdown', 'value'),
+         Output('brand-alert-div', 'children')],
         [Input('crops-dropdown', 'value'),
          Input('compare-year-dropdown', 'value')]
     )
@@ -99,7 +99,12 @@ def compare_callbacks(app):
         brands = dataset['BRAND'].unique()
         brands = [brand for brand in brands if not pd.isna(brand)]
         brands.sort()
-        return [{'label': str(brand), 'value': brand} for brand in brands], brands[0]
+        if not brands:
+            alert_message = html.Div(
+                'No brands available for the selected crop and year!', style={'color': 'red', 'font-size': '30px'})
+            return [], None, alert_message
+        else:
+            return [{'label': str(brand), 'value': brand} for brand in brands], brands[0], None
 
     # Brand 2 dropdown
     @app.callback(
@@ -114,9 +119,13 @@ def compare_callbacks(app):
         dataset = dataset[dataset.YEAR == selected_year]
         brands = dataset['BRAND'].unique()
         brands = [brand for brand in brands if not pd.isna(brand)]
-        brands.remove(brand_1)
+        if brand_1 in brands:
+            brands.remove(brand_1)
         brands.sort()
-        return [{'label': str(brand), 'value': brand} for brand in brands], brands[1]
+        if not brands:
+            return [], None
+        else:
+            return [{'label': str(brand), 'value': brand} for brand in brands], brands[1]
 
     # Yield Brand Bar graph
     @app.callback(
@@ -134,8 +143,27 @@ def compare_callbacks(app):
          Input('compare-year-dropdown', 'value'),
          Input('compare-brand-2-dropdown', 'value')]
     )
-    def update_compare_yield_brand_graph(crops_value, selected_year, brand_2):
+    def update_compare_yield_brand_2_graph(crops_value, selected_year, brand_2):
         return vis.compare_yield_brand(crops_value, selected_year, brand_2, True)
+
+    # Moist Yield Scatter graph
+    @app.callback(
+        Output('compare-moist-yield-1-graph', 'figure'),
+        [Input('crops-dropdown', 'value'),
+         Input('compare-year-dropdown', 'value'),
+         Input('compare-brand-1-dropdown', 'value')]
+    )
+    def update_compare_moist_yield_brand_1_graph(crops_value, selected_year, brand_1):
+        return vis.compare_moist_yield(crops_value, selected_year, brand_1)
+
+    @app.callback(
+        Output('compare-moist-yield-2-graph', 'figure'),
+        [Input('crops-dropdown', 'value'),
+         Input('compare-year-dropdown', 'value'),
+         Input('compare-brand-2-dropdown', 'value')]
+    )
+    def update_compare_moist_yield_brand_2_graph(crops_value, selected_year, brand_2):
+        return vis.compare_moist_yield(crops_value, selected_year, brand_2)
 
 
 def home_callbacks(app):

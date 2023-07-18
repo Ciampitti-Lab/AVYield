@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import dcc, html, dash_table
+from dash import dcc, html
 
 layout = html.Div([
     html.H1("Compare page"),
@@ -22,7 +22,7 @@ layout = html.Div([
             style={'margin-right': '150px'}
         ),
     ], style={'display': 'flex'}),
-
+    html.Div(id='brand-alert-div'),
     html.H4("Brand Yield by Name", style={
             'text-align': 'center', 'margin-top': '40px'}),
     html.Div([
@@ -35,5 +35,5 @@ layout = html.Div([
     html.Div([
         dcc.Graph(id='compare-moist-yield-1-graph'),
         dcc.Graph(id='compare-moist-yield-2-graph'),
-    ], style={'display': 'flex', 'margin-top': '0px'})
+    ], style={'display': 'flex', 'margin-top': '0px'}),
 ])
