@@ -2,7 +2,7 @@ import pandas as pd
 import dash
 from dash import dcc
 from dash.dependencies import Input, Output, State
-from components import home, data, about
+from components import home, compare, data, about
 from data import visualization as vis
 
 
@@ -52,7 +52,7 @@ def data_callbacks(app):
     )
     def download_dataset(n_clicks, crops_value, start_year, end_year):
         ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]  # type: ignore
 
         if trigger_id == 'data-download-btn':
             dataset = vis.get_dataset(crops_value)
@@ -73,6 +73,69 @@ def data_callbacks(app):
         dataset = dataset[(dataset['YEAR'] >= start_year)
                           & (dataset['YEAR'] <= end_year)]
         return dataset.to_dict('records')
+
+
+def compare_callbacks(app):
+    # Year dropdown
+    @app.callback(
+        [Output('compare-year-dropdown', 'options'),
+         Output('compare-year-dropdown', 'value')],
+        [Input('crops-dropdown', 'value')]
+    )
+    def update_compare_year_dropdown(crops_value):
+        dataset = vis.get_dataset(crops_value)
+        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+
+    # Brand 1 dropdown
+    @app.callback(
+        [Output('compare-brand-1-dropdown', 'options'),
+         Output('compare-brand-1-dropdown', 'value')],
+        [Input('crops-dropdown', 'value'),
+         Input('compare-year-dropdown', 'value')]
+    )
+    def update_compare_brand_1_dropdown(crops_value, selected_year):
+        dataset = vis.get_dataset(crops_value)
+        dataset = dataset[dataset.YEAR == selected_year]
+        brands = dataset['BRAND'].unique()
+        brands = [brand for brand in brands if not pd.isna(brand)]
+        brands.sort()
+        return [{'label': str(brand), 'value': brand} for brand in brands], brands[0]
+
+    # Brand 2 dropdown
+    @app.callback(
+        [Output('compare-brand-2-dropdown', 'options'),
+         Output('compare-brand-2-dropdown', 'value')],
+        [Input('crops-dropdown', 'value'),
+         Input('compare-brand-1-dropdown', 'value'),
+         Input('compare-year-dropdown', 'value')]
+    )
+    def update_compare_brand_2_dropdown(crops_value, brand_1, selected_year):
+        dataset = vis.get_dataset(crops_value)
+        dataset = dataset[dataset.YEAR == selected_year]
+        brands = dataset['BRAND'].unique()
+        brands = [brand for brand in brands if not pd.isna(brand)]
+        brands.remove(brand_1)
+        brands.sort()
+        return [{'label': str(brand), 'value': brand} for brand in brands], brands[1]
+
+    # Yield Brand Bar graph
+    @app.callback(
+        Output('compare-yield-brand-1-graph', 'figure'),
+        [Input('crops-dropdown', 'value'),
+         Input('compare-year-dropdown', 'value'),
+         Input('compare-brand-1-dropdown', 'value')]
+    )
+    def update_compare_yield_brand_1_graph(crops_value, selected_year, brand_1):
+        return vis.compare_yield_brand(crops_value, selected_year, brand_1, False)
+
+    @app.callback(
+        Output('compare-yield-brand-2-graph', 'figure'),
+        [Input('crops-dropdown', 'value'),
+         Input('compare-year-dropdown', 'value'),
+         Input('compare-brand-2-dropdown', 'value')]
+    )
+    def update_compare_yield_brand_graph(crops_value, selected_year, brand_2):
+        return vis.compare_yield_brand(crops_value, selected_year, brand_2, True)
 
 
 def home_callbacks(app):
@@ -166,6 +229,8 @@ def main_callbacks(app):
     def display_page(pathname):
         if pathname == '/':
             return home.layout
+        elif pathname == '/compare':
+            return compare.layout
         elif pathname == '/data':
             return data.layout
         elif pathname == '/about':

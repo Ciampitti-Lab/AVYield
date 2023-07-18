@@ -2,6 +2,7 @@ from data.pre_processing import datasets
 from dash import dash_table
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.subplots as sp
 import pandas as pd
 import numpy as np
 
@@ -115,3 +116,17 @@ def table(selected_crop):
     df = df.sort_values('YEAR', ascending=False)
 
     return df.to_dict('records')
+
+
+# Compare Brand Yield Bar Graph
+def compare_yield_brand(selected_crop, selected_year, brand, legend_flag):
+    df = datasets[selected_crop]
+    df = df[df.YEAR == selected_year]
+    df = df[df['BRAND'] == brand].groupby(['NAME', 'WATER_REGIME'])[
+        'YIELD'].mean().reset_index()
+
+    fig = px.bar(df, x='NAME', y='YIELD',
+                 color='WATER_REGIME', barmode='group')
+    fig.update_layout(showlegend=legend_flag)
+
+    return fig

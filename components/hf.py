@@ -39,6 +39,13 @@ header = html.Div(
                                 html.Li(
                                     className="nav-item",
                                     children=[
+                                        dcc.Link("Compare", href="/compare",
+                                                 className="nav-link")
+                                    ],
+                                ),
+                                html.Li(
+                                    className="nav-item",
+                                    children=[
                                         dcc.Link("Data", href="/data",
                                                  className="nav-link")
                                     ],
