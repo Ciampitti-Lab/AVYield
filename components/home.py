@@ -1,5 +1,4 @@
 from dash import dcc, html, dash_table
-from data.pre_processing import county_data
 
 layout = html.Div(
     [
