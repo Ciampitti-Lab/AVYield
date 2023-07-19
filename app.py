@@ -13,6 +13,9 @@ app = Dash(
         getattr(dbc.themes, config.dash.theme), "styles.css"],
 )
 
+app.title = config.dash.app_title
+app._favicon = favicon = config.template.fa_logo_src
+
 app.layout = html.Div(
     [
         dcc.Location(id='url', refresh=False),

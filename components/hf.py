@@ -14,7 +14,7 @@ header = html.Div(
                 html.A(
                     [
                         html.Img(
-                            src=config.template.logo_src,
+                            src=config.template.fa_logo_src,
                             className="logo",
                         ),
                         html.Span(title, className="navbar-brand-title"),

@@ -13,6 +13,7 @@ data:
 
 template:
   logo_src: ../assets/KSU-Crops-logo.png
+  fa_logo_src: ../assets/chart-line-solid.svg
   about_img_src: ../assets/cg-kansasstate-farm.jpg
 
 version: v0.0.1
