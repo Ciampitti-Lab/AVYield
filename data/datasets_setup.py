@@ -88,6 +88,7 @@ Datasets changes and fixes:
         * Change BRAND and NAME missing values to "Unknown"? (For now I won't).
         * Drop columns with low usable data. (Done)
         * Map COUNTY in new column LOC. (Done)
+        * There is a county named Colby. Maybe this is referring to Thomas County?
     - Soybean:
         * Change BRAND and NAME missing values to "Unknown"? (For now I won't).
         * Drop columns with low usable data. (Done)

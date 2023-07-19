@@ -13,7 +13,7 @@ def data_callbacks(app):
         Input('crops-dropdown', 'value')
     )
     def update_data_selected_crop(crop_value):
-        return "You are about to download --" + crop_value + "-- dataset."
+        return "You are about to download " + crop_value.lower() + " dataset."
 
     # Start year
     @app.callback(
