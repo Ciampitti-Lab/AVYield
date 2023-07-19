@@ -15,7 +15,7 @@ def data_callbacks(app):
     def update_data_selected_crop(crop_value):
         return "You are about to download --" + crop_value + "-- dataset."
 
-# Start year
+    # Start year
     @app.callback(
         [Output('data-start-year-dropdown', 'options'),
          Output('data-start-year-dropdown', 'value')],
@@ -25,7 +25,7 @@ def data_callbacks(app):
         dataset = vis.get_dataset(crops_value)
         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[0]['YEAR']
 
-# End year
+    # End year
     @app.callback(
         [Output('data-end-year-dropdown', 'options'),
          Output('data-end-year-dropdown', 'value')],
@@ -41,7 +41,7 @@ def data_callbacks(app):
         end_year_value = filtered_years[-1] if filtered_years else None
         return [{'label': str(year), 'value': year} for year in filtered_years], end_year_value
 
-# Download
+    # Download
     @app.callback(
         Output('data-download', 'data'),
         [Input('data-download-btn', 'n_clicks')],
@@ -146,24 +146,33 @@ def compare_callbacks(app):
     def update_compare_yield_brand_2_graph(crops_value, selected_year, brand_2):
         return vis.compare_yield_brand(crops_value, selected_year, brand_2, True)
 
-    # Moist Yield Scatter graph
+    # Title
     @app.callback(
-        Output('compare-moist-yield-1-graph', 'figure'),
+        Output('compare-second-title', 'children'),
+        Input('crops-dropdown', 'value')
+    )
+    def update_data_selected_crop(crop_value):
+        return "Days Yield by Genotype" if crop_value == "Sunflower" else ("Genotype Yield" if crop_value == "Soybean" else "Genotype Moist")
+
+    # Moist Name Scatter graph
+
+    @app.callback(
+        Output('compare-moist-name-1-graph', 'figure'),
         [Input('crops-dropdown', 'value'),
          Input('compare-year-dropdown', 'value'),
          Input('compare-brand-1-dropdown', 'value')]
     )
-    def update_compare_moist_yield_brand_1_graph(crops_value, selected_year, brand_1):
-        return vis.compare_moist_yield(crops_value, selected_year, brand_1)
+    def update_compare_moist_name_brand_1_graph(crops_value, selected_year, brand_1):
+        return vis.compare_moist_name(crops_value, selected_year, brand_1, False)
 
     @app.callback(
-        Output('compare-moist-yield-2-graph', 'figure'),
+        Output('compare-moist-name-2-graph', 'figure'),
         [Input('crops-dropdown', 'value'),
          Input('compare-year-dropdown', 'value'),
          Input('compare-brand-2-dropdown', 'value')]
     )
     def update_compare_moist_yield_brand_2_graph(crops_value, selected_year, brand_2):
-        return vis.compare_moist_yield(crops_value, selected_year, brand_2)
+        return vis.compare_moist_name(crops_value, selected_year, brand_2, True)
 
 
 def home_callbacks(app):
