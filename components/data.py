@@ -1,27 +1,39 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html, dash_table
 
-layout = html.Div([
-    html.H1('Data'),
-    html.H2(id='data-selected-crop'),
-    html.Div([
-        html.H3('From:', style={'margin-right': '10px'}),
-        dcc.Dropdown(
-            id='data-start-year-dropdown',
-            clearable=False,
-            style={'margin-right': '30px'}
-        ),
-        html.H3('To:', style={'margin-right': '10px'}),
-        dcc.Dropdown(
-            id='data-end-year-dropdown',
-            clearable=False,
-            style={'margin-right': '30px'}
-        ),
-        html.Button("Download Dataset", id="data-download-btn"),
-        dcc.Download(id="data-download")
-    ], style={'display': 'flex'}),
+layout = dbc.Container([
+    dbc.Row([
+        html.H1(
+            'Data',
+            style={'text-align': 'center'}
+        )
+    ]),
+    html.H2(id='data-selected-crop', style={'text-align': 'center'}),
+    dbc.Row([
+        dbc.Col([
+            dcc.Dropdown(
+                id='data-start-year-dropdown',
+                clearable=False,
+            ),
+        ]),
+        dbc.Col([
+            dcc.Dropdown(
+                id='data-end-year-dropdown',
+                clearable=False,
+            ),
+        ]),
+    ]),
+    html.Br(),
+    dbc.Row([
+        dbc.Col([
+            html.Button("Download Dataset", id="data-download-btn"),
+            dcc.Download(id="data-download")
+        ], style={'display': 'flex', 'justify-content': 'center'}),
+    ], className='g-0'),
 
-    html.H2("Preview"),
+    html.Br(),
+
+    html.H2("Preview",  style={'text-align': 'center'}),
     dash_table.DataTable(
         id='data-preview-table',
         page_size=10,
@@ -35,4 +47,4 @@ layout = html.Div([
             'text-align': 'left'
         }
     ),
-])
+], fluid=True)
