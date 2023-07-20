@@ -3,8 +3,11 @@ from dash import dash_table
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.subplots as sp
+import geopandas as gpd
 import pandas as pd
 import numpy as np
+from config import config
+import json
 
 
 # General methods
@@ -73,7 +76,7 @@ def yield_brand(selected_crop, selected_year):
 
 
 # Lollipop - Mean Yield per Location by Year
-def yield_county(selected_crop, year_value):
+def mean_yield_county(selected_crop, year_value):
     df = datasets[selected_crop]
     mean_yield_county = df[df.YEAR == year_value].groupby('COUNTY').agg(
         {'YIELD': lambda x: round(x.mean(), 2)}).reset_index()
@@ -93,7 +96,40 @@ def yield_county(selected_crop, year_value):
                       x1=i,
                       y1=mean_yield_county["YIELD"][i],
                       line=dict(color='darkblue', width=3))
-    fig.update_layout(title_text="Median Yield per County by Year")
+    fig.update_layout(title_text="Mean Yield per County by Year")
+
+    return fig
+
+
+# Map - Total Yield per County by Year
+def total_yield_county(selected_crop, year_value):
+    df = datasets[selected_crop]
+    df = df[df.YEAR == year_value].groupby(
+        "COUNTY")["YIELD"].sum().reset_index()
+    df.rename(columns={"COUNTY": "name"}, inplace=True)
+
+    with open(config.data.geodata_path) as f:
+        geodata = json.load(f)
+
+    names_list = [feature['properties']['name']
+                  for feature in geodata['features']]
+    missing_names_df = pd.DataFrame(
+        {'name': [name for name in names_list if name not in df['name'].values], 'YIELD': 0})
+    total_yield_county = pd.concat([df, missing_names_df], ignore_index=True)
+
+    fig = px.choropleth_mapbox(
+        total_yield_county,
+        geojson=geodata,
+        featureidkey="properties.name",
+        locations="name",
+        color="YIELD",
+        color_continuous_scale="Sunsetdark",
+        zoom=5.5,  # type: ignore
+        center={"lat": 38.5, "lon": -98.5},
+        mapbox_style="carto-positron",
+        title='Total Yield Per County by Year',
+        labels={'name': 'County', 'YIELD': 'Yield'}
+    )
 
     return fig
 

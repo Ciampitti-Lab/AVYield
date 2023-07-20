@@ -10,6 +10,7 @@ data:
   sunflower_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/sunflower.csv
   wheat_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/wheat.csv
   county_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/county_data.csv
+  geodata_path: /home/sprmbng/Desktop/croptrials_vis_prototype/data/datasets/us-county-boundaries.geojson
 
 template:
   logo_src: ../assets/KSU-Crops-logo.png

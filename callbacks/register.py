@@ -225,7 +225,7 @@ def home_callbacks(app):
     def update_yield_brand_graph(crops_value, year_value):
         return vis.yield_brand(crops_value, year_value)
 
-# Mean Yield per County
+# Mean and Total (map) Yield per County
     @app.callback(
         [Output('yield-county-year-dropdown', 'options'),
          Output('yield-county-year-dropdown', 'value')],
@@ -241,7 +241,15 @@ def home_callbacks(app):
          Input('yield-county-year-dropdown', 'value')]
     )
     def update_yield_county_graph(crops_value, year_value):
-        return vis.yield_county(crops_value, year_value)
+        return vis.mean_yield_county(crops_value, year_value)
+
+    @app.callback(
+        Output('yield-county-map', 'figure'),
+        [Input('crops-dropdown', 'value'),
+         Input('yield-county-year-dropdown', 'value')]
+    )
+    def update_yield_county_map(crops_value, year_value):
+        return vis.total_yield_county(crops_value, year_value)
 
 # Mean Yield per year
     @app.callback(
