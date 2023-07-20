@@ -107,6 +107,7 @@ def total_yield_county(selected_crop, year_value):
     df = df[df.YEAR == year_value].groupby(
         "COUNTY")["YIELD"].sum().reset_index()
     df.rename(columns={"COUNTY": "name"}, inplace=True)
+    df['name'] = df['name'].apply(lambda x: x.capitalize()) 
 
     with open(config.data.geodata_path) as f:
         geodata = json.load(f)

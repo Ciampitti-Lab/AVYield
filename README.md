@@ -7,6 +7,16 @@
 * [Reference site - 1](http://ramwheatdb.com/headtohead.php)
 * [Reference site - 2](https://www.myfields.info/crop-data)
 * [Geo Data](https://public.opendatasoft.com/explore/dataset/us-county-boundaries)
+* https://analytics.iasoybeans.com/cool-apps/ISOFAST/
+
+## Initial Notes
+* Scrape almost every vis.
+* Focus on genotypes.
+  * genotype yield by year.
+  * compare yield from 2 genotypes.
+  * check data from counties and try something. 
+* Process corn dataset to deleted metrics in genotype NAME.
+* Drop duplicate rows in the datasets.
 
 ## To-do
 ### Data Engineering

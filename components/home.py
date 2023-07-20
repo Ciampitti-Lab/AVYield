@@ -5,25 +5,6 @@ layout = dbc.Container([
     dbc.Row([
         dbc.Row([
             html.H1(
-                'Yield per County by Year',
-                style={'text-align': 'center'}
-            )
-        ]),
-        dbc.Row([
-            dcc.Dropdown(
-                id='yield-county-year-dropdown',
-                clearable=False,
-            )
-        ]),
-        dbc.Row([
-            dbc.Col([dcc.Graph(id='yield-county-graph')], width=6),
-            dbc.Col([dcc.Graph(id='yield-county-map')], width=6),
-        ]),
-    ]),
-
-    dbc.Row([
-        dbc.Row([
-            html.H1(
                 'Table',
                 style={'text-align': 'center'}
             )
@@ -41,6 +22,25 @@ layout = dbc.Container([
                 'text-align': 'left'
             }
         ),
+    ]),
+
+    dbc.Row([
+        dbc.Row([
+            html.H1(
+                'Yield per County by Year',
+                style={'text-align': 'center'}
+            )
+        ]),
+        dbc.Row([
+            dcc.Dropdown(
+                id='yield-county-year-dropdown',
+                clearable=False,
+            )
+        ]),
+        dbc.Row([
+            dbc.Col([dcc.Graph(id='yield-county-graph')], width=6),
+            dbc.Col([dcc.Graph(id='yield-county-map')], width=6),
+        ]),
     ]),
 
     dbc.Row([

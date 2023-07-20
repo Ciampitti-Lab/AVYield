@@ -8,6 +8,7 @@ layout = dbc.Container([
             style={'text-align': 'center'}
         )
     ]),
+
     html.H2(id='data-selected-crop', style={'text-align': 'center'}),
     dbc.Row([
         dbc.Col([
@@ -24,9 +25,14 @@ layout = dbc.Container([
         ]),
     ]),
     html.Br(),
+
     dbc.Row([
         dbc.Col([
-            html.Button("Download Dataset", id="data-download-btn"),
+            dbc.Button(
+                "Download Dataset",
+                color='secondary',
+                id="data-download-btn"
+            ),
             dcc.Download(id="data-download")
         ], style={'display': 'flex', 'justify-content': 'center'}),
     ], className='g-0'),
