@@ -54,3 +54,5 @@
 - [ ] Add climate data:
   - [ ] Yield - temperature (add water regime and use parallel coordinates?);</s>
 - [ ] Add units (see in the xlsx files).
+- [ ] Add option to change units.
+- [ ] parallel coordinates: genotype -> year? -> yield -> moist?
