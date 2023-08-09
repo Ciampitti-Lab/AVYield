@@ -180,8 +180,8 @@ def compare_yield_box(selected_crop, selected_year, genotypes, legend_flag):
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     fig = px.box(
         df,
-        x='YIELD',
-        y='NAME',
+        x='NAME',
+        y='YIELD',
         color_discrete_map=color_map,
         color='WATER_REGIME',
         labels={'MOIST': 'Moist', 'YIELD': 'Yield',
