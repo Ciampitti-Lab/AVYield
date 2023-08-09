@@ -86,93 +86,98 @@ def compare_callbacks(app):
         dataset = vis.get_dataset(crops_value)
         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
 
+    # Genotype dropdown
     @app.callback(
-        [Output('compare-brand-1-dropdown', 'options'),
-         Output('compare-brand-1-dropdown', 'value'),
-         Output('brand-alert-div', 'children')],
+        [Output('compare-genotype-dropdown', 'options'),
+         Output('compare-genotype-dropdown', 'value'),
+         Output('genotype-alert-div', 'children')],
         [Input('crops-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value')]
+         Input('compare-year-dropdown', 'value')],
     )
-    def update_compare_brand_1_dropdown(crops_value, selected_year):
+    def update_compare_genotype_dropdown(crops_value, selected_year):
         dataset = vis.get_dataset(crops_value)
         dataset = dataset[dataset.YEAR == selected_year]
-        brands = dataset['BRAND'].unique()
-        brands = [brand for brand in brands if not pd.isna(brand)]
-        brands.sort()
-        if not brands:
+        names = dataset['NAME'].unique()
+        names = [name for name in names if not pd.isna(name)]
+        names.sort()
+        if not names:
             alert_message = html.Div(
-                'No brands available for the selected crop and year!', style={'color': 'red', 'font-size': '30px'})
+                'No Genotypes available for the selected crop and year!', style={'color': 'red', 'font-size': '30px'})
             return [], None, alert_message
         else:
-            return [{'label': str(brand), 'value': brand} for brand in brands], brands[0], None
+            return [{'label': str(name), 'value': name} for name in names], names[0], None
 
-    # Brand 2 dropdown
+    # Add and Clear Genotype button
     @app.callback(
-        [Output('compare-brand-2-dropdown', 'options'),
-         Output('compare-brand-2-dropdown', 'value')],
-        [Input('crops-dropdown', 'value'),
-         Input('compare-brand-1-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value')]
+        Output("add-genotype-output", "children", allow_duplicate=True),
+        Output("already-added-alert", "is_open"),
+        Output("selected-genotypes-store", "data", allow_duplicate=True),
+        Input("add-genotype-btn", "n_clicks"),
+        State("compare-genotype-dropdown", "value"),
+        State("add-genotype-output", "children"),
+        State("selected-genotypes-store", "data"),
+        State("already-added-alert", "is_open"),
+        prevent_initial_call=True
     )
-    def update_compare_brand_2_dropdown(crops_value, brand_1, selected_year):
-        dataset = vis.get_dataset(crops_value)
-        dataset = dataset[dataset.YEAR == selected_year]
-        brands = dataset['BRAND'].unique()
-        brands = [brand for brand in brands if not pd.isna(brand)]
-        if brand_1 in brands:
-            brands.remove(brand_1)
-        brands.sort()
-        if not brands:
-            return [], None
-        else:
-            return [{'label': str(brand), 'value': brand} for brand in brands], brands[1]
+    def update_genotype_output(n_clicks, selected_genotype, current_output, stored_genotypes, is_open):
+        if stored_genotypes is None:
+            stored_genotypes = []
 
-    # Yield Brand Bar graph
+        if n_clicks > 0 and selected_genotype:
+            if selected_genotype not in stored_genotypes:
+                stored_genotypes.append(selected_genotype)
+                if current_output is None:
+                    new_output = f"Genotype(s): {selected_genotype}"
+                else:
+                    new_output = f"{current_output}, {selected_genotype}"
+                return new_output, is_open, stored_genotypes
+            else:
+                return current_output, not is_open, stored_genotypes
+        return current_output, False, stored_genotypes
+
     @app.callback(
-        Output('compare-yield-brand-1-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
+        Output("add-genotype-output", "children"),
+        Output("selected-genotypes-store", "data"),
+        Input("compare-year-dropdown", "value"),
+        Input("clear-genotype-btn", "n_clicks")
+    )
+    def clear_genotype_storage(n_clicks, selected_year):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]  # type: ignore
+
+        if trigger_id == 'clear-genotype-btn':
+            return None, None
+        return None, None
+
+    # Yield Genotype Bar graph
+    @app.callback(
+        Output('compare-yield-bar-graph', 'figure'),
+        [Input('add-genotype-btn', 'n_clicks'),
+         Input('crops-dropdown', 'value'),
          Input('compare-year-dropdown', 'value'),
-         Input('compare-brand-1-dropdown', 'value')]
+         Input('selected-genotypes-store', 'data')]
     )
-    def update_compare_yield_brand_1_graph(crops_value, selected_year, brand_1):
-        return vis.compare_yield_brand(crops_value, selected_year, brand_1, False)
-
-    @app.callback(
-        Output('compare-yield-brand-2-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value'),
-         Input('compare-brand-2-dropdown', 'value')]
-    )
-    def update_compare_yield_brand_2_graph(crops_value, selected_year, brand_2):
-        return vis.compare_yield_brand(crops_value, selected_year, brand_2, True)
-
-    # Title
-    @app.callback(
-        Output('compare-second-title', 'children'),
-        Input('crops-dropdown', 'value')
-    )
-    def update_data_selected_crop(crop_value):
-        return "Days Yield by Genotype" if crop_value == "Sunflower" else ("Genotype Yield" if crop_value == "Soybean" else "Genotype Moist")
+    def update_compare_yield_bar_graph(n_clicks, crops_value, selected_year, genotypes):
+        if n_clicks is None:
+            return dash.no_update
+        if genotypes is None:
+            return dash.no_update
+        return vis.compare_yield_bar(crops_value, selected_year, genotypes, True)
 
     # Moist Name Scatter graph
-
     @app.callback(
-        Output('compare-moist-name-1-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
+        Output('compare-yield-box-graph', 'figure'),
+        [Input('add-genotype-btn', 'n_clicks'),
+         Input('crops-dropdown', 'value'),
          Input('compare-year-dropdown', 'value'),
-         Input('compare-brand-1-dropdown', 'value')]
+         Input('selected-genotypes-store', 'data')]
     )
-    def update_compare_moist_name_brand_1_graph(crops_value, selected_year, brand_1):
-        return vis.compare_moist_name(crops_value, selected_year, brand_1, False)
-
-    @app.callback(
-        Output('compare-moist-name-2-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value'),
-         Input('compare-brand-2-dropdown', 'value')]
-    )
-    def update_compare_moist_yield_brand_2_graph(crops_value, selected_year, brand_2):
-        return vis.compare_moist_name(crops_value, selected_year, brand_2, True)
+    def update_compare_yield_box_graph(n_clicks, crops_value, selected_year, genotypes):
+        if n_clicks is None:
+            return dash.no_update
+        if genotypes is None:
+            return dash.no_update
+        return vis.compare_yield_box(crops_value, selected_year, genotypes, True)
 
 
 def home_callbacks(app):

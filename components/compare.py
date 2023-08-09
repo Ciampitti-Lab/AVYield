@@ -9,26 +9,49 @@ layout = dbc.Container([
         )
     ]),
     dbc.Row([
+        dcc.Store(id='selected-genotypes-store'),
         dbc.Col([
             dcc.Dropdown(
                 id='compare-year-dropdown',
                 clearable=False,
             ),
-        ]),
+        ], width=4),
         dbc.Col([
             dcc.Dropdown(
-                id='compare-brand-1-dropdown',
+                id='compare-genotype-dropdown',
                 clearable=False,
             ),
-        ]),
+        ], width=4),
         dbc.Col([
-            dcc.Dropdown(
-                id='compare-brand-2-dropdown',
-                clearable=False
+            dbc.Button(
+                "Add Genotype",
+                color='secondary',
+                className="me-4",
+                id="add-genotype-btn",
+                n_clicks=0
+            ),
+            dbc.Button(
+                "Clear Genotypes",
+                color='danger',
+                id="clear-genotype-btn",
+                n_clicks=0
             ),
         ]),
     ]),
-    html.Div(id='brand-alert-div'),
+
+    dbc.Row([html.H4(id="add-genotype-output")]),
+    dbc.Col([
+        dbc.Alert(
+            "Genotype already added!",
+            id="already-added-alert",
+            is_open=True,
+            duration=2000,
+            color="danger",
+            className="text-center",
+            style={"display": "inline-block", "margin": "0 auto"}
+        ),
+    ], className="d-flex justify-content-center"),
+    html.Div(id='genotype-alert-div'),
 
     html.Br(),
     html.Br(),
@@ -40,48 +63,12 @@ layout = dbc.Container([
         )
     ]),
     dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-yield-brand-1-graph')], width=6),
-        dbc.Col([dcc.Graph(id='compare-yield-brand-2-graph')], width=6),
-    ]),
-
-    html.Br(),
-    html.Br(),
-
-    dbc.Row([
-        html.H1(
-            id='compare-second-title',
-            style={'text-align': 'center'}
-        )
-    ]),
-    dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-moist-name-1-graph')], width=6),
-        dbc.Col([dcc.Graph(id='compare-moist-name-2-graph')], width=6),
+        dbc.Col([dcc.Graph(id='compare-yield-bar-graph')]),
+        dbc.Col([dcc.Graph(id='compare-yield-box-graph')]),
     ]),
 
     html.Br(),
     # old home vis down here
-
-    dbc.Row([
-            dbc.Row([
-                html.H1(
-                    'Table',
-                    style={'text-align': 'center'}
-                )
-            ]),
-            dash_table.DataTable(
-                id='table-data',
-                page_size=5,
-                style_data_conditional=[
-                    {
-                        'if': {'row_index': 'even'},
-                        'backgroundColor': 'rgb(220, 220, 220)',
-                    }
-                ],
-                style_cell={
-                    'text-align': 'left'
-                }
-            ),
-            ]),
 
     dbc.Row([
         dbc.Row([
@@ -140,5 +127,27 @@ layout = dbc.Container([
             )
         ]),
         dcc.Graph(id='yield-year-graph'),
+    ]),
+
+    dbc.Row([
+        dbc.Row([
+            html.H1(
+                'Table',
+                style={'text-align': 'center'}
+            )
+        ]),
+        dash_table.DataTable(
+            id='table-data',
+            page_size=5,
+            style_data_conditional=[
+                {
+                    'if': {'row_index': 'even'},
+                    'backgroundColor': 'rgb(220, 220, 220)',
+                }
+            ],
+            style_cell={
+                'text-align': 'left'
+            }
+        ),
     ]),
 ], fluid=True)

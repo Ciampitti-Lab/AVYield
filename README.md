@@ -56,3 +56,5 @@
 - [ ] Add units (see in the xlsx files).
 - [ ] Add option to change units.
 - [ ] parallel coordinates: genotype -> year? -> yield -> moist?
+- [ ] change clear genotypes btn, input year dropdown, crops dropdown to clear the graphs?
+- [ ] make it in a pop up window?

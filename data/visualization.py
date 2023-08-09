@@ -107,7 +107,7 @@ def total_yield_county(selected_crop, year_value):
     df = df[df.YEAR == year_value].groupby(
         "COUNTY")["YIELD"].sum().reset_index()
     df.rename(columns={"COUNTY": "name"}, inplace=True)
-    df['name'] = df['name'].apply(lambda x: x.capitalize()) 
+    df['name'] = df['name'].apply(lambda x: x.capitalize())
 
     with open(config.data.geodata_path) as f:
         geodata = json.load(f)
@@ -156,11 +156,11 @@ def table(selected_crop):
 
 
 # Compare Brand Yield Bar Graph
-def compare_yield_brand(selected_crop, selected_year, brand, legend_flag):
+def compare_yield_bar(selected_crop, selected_year, genotypes, legend_flag):
     df = datasets[selected_crop]
     df = df[df.YEAR == selected_year]
-    df = df[df['BRAND'] == brand].groupby(['NAME', 'WATER_REGIME'])[
-        'YIELD'].mean().reset_index()
+    df = df[df['NAME'].isin(genotypes)].groupby(
+        ['NAME', 'WATER_REGIME'])['YIELD'].mean().reset_index()
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     fig = px.bar(df, x='NAME', y='YIELD',
                  color_discrete_map=color_map,
@@ -173,37 +173,19 @@ def compare_yield_brand(selected_crop, selected_year, brand, legend_flag):
 
 
 # Compare Moist Name Box graph
-def compare_moist_name(selected_crop, selected_year, brand, legend_flag):
+def compare_yield_box(selected_crop, selected_year, genotypes, legend_flag):
     df = datasets[selected_crop]
     df = df[df.YEAR == selected_year]
-    df = df.loc[df['BRAND'].isin([brand])]
+    df = df.loc[df['NAME'].isin(genotypes)]
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    if selected_crop == "Sunflower":
-        fig = px.strip(
-            df,
-            x='DAYS',
-            y='YIELD',
-            facet_col='NAME',
-            color='WATER_REGIME',
-            color_discrete_map=color_map,
-            labels={'MOIST': 'Moist', 'YIELD': 'Yield',
-                    'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
-        )
-        fig.update_layout(showlegend=legend_flag)
-        fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[1]))
-        return fig
-    else:
-        xcol = 'MOIST'
-        if selected_crop == "Soybean":
-            xcol = 'YIELD'
-        fig = px.box(
-            df,
-            x=xcol,
-            y='NAME',
-            color_discrete_map=color_map,
-            color='WATER_REGIME',
-            labels={'MOIST': 'Moist', 'YIELD': 'Yield',
-                    'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
-        )
-        fig.update_layout(showlegend=legend_flag)
-        return fig
+    fig = px.box(
+        df,
+        x='YIELD',
+        y='NAME',
+        color_discrete_map=color_map,
+        color='WATER_REGIME',
+        labels={'MOIST': 'Moist', 'YIELD': 'Yield',
+                'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
+    )
+    fig.update_layout(showlegend=legend_flag)
+    return fig
