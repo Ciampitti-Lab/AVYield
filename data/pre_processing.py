@@ -32,7 +32,7 @@ corn = drop_duplicates_by_year(corn)
 brand_elements = ["MAT CHK", "MATURITY CHECK",
                   "zMATURITY CHECK", "-MATURITY CHECK"]
 name_elements = ["MEAN", "CV", "LSD", "Average",
-                 "CV (%)", "LSD (0.5)", "MATURITY SHORT", "MATURITY MID", "MATURITY FULL"]
+                 "CV (%)", "LSD (0.5)", "MATURITY SHORT", "MATURITY MID", "MATURITY FULL", "GRAND MEAN"]
 corn = corn[~corn['BRAND'].isin(brand_elements)]
 corn = corn[~corn['NAME'].isin(name_elements)]
 corn.reset_index(drop=True, inplace=True)
