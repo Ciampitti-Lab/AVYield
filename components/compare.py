@@ -8,17 +8,28 @@ layout = dbc.Container([
             style={'text-align': 'center'}
         )
     ]),
+    dbc.Col([
+        dbc.RadioItems(
+            options=[
+                {"label": "Filter by Genotype", "value": "genotype"},
+                {"label": "Filter by Year", "value": "year"},
+            ],
+            value='genotype',
+            id="filter-opt",
+            inline=True,
+        ),
+    ]),
     dbc.Row([
-        dcc.Store(id='selected-genotypes-store'),
+        dcc.Store(id='selected-opt-store'),
         dbc.Col([
             dcc.Dropdown(
-                id='compare-year-dropdown',
+                id='compare-first-dropdown',
                 clearable=False,
             ),
         ], width=4),
         dbc.Col([
             dcc.Dropdown(
-                id='compare-genotype-dropdown',
+                id='compare-second-dropdown',
                 clearable=False,
             ),
         ], width=4),
@@ -27,22 +38,22 @@ layout = dbc.Container([
                 "Add Genotype",
                 color='secondary',
                 className="me-4",
-                id="add-genotype-btn",
+                id="compare-add-btn",
                 n_clicks=0
             ),
             dbc.Button(
                 "Clear Genotypes",
                 color='danger',
-                id="clear-genotype-btn",
+                id="compare-clear-btn",
                 n_clicks=0
             ),
         ]),
     ]),
 
-    dbc.Row([html.H4(id="add-genotype-output")]),
+    dbc.Row([html.H4(id="add-opt-output")]),
     dbc.Col([
         dbc.Alert(
-            "Genotype already added!",
+            "Data already added!",
             id="already-added-alert",
             is_open=True,
             duration=2000,
@@ -51,10 +62,6 @@ layout = dbc.Container([
             style={"display": "inline-block", "margin": "0 auto"}
         ),
     ], className="d-flex justify-content-center"),
-    html.Div(id='genotype-alert-div'),
-
-    html.Br(),
-    html.Br(),
 
     dbc.Row([
         html.H1(
@@ -70,84 +77,84 @@ layout = dbc.Container([
     html.Br(),
     # old home vis down here
 
-    dbc.Row([
-        dbc.Row([
-            html.H1(
-                'Yield per County by Year',
-                style={'text-align': 'center'}
-            )
-        ]),
-        dbc.Row([
-            dcc.Dropdown(
-                id='yield-county-year-dropdown',
-                clearable=False,
-            )
-        ]),
-        dbc.Row([
-            dbc.Col([dcc.Graph(id='yield-county-graph')], width=6),
-            dbc.Col([dcc.Graph(id='yield-county-map')], width=6),
-        ]),
-    ]),
+    # dbc.Row([
+    #     dbc.Row([
+    #         html.H1(
+    #             'Yield per County by Year',
+    #             style={'text-align': 'center'}
+    #         )
+    #     ]),
+    #     dbc.Row([
+    #         dcc.Dropdown(
+    #             id='yield-county-year-dropdown',
+    #             clearable=False,
+    #         )
+    #     ]),
+    #     dbc.Row([
+    #         dbc.Col([dcc.Graph(id='yield-county-graph')], width=6),
+    #         dbc.Col([dcc.Graph(id='yield-county-map')], width=6),
+    #     ]),
+    # ]),
 
-    dbc.Row([
-        dbc.Row([
-            html.H1(
-                'Mean Brand Yield per Year',
-                style={'text-align': 'center'}
-            )
-        ]),
-        dbc.Row([
-            dcc.Dropdown(
-                id='brand-year-dropdown',
-                clearable=False,
-            )
-        ]),
-        dcc.Graph(id='brand-year-graph'),
-    ]),
+    # dbc.Row([
+    #     dbc.Row([
+    #         html.H1(
+    #             'Mean Brand Yield per Year',
+    #             style={'text-align': 'center'}
+    #         )
+    #     ]),
+    #     dbc.Row([
+    #         dcc.Dropdown(
+    #             id='brand-year-dropdown',
+    #             clearable=False,
+    #         )
+    #     ]),
+    #     dcc.Graph(id='brand-year-graph'),
+    # ]),
 
-    dbc.Row([
-        dbc.Row([
-            html.H1(
-                'Yield per Brand',
-                style={'text-align': 'center'}
-            )
-        ]),
-        dcc.Dropdown(
-            id='yield-brand-dropdown',
-            clearable=False,
-        ),
-        dcc.Graph(id='yield-brand-graph'),
-    ]),
+    # dbc.Row([
+    #     dbc.Row([
+    #         html.H1(
+    #             'Yield per Brand',
+    #             style={'text-align': 'center'}
+    #         )
+    #     ]),
+    #     dcc.Dropdown(
+    #         id='yield-brand-dropdown',
+    #         clearable=False,
+    #     ),
+    #     dcc.Graph(id='yield-brand-graph'),
+    # ]),
 
-    dbc.Row([
-        dbc.Row([
-            html.H1(
-                'Mean Yield per Year',
-                style={'text-align': 'center'}
-            )
-        ]),
-        dcc.Graph(id='yield-year-graph'),
-    ]),
+    # dbc.Row([
+    #     dbc.Row([
+    #         html.H1(
+    #             'Mean Yield per Year',
+    #             style={'text-align': 'center'}
+    #         )
+    #     ]),
+    #     dcc.Graph(id='yield-year-graph'),
+    # ]),
 
-    dbc.Row([
-        dbc.Row([
-            html.H1(
-                'Table',
-                style={'text-align': 'center'}
-            )
-        ]),
-        dash_table.DataTable(
-            id='table-data',
-            page_size=5,
-            style_data_conditional=[
-                {
-                    'if': {'row_index': 'even'},
-                    'backgroundColor': 'rgb(220, 220, 220)',
-                }
-            ],
-            style_cell={
-                'text-align': 'left'
-            }
-        ),
-    ]),
+    # dbc.Row([
+    #     dbc.Row([
+    #         html.H1(
+    #             'Table',
+    #             style={'text-align': 'center'}
+    #         )
+    #     ]),
+    #     dash_table.DataTable(
+    #         id='table-data',
+    #         page_size=5,
+    #         style_data_conditional=[
+    #             {
+    #                 'if': {'row_index': 'even'},
+    #                 'backgroundColor': 'rgb(220, 220, 220)',
+    #             }
+    #         ],
+    #         style_cell={
+    #             'text-align': 'left'
+    #         }
+    #     ),
+    # ]),
 ], fluid=True)

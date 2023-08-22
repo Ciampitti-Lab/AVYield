@@ -1,6 +1,7 @@
 import pandas as pd
 import dash
-from dash import dcc, html
+import plotly.graph_objects as go
+from dash import dcc, html, callback_context
 from dash.dependencies import Input, Output, State
 from components import home, compare, data, about
 from data import visualization as vis
@@ -76,46 +77,50 @@ def data_callbacks(app):
 
 
 def compare_callbacks(app):
-    # Year dropdown
+    # First dropdown
     @app.callback(
-        [Output('compare-year-dropdown', 'options'),
-         Output('compare-year-dropdown', 'value')],
-        [Input('crops-dropdown', 'value')]
+        Output('compare-first-dropdown', 'options'),
+        Output('compare-first-dropdown', 'value'),
+        Input('crops-dropdown', 'value'),
+        Input('filter-opt', 'value')
     )
-    def update_compare_year_dropdown(crops_value):
+    def update_compare_first_dropdown(crops_value, filter):
         dataset = vis.get_dataset(crops_value)
-        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+        if filter == 'genotype':
+            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+        elif filter == 'year':
+            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME']
 
-    # Genotype dropdown
+    # Second dropdown
     @app.callback(
-        [Output('compare-genotype-dropdown', 'options'),
-         Output('compare-genotype-dropdown', 'value'),
-         Output('genotype-alert-div', 'children')],
-        [Input('crops-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value')],
+        Output('compare-second-dropdown', 'options'),
+        Output('compare-second-dropdown', 'value'),
+        Input('crops-dropdown', 'value'),
+        Input('compare-first-dropdown', 'value'),
+        Input('filter-opt', 'value')
     )
-    def update_compare_genotype_dropdown(crops_value, selected_year):
+    def update_compare_genotype_dropdown(crops_value, selected_filter, filter):
         dataset = vis.get_dataset(crops_value)
-        dataset = dataset[dataset.YEAR == selected_year]
-        names = dataset['NAME'].unique()
-        names = [name for name in names if not pd.isna(name)]
-        names.sort()
-        if not names:
-            alert_message = html.Div(
-                'No Genotypes available for the selected crop and year!', style={'color': 'red', 'font-size': '30px'})
-            return [], None, alert_message
-        else:
-            return [{'label': str(name), 'value': name} for name in names], names[0], None
+        if filter == 'genotype':
+            dataset = dataset[dataset.YEAR == selected_filter]
+            names = dataset['NAME'].unique()
+            names = [name for name in names if not pd.isna(name)]
+            names.sort()
+            return [{'label': str(name), 'value': name} for name in names], names[0]
+        elif filter == 'year':
+            dataset = dataset[dataset.NAME == selected_filter]
+            years = dataset['YEAR'].unique()
+            return [{'label': year, 'value': year} for year in years], years[0]
 
     # Add and Clear Genotype button
     @app.callback(
-        Output("add-genotype-output", "children", allow_duplicate=True),
+        Output("add-opt-output", "children", allow_duplicate=True),
         Output("already-added-alert", "is_open"),
-        Output("selected-genotypes-store", "data", allow_duplicate=True),
-        Input("add-genotype-btn", "n_clicks"),
-        State("compare-genotype-dropdown", "value"),
-        State("add-genotype-output", "children"),
-        State("selected-genotypes-store", "data"),
+        Output("selected-opt-store", "data", allow_duplicate=True),
+        Input("compare-add-btn", "n_clicks"),
+        State("compare-second-dropdown", "value"),
+        State("add-opt-output", "children"),
+        State("selected-opt-store", "data"),
         State("already-added-alert", "is_open"),
         prevent_initial_call=True
     )
@@ -136,14 +141,14 @@ def compare_callbacks(app):
         return current_output, False, stored_genotypes
 
     @app.callback(
-        Output("add-genotype-output", "children"),
-        Output("selected-genotypes-store", "data"),
-        Input("compare-year-dropdown", "value"),
-        Input("clear-genotype-btn", "n_clicks")
+        Output("add-opt-output", "children"),
+        Output("selected-opt-store", "data"),
+        Input("compare-clear-btn", "n_clicks"),
+        Input("compare-first-dropdown", "value"),
     )
     def clear_genotype_storage(n_clicks, selected_year):
         ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]  # type: ignore
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
         if trigger_id == 'clear-genotype-btn':
             return None, None
@@ -152,125 +157,137 @@ def compare_callbacks(app):
     # Yield Genotype Bar graph
     @app.callback(
         Output('compare-yield-bar-graph', 'figure'),
-        [Input('add-genotype-btn', 'n_clicks'),
-         Input('crops-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value'),
-         Input('selected-genotypes-store', 'data')]
+        Input('compare-add-btn', 'n_clicks'),
+        Input("compare-clear-btn", 'n_clicks'),
+        Input('crops-dropdown', 'value'),
+        Input('compare-first-dropdown', 'value'),
+        Input('selected-opt-store', 'data'),
+        Input('filter-opt', 'value'),
     )
-    def update_compare_yield_bar_graph(n_clicks, crops_value, selected_year, genotypes):
+    def update_compare_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
+            return go.Figure()
         if n_clicks is None:
             return dash.no_update
-        if genotypes is None:
+        if second_opt is None:
             return dash.no_update
-        return vis.compare_yield_bar(crops_value, selected_year, genotypes, True)
+        return vis.compare_yield_bar(crops_value, first_opt, second_opt, filter, True)
 
-    # Moist Name Scatter graph
+    # Moist Genotype Box graph
     @app.callback(
         Output('compare-yield-box-graph', 'figure'),
-        [Input('add-genotype-btn', 'n_clicks'),
-         Input('crops-dropdown', 'value'),
-         Input('compare-year-dropdown', 'value'),
-         Input('selected-genotypes-store', 'data')]
+        Input('compare-add-btn', 'n_clicks'),
+        Input("compare-clear-btn", 'n_clicks'),
+        Input('crops-dropdown', 'value'),
+        Input('compare-first-dropdown', 'value'),
+        Input('selected-opt-store', 'data'),
+        Input('filter-opt', 'value'),
     )
-    def update_compare_yield_box_graph(n_clicks, crops_value, selected_year, genotypes):
+    def update_compare_yield_box_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
+            return go.Figure()
         if n_clicks is None:
             return dash.no_update
-        if genotypes is None:
+        if second_opt is None:
             return dash.no_update
-        return vis.compare_yield_box(crops_value, selected_year, genotypes, True)
+        return vis.compare_yield_box(crops_value, first_opt, second_opt, filter, True)
 
 
-def home_callbacks(app):
-    # Brand Yield per year
-    @app.callback(
-        [Output('brand-year-dropdown', 'options'),
-         Output('brand-year-dropdown', 'value')],
-        [Input('crops-dropdown', 'value')]
-    )
-    def update_brand_year_dropdown(crops_value):
-        dataset = vis.get_dataset(crops_value)
-        brands = dataset['BRAND'].unique()
-        brands = [brand for brand in brands if not pd.isna(brand)]
-        brands.sort()
+# def home_callbacks(app):
+#     # Brand Yield per year
+#     @app.callback(
+#         [Output('brand-year-dropdown', 'options'),
+#          Output('brand-year-dropdown', 'value')],
+#         [Input('crops-dropdown', 'value')]
+#     )
+#     def update_brand_year_dropdown(crops_value):
+#         dataset = vis.get_dataset(crops_value)
+#         brands = dataset['BRAND'].unique()
+#         brands = [brand for brand in brands if not pd.isna(brand)]
+#         brands.sort()
 
-        default = ''
-        if crops_value == 'Corn':
-            default = 'GOLDEN HARVEST'
-        elif crops_value == 'Soybean':
-            default = 'ASGROW'
-        elif crops_value == 'Sunflower':
-            default = 'Syngenta'
-        elif crops_value == 'Wheat':
-            default = 'AGSECO'
-        return [{'label': str(brand), 'value': brand} for brand in brands], default
+#         default = ''
+#         if crops_value == 'Corn':
+#             default = 'GOLDEN HARVEST'
+#         elif crops_value == 'Soybean':
+#             default = 'ASGROW'
+#         elif crops_value == 'Sunflower':
+#             default = 'Syngenta'
+#         elif crops_value == 'Wheat':
+#             default = 'AGSECO'
+#         return [{'label': str(brand), 'value': brand} for brand in brands], default
 
-    @app.callback(
-        Output('brand-year-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
-         Input('brand-year-dropdown', 'value')]
-    )
-    def update_brand_year_graph(crops_value, brand_value):
-        return vis.brand_year(crops_value, brand_value)
+#     @app.callback(
+#         Output('brand-year-graph', 'figure'),
+#         [Input('crops-dropdown', 'value'),
+#          Input('brand-year-dropdown', 'value')]
+#     )
+#     def update_brand_year_graph(crops_value, brand_value):
+#         return vis.brand_year(crops_value, brand_value)
 
-# Yield per brand per year
-    @app.callback(
-        [Output('yield-brand-dropdown', 'options'),
-         Output('yield-brand-dropdown', 'value')],
-        [Input('crops-dropdown', 'value')]
-    )
-    def update_yield_brand_dropdown(crops_value):
-        dataset = vis.get_dataset(crops_value)
-        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+# # Yield per brand per year
+#     @app.callback(
+#         [Output('yield-brand-dropdown', 'options'),
+#          Output('yield-brand-dropdown', 'value')],
+#         [Input('crops-dropdown', 'value')]
+#     )
+#     def update_yield_brand_dropdown(crops_value):
+#         dataset = vis.get_dataset(crops_value)
+#         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
 
-    @app.callback(
-        Output('yield-brand-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
-         Input('yield-brand-dropdown', 'value')]
-    )
-    def update_yield_brand_graph(crops_value, year_value):
-        return vis.yield_brand(crops_value, year_value)
+#     @app.callback(
+#         Output('yield-brand-graph', 'figure'),
+#         [Input('crops-dropdown', 'value'),
+#          Input('yield-brand-dropdown', 'value')]
+#     )
+#     def update_yield_brand_graph(crops_value, year_value):
+#         return vis.yield_brand(crops_value, year_value)
 
-# Mean and Total (map) Yield per County
-    @app.callback(
-        [Output('yield-county-year-dropdown', 'options'),
-         Output('yield-county-year-dropdown', 'value')],
-        [Input('crops-dropdown', 'value')]
-    )
-    def update_yield_county_year_dropdown(crops_value):
-        dataset = vis.get_dataset(crops_value)
-        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+# # Mean and Total (map) Yield per County
+#     @app.callback(
+#         [Output('yield-county-year-dropdown', 'options'),
+#          Output('yield-county-year-dropdown', 'value')],
+#         [Input('crops-dropdown', 'value')]
+#     )
+#     def update_yield_county_year_dropdown(crops_value):
+#         dataset = vis.get_dataset(crops_value)
+#         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
 
-    @app.callback(
-        Output('yield-county-graph', 'figure'),
-        [Input('crops-dropdown', 'value'),
-         Input('yield-county-year-dropdown', 'value')]
-    )
-    def update_yield_county_graph(crops_value, year_value):
-        return vis.mean_yield_county(crops_value, year_value)
+#     @app.callback(
+#         Output('yield-county-graph', 'figure'),
+#         [Input('crops-dropdown', 'value'),
+#          Input('yield-county-year-dropdown', 'value')]
+#     )
+#     def update_yield_county_graph(crops_value, year_value):
+#         return vis.mean_yield_county(crops_value, year_value)
 
-    @app.callback(
-        Output('yield-county-map', 'figure'),
-        [Input('crops-dropdown', 'value'),
-         Input('yield-county-year-dropdown', 'value')]
-    )
-    def update_yield_county_map(crops_value, year_value):
-        return vis.total_yield_county(crops_value, year_value)
+#     @app.callback(
+#         Output('yield-county-map', 'figure'),
+#         [Input('crops-dropdown', 'value'),
+#          Input('yield-county-year-dropdown', 'value')]
+#     )
+#     def update_yield_county_map(crops_value, year_value):
+#         return vis.total_yield_county(crops_value, year_value)
 
-# Mean Yield per year
-    @app.callback(
-        Output('yield-year-graph', 'figure'),
-        Input('crops-dropdown', 'value')
-    )
-    def update_yield_year_graph(crops_value):
-        return vis.yield_year(crops_value)
+# # Mean Yield per year
+#     @app.callback(
+#         Output('yield-year-graph', 'figure'),
+#         Input('crops-dropdown', 'value')
+#     )
+#     def update_yield_year_graph(crops_value):
+#         return vis.yield_year(crops_value)
 
-# Table
-    @app.callback(
-        Output('table-data', 'data'),
-        Input('crops-dropdown', 'value')
-    )
-    def update_table(crops_value):
-        return vis.table(crops_value)
+# # Table
+#     @app.callback(
+#         Output('table-data', 'data'),
+#         Input('crops-dropdown', 'value')
+#     )
+#     def update_table(crops_value):
+#         return vis.table(crops_value)
 
 
 def main_callbacks(app):

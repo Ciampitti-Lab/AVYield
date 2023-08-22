@@ -155,37 +155,67 @@ def table(selected_crop):
     return df.to_dict('records')
 
 
-# Compare Brand Yield Bar Graph
-def compare_yield_bar(selected_crop, selected_year, genotypes, legend_flag):
+# Compare Yield Bar Graph
+def compare_yield_bar(selected_crop, first_opt, second_opt, filter, legend_flag):
     df = datasets[selected_crop]
-    df = df[df.YEAR == selected_year]
-    df = df[df['NAME'].isin(genotypes)].groupby(
-        ['NAME', 'WATER_REGIME'])['YIELD'].mean().reset_index()
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    fig = px.bar(df, x='NAME', y='YIELD',
-                 color_discrete_map=color_map,
-                 color='WATER_REGIME', barmode='group',
-                 labels={'NAME': 'Name', 'YIELD': 'Yield',
-                                 'WATER_REGIME': 'Water Regime'})
-    fig.update_layout(showlegend=legend_flag)
+    if filter == 'genotype':
+        df = df[df.YEAR == first_opt]
+        df = df[df['NAME'].isin(second_opt)].groupby(
+            ['NAME', 'WATER_REGIME'])['YIELD'].mean().reset_index()
+        fig = px.bar(df, x='NAME', y='YIELD',
+                     color_discrete_map=color_map,
+                     color='WATER_REGIME', barmode='group',
+                     labels={'NAME': 'Name', 'YIELD': 'Yield',
+                             'WATER_REGIME': 'Water Regime'})
+        fig.update_layout(showlegend=legend_flag)
+        fig.update_layout(title={'text': f"{first_opt} Yield"})
+        return fig
+    elif filter == 'year':
+        df = df[df.NAME == first_opt]
+        df = df[df['YEAR'].isin(second_opt)].groupby(
+            ['YEAR', 'WATER_REGIME'])['YIELD'].mean().reset_index()
+        df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
+        fig = px.bar(df, x='YEAR', y='YIELD',
+                     color_discrete_map=color_map,
+                     color='WATER_REGIME', barmode='group',
+                     labels={'NAME': 'Name', 'YIELD': 'Yield',
+                             'WATER_REGIME': 'Water Regime', 'YEAR': 'Year'})
+        fig.update_layout(showlegend=legend_flag)
+        fig.update_layout(title={'text': f"{first_opt} Yield"})
+        return fig
 
-    return fig
 
-
-# Compare Moist Name Box graph
-def compare_yield_box(selected_crop, selected_year, genotypes, legend_flag):
+# Compare Yield Box graph
+def compare_yield_box(selected_crop, first_opt, second_opt, filter, legend_flag):
     df = datasets[selected_crop]
-    df = df[df.YEAR == selected_year]
-    df = df.loc[df['NAME'].isin(genotypes)]
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    fig = px.box(
-        df,
-        x='NAME',
-        y='YIELD',
-        color_discrete_map=color_map,
-        color='WATER_REGIME',
-        labels={'MOIST': 'Moist', 'YIELD': 'Yield',
-                'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
-    )
-    fig.update_layout(showlegend=legend_flag)
-    return fig
+    if filter == 'genotype':
+        df = df[df.YEAR == first_opt]
+        df = df.loc[df['NAME'].isin(second_opt)]
+        fig = px.box(
+            df,
+            x='NAME',
+            y='YIELD',
+            color_discrete_map=color_map,
+            color='WATER_REGIME',
+            labels={'MOIST': 'Moist', 'YIELD': 'Yield',
+                    'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
+        )
+        fig.update_layout(showlegend=legend_flag)
+        return fig
+    elif filter == 'year':
+        df = df[df.NAME == first_opt]
+        df = df.loc[df['YEAR'].isin(second_opt)]
+        df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
+        fig = px.box(
+            df,
+            x='YEAR',
+            y='YIELD',
+            color_discrete_map=color_map,
+            color='WATER_REGIME',
+            labels={'MOIST': 'Moist', 'YIELD': 'Yield',
+                    'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'YEAR': 'Year'},
+        )
+        fig.update_layout(showlegend=legend_flag)
+        return fig
