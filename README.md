@@ -43,20 +43,13 @@
 - [ ] Front-end.
 
 ### Data Analysis
-<s>- [x] Implement exclusive visualizations for each dataset to account for data mismatching.
-- [x] Mean Brand Yield per Year:
-  - [x] Better default dropdown selection;
-- [x] Yield per brand:
-  - [x] Add Year selector;
-  - [x] Better default dropdown selection;
-  - [ ] Set better hover options;
-- [x] Mean Yield per year:
-- [ ] Add climate data:
-  - [ ] Yield - temperature (add water regime and use parallel coordinates?);</s>
-- [ ] Add units (see in the xlsx files).
-- [ ] Add option to change units.
-- [ ] parallel coordinates: genotype -> year? -> yield -> moist?
-- [ ] change clear genotypes btn, input year dropdown, crops dropdown to clear the graphs?
 - [ ] make it in a pop up window?
-- [ ] add county filter in compare.
-- [ ] also add a fix genotype with diff years.
+- [ ] Add units (see in the xlsx files) (add to graph title).
+- [ ] Add option to change units.
+- [ ] add a max amount that the user can input.
+- [x] change clear genotypes btn, input year dropdown, crops dropdown to clear the graphs
+- [ ] fix bar and box vis, the analysis and display of information is not matching and something is going on there.
+- [ ] add county filter in compare?
+  - [ ] I was thinking in making a separate view for the counties, leave 1 for the avg of all of them, another representing them in a box plot so the user can check by themselves, and lastly one to show each county individually.
+- [x] add a filter for genotype with diff years.
+  - [ ] Should the user input the years or just throw all of them?
