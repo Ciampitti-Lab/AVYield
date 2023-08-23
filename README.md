@@ -46,6 +46,7 @@
 - [ ] make it in a pop up window?
 - [ ] Add units (see in the xlsx files) (add to graph title).
 - [ ] Add option to change units.
+- [ ] US customary units: bu/ac and lb/ac --- Metric: Mg/ha, kg/ha --- [Conversion Rates](https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html).
 - [ ] add a max amount that the user can input.
 - [x] change clear genotypes btn, input year dropdown, crops dropdown to clear the graphs
 - [ ] fix bar and box vis, the analysis and display of information is not matching and something is going on there.

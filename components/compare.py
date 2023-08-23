@@ -70,9 +70,14 @@ layout = dbc.Container([
         )
     ]),
     dbc.Row([
+        dbc.Col([dcc.Graph(id='compare-county-yield-map')]),
+        dbc.Col([dcc.Graph(id='compare-county-yield-bar-graph')]),
+    ]),
+    dbc.Row([
         dbc.Col([dcc.Graph(id='compare-yield-bar-graph')]),
         dbc.Col([dcc.Graph(id='compare-yield-box-graph')]),
     ]),
+
 
     html.Br(),
     # old home vis down here

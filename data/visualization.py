@@ -159,63 +159,70 @@ def table(selected_crop):
 def compare_yield_bar(selected_crop, first_opt, second_opt, filter, legend_flag):
     df = datasets[selected_crop]
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    if filter == 'genotype':
-        df = df[df.YEAR == first_opt]
-        df = df[df['NAME'].isin(second_opt)].groupby(
-            ['NAME', 'WATER_REGIME'])['YIELD'].mean().reset_index()
-        fig = px.bar(df, x='NAME', y='YIELD',
-                     color_discrete_map=color_map,
-                     color='WATER_REGIME', barmode='group',
-                     labels={'NAME': 'Name', 'YIELD': 'Yield',
-                             'WATER_REGIME': 'Water Regime'})
-        fig.update_layout(showlegend=legend_flag)
-        fig.update_layout(title={'text': f"{first_opt} Yield"})
-        return fig
-    elif filter == 'year':
-        df = df[df.NAME == first_opt]
-        df = df[df['YEAR'].isin(second_opt)].groupby(
-            ['YEAR', 'WATER_REGIME'])['YIELD'].mean().reset_index()
-        df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
-        fig = px.bar(df, x='YEAR', y='YIELD',
-                     color_discrete_map=color_map,
-                     color='WATER_REGIME', barmode='group',
-                     labels={'NAME': 'Name', 'YIELD': 'Yield',
-                             'WATER_REGIME': 'Water Regime', 'YEAR': 'Year'})
-        fig.update_layout(showlegend=legend_flag)
-        fig.update_layout(title={'text': f"{first_opt} Yield"})
-        return fig
+    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
+    df = df[df[col1] == first_opt]
+    df = df[df[col2].isin(second_opt)].groupby(
+        [col2, 'WATER_REGIME'])['YIELD'].mean().reset_index()
+    fig = px.bar(df, x=col2, y='YIELD',
+                 color_discrete_map=color_map,
+                 color='WATER_REGIME', barmode='group',
+                 labels={'NAME': 'Name', 'YIELD': 'Yield',
+                         'WATER_REGIME': 'Water Regime', 'YEAR': 'Year'})
+    fig.update_layout(showlegend=legend_flag)
+    fig.update_layout(title={'text': f"{first_opt} Yield"})
+    return fig
 
 
 # Compare Yield Box graph
 def compare_yield_box(selected_crop, first_opt, second_opt, filter, legend_flag):
     df = datasets[selected_crop]
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    if filter == 'genotype':
-        df = df[df.YEAR == first_opt]
-        df = df.loc[df['NAME'].isin(second_opt)]
-        fig = px.box(
-            df,
-            x='NAME',
-            y='YIELD',
-            color_discrete_map=color_map,
-            color='WATER_REGIME',
-            labels={'MOIST': 'Moist', 'YIELD': 'Yield',
-                    'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
-        )
-        fig.update_layout(showlegend=legend_flag)
-        return fig
-    elif filter == 'year':
-        df = df[df.NAME == first_opt]
-        df = df.loc[df['YEAR'].isin(second_opt)]
-        df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
-        fig = px.box(
-            df,
-            x='YEAR',
-            y='YIELD',
-            color_discrete_map=color_map,
-            color='WATER_REGIME',
-            labels={'MOIST': 'Moist', 'YIELD': 'Yield',
-                    'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'YEAR': 'Year'},
-        )
-        fig.update_layout(showlegend=legend_flag)
-        return fig
+    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
+    df = df[df[col1] == first_opt]
+    df = df.loc[df[col2].isin(second_opt)]
+    fig = px.box(
+        df,
+        x=col2,
+        y='YIELD',
+        color_discrete_map=color_map,
+        color='WATER_REGIME',
+        labels={'MOIST': 'Moist', 'YIELD': 'Yield',
+                'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
+    )
+    fig.update_layout(showlegend=legend_flag)
+    return fig
+
+
+# Compare County Map
+def compare_county_map(selected_crop, first_opt, second_opt, filter):
+    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
+    df = datasets[selected_crop]
+    df = df[df[col1] == first_opt]
+    df = df[df[col2].isin(second_opt)].groupby(
+        ['COUNTY'])['YIELD'].sum().reset_index()
+    df["COUNTY"] = df["COUNTY"].apply(lambda x: x.capitalize())
+
+    with open(config.data.geodata_path) as f:
+        geodata = json.load(f)
+
+    names_list = [feature['properties']['name']
+                  for feature in geodata['features']]
+    missing_names_df = pd.DataFrame(
+        {'COUNTY': [name for name in names_list if name not in df['COUNTY'].values], 'YIELD': 0})
+    total_yield_county = pd.concat([df, missing_names_df], ignore_index=True)
+
+    fig = px.choropleth_mapbox(
+        total_yield_county,
+        geojson=geodata,
+        featureidkey="properties.name",
+        locations="COUNTY",
+        color="YIELD",
+        color_continuous_scale="Sunsetdark",
+        zoom=5.5,  # type: ignore
+        center={"lat": 38.5, "lon": -98.5},
+        mapbox_style="carto-positron",
+        title='Por nome significativo',
+        labels={'name': 'County', 'YIELD': 'Yield'}
+    )
+
+    return fig

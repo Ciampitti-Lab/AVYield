@@ -175,7 +175,7 @@ def compare_callbacks(app):
             return dash.no_update
         return vis.compare_yield_bar(crops_value, first_opt, second_opt, filter, True)
 
-    # Moist Genotype Box graph
+    # Yield Genotype Box graph
     @app.callback(
         Output('compare-yield-box-graph', 'figure'),
         Input('compare-add-btn', 'n_clicks'),
@@ -195,6 +195,27 @@ def compare_callbacks(app):
         if second_opt is None:
             return dash.no_update
         return vis.compare_yield_box(crops_value, first_opt, second_opt, filter, True)
+
+    # County Map
+    @app.callback(
+        Output('compare-county-yield-map', 'figure'),
+        Input('compare-add-btn', 'n_clicks'),
+        Input("compare-clear-btn", 'n_clicks'),
+        Input('crops-dropdown', 'value'),
+        Input('compare-first-dropdown', 'value'),
+        Input('selected-opt-store', 'data'),
+        Input('filter-opt', 'value'),
+    )
+    def update_compare_county_yield_map(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
+            return go.Figure()
+        if n_clicks is None:
+            return dash.no_update
+        if second_opt is None:
+            return dash.no_update
+        return vis.compare_county_map(crops_value, first_opt, second_opt, filter)
 
 
 # def home_callbacks(app):
