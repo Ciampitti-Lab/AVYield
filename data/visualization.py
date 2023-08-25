@@ -9,6 +9,33 @@ import numpy as np
 from config import config
 import json
 
+conversion_rates = {  # From bu/ac
+    'bu-ac': {
+        'Corn': 1,
+        'Wheat': 1,
+        'Soybean': 1,
+        'Sunflower': 1,
+    },
+    'lb-ac': {
+        'Corn': 62.77/1.121,
+        'Wheat': 67.25/1.121,
+        'Soybean': 67.25/1.121,
+        'Sunflower': 33.625/1.121,
+    },
+    'mg-ha': {
+        'Corn': 0.0628,
+        'Wheat': 0.0673,
+        'Soybean': 0.0673,
+        'Sunflower': 0.0336,
+    },
+    'kg-ha': {
+        'Corn': 62.77,
+        'Wheat': 67.25,
+        'Soybean': 67.25,
+        'Sunflower': 33.625,
+    }
+}
+
 
 # General methods
 def print_data(selected_crop):
@@ -156,8 +183,11 @@ def table(selected_crop):
 
 
 # Compare Yield Bar Graph
-def compare_yield_bar(selected_crop, first_opt, second_opt, filter, legend_flag):
-    df = datasets[selected_crop]
+def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend_flag):
+    df = (datasets[selected_crop]).copy()
+    conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    df.YIELD = df.YIELD * conv_rate  # type: ignore
+    df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
@@ -174,8 +204,10 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, filter, legend_flag)
 
 
 # Compare Yield Box graph
-def compare_yield_box(selected_crop, first_opt, second_opt, filter, legend_flag):
-    df = datasets[selected_crop]
+def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend_flag):
+    df = (datasets[selected_crop]).copy()
+    conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    df.YIELD = df.YIELD * conv_rate  # type: ignore
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
@@ -193,10 +225,31 @@ def compare_yield_box(selected_crop, first_opt, second_opt, filter, legend_flag)
     return fig
 
 
-# Compare County Map
-def compare_county_map(selected_crop, first_opt, second_opt, filter):
+# Compare County Bar
+def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, filter):
+    df = (datasets[selected_crop]).copy(deep=True)
+    conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    df.YIELD = df.YIELD * conv_rate  # type: ignore
+    color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
-    df = datasets[selected_crop]
+    df = df[df[col1] == first_opt]
+    df = df[df[col2].isin(second_opt)][[
+        col2, 'WATER_REGIME', 'COUNTY', 'YIELD']]
+    fig = px.bar(df, x='COUNTY', y='YIELD',
+                 color_discrete_map=color_map,
+                 facet_col=col2,
+                 color='WATER_REGIME', barmode='group',
+                 labels={'NAME': 'Name', 'YIELD': 'Yield',
+                         'WATER_REGIME': 'Water Regime', 'YEAR': 'Year', 'COUNTY': 'County'})
+    return fig
+
+
+# Compare County Map
+def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
+    df = (datasets[selected_crop]).copy(deep=True)
+    conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    df.YIELD = df.YIELD * conv_rate  # type: ignore
+    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
     df = df[df[col2].isin(second_opt)].groupby(
         ['COUNTY'])['YIELD'].sum().reset_index()

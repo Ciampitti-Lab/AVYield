@@ -44,13 +44,15 @@
 
 ### Data Analysis
 - [ ] make it in a pop up window?
-- [ ] Add units (see in the xlsx files) (add to graph title).
-- [ ] Add option to change units.
-- [ ] US customary units: bu/ac and lb/ac --- Metric: Mg/ha, kg/ha --- [Conversion Rates](https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html).
+- [ ] fix hovers, round hovers and add units in titles and hovers.
+- [x] Add units (see in the xlsx files) (add to graph title).
+- [x] Add option to change units.
+- [x] Fix unit selector not clearing options store and list.
+- [x] US customary units: bu/ac and lb/ac --- Metric: Mg/ha, kg/ha --- [Conversion Rates](https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html).
 - [ ] add a max amount that the user can input.
 - [x] change clear genotypes btn, input year dropdown, crops dropdown to clear the graphs
-- [ ] fix bar and box vis, the analysis and display of information is not matching and something is going on there.
-- [ ] add county filter in compare?
-  - [ ] I was thinking in making a separate view for the counties, leave 1 for the avg of all of them, another representing them in a box plot so the user can check by themselves, and lastly one to show each county individually.
+- [x] fix bar and box vis, the analysis and display of information is not matching and something is going on there.
+* Add county filter in compare?
+  - [x] I was thinking in making a separate view for the counties, leave 1 for the avg of all of them, another representing them in a box plot so the user can check by themselves, and lastly one to show each county individually.
 - [x] add a filter for genotype with diff years.
-  - [ ] Should the user input the years or just throw all of them?
+  * Should the user input the years or just throw all of them?

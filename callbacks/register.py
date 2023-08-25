@@ -76,15 +76,28 @@ def data_callbacks(app):
         return dataset.to_dict('records')
 
 
+def handle_triggers(n_clicks, second_opt):
+    ctx = dash.callback_context
+    trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt' or trigger_id == 'units-selection':
+        return go.Figure()
+    if n_clicks is None:
+        return dash.no_update
+    if second_opt is None:
+        return dash.no_update
+    return None
+
+
 def compare_callbacks(app):
     # First dropdown
     @app.callback(
         Output('compare-first-dropdown', 'options'),
         Output('compare-first-dropdown', 'value'),
         Input('crops-dropdown', 'value'),
-        Input('filter-opt', 'value')
+        Input('filter-opt', 'value'),
+        Input('units-selection', 'value'),
     )
-    def update_compare_first_dropdown(crops_value, filter):
+    def update_compare_first_dropdown(crops_value, filter, unit):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
             return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
@@ -97,31 +110,33 @@ def compare_callbacks(app):
         Output('compare-second-dropdown', 'value'),
         Input('crops-dropdown', 'value'),
         Input('compare-first-dropdown', 'value'),
-        Input('filter-opt', 'value')
+        Input('filter-opt', 'value'),
+        Input('units-selection', 'value'),
     )
-    def update_compare_genotype_dropdown(crops_value, selected_filter, filter):
+    def update_compare_genotype_dropdown(crops_value, first_dropdown_selection, filter, unit):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
-            dataset = dataset[dataset.YEAR == selected_filter]
+            dataset = dataset[dataset.YEAR == first_dropdown_selection]
             names = dataset['NAME'].unique()
             names = [name for name in names if not pd.isna(name)]
             names.sort()
             return [{'label': str(name), 'value': name} for name in names], names[0]
         elif filter == 'year':
-            dataset = dataset[dataset.NAME == selected_filter]
+            dataset = dataset[dataset.NAME == first_dropdown_selection]
             years = dataset['YEAR'].unique()
             return [{'label': year, 'value': year} for year in years], years[0]
 
     # Add and Clear Genotype button
     @app.callback(
         Output("add-opt-output", "children", allow_duplicate=True),
-        Output("already-added-alert", "is_open"),
+        Output("input-alert", "is_open"),
+        Output("input-alert", "children"),
         Output("selected-opt-store", "data", allow_duplicate=True),
         Input("compare-add-btn", "n_clicks"),
         State("compare-second-dropdown", "value"),
         State("add-opt-output", "children"),
         State("selected-opt-store", "data"),
-        State("already-added-alert", "is_open"),
+        State("input-alert", "is_open"),
         prevent_initial_call=True
     )
     def update_genotype_output(n_clicks, selected_genotype, current_output, stored_genotypes, is_open):
@@ -130,15 +145,18 @@ def compare_callbacks(app):
 
         if n_clicks > 0 and selected_genotype:
             if selected_genotype not in stored_genotypes:
+                if len(stored_genotypes) >= 5:
+                    return current_output, not is_open, 'Max of 5 items', stored_genotypes
+
                 stored_genotypes.append(selected_genotype)
                 if current_output is None:
                     new_output = f"Genotype(s): {selected_genotype}"
                 else:
                     new_output = f"{current_output}, {selected_genotype}"
-                return new_output, is_open, stored_genotypes
+                return new_output, is_open, None, stored_genotypes
             else:
-                return current_output, not is_open, stored_genotypes
-        return current_output, False, stored_genotypes
+                return current_output, not is_open, 'Data Already Added', stored_genotypes
+        return current_output, False, None, stored_genotypes
 
     @app.callback(
         Output("add-opt-output", "children"),
@@ -163,17 +181,10 @@ def compare_callbacks(app):
         Input('compare-first-dropdown', 'value'),
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
+        Input('units-selection', 'value'),
     )
-    def update_compare_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter):
-        ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
-            return go.Figure()
-        if n_clicks is None:
-            return dash.no_update
-        if second_opt is None:
-            return dash.no_update
-        return vis.compare_yield_bar(crops_value, first_opt, second_opt, filter, True)
+    def update_compare_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
+        return vis.compare_yield_bar(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
     # Yield Genotype Box graph
     @app.callback(
@@ -184,17 +195,24 @@ def compare_callbacks(app):
         Input('compare-first-dropdown', 'value'),
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
+        Input('units-selection', 'value'),
     )
-    def update_compare_yield_box_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter):
-        ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
-            return go.Figure()
-        if n_clicks is None:
-            return dash.no_update
-        if second_opt is None:
-            return dash.no_update
-        return vis.compare_yield_box(crops_value, first_opt, second_opt, filter, True)
+    def update_compare_yield_box_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
+        return vis.compare_yield_box(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
+
+    # County Bar Graph
+    @app.callback(
+        Output('compare-county-yield-bar-graph', 'figure'),
+        Input('compare-add-btn', 'n_clicks'),
+        Input("compare-clear-btn", 'n_clicks'),
+        Input('crops-dropdown', 'value'),
+        Input('compare-first-dropdown', 'value'),
+        Input('selected-opt-store', 'data'),
+        Input('filter-opt', 'value'),
+        Input('units-selection', 'value'),
+    )
+    def update_compare_county_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
+        return vis.compare_county_yield_bar_graph(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
     # County Map
     @app.callback(
@@ -205,17 +223,10 @@ def compare_callbacks(app):
         Input('compare-first-dropdown', 'value'),
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
+        Input('units-selection', 'value'),
     )
-    def update_compare_county_yield_map(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter):
-        ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
-            return go.Figure()
-        if n_clicks is None:
-            return dash.no_update
-        if second_opt is None:
-            return dash.no_update
-        return vis.compare_county_map(crops_value, first_opt, second_opt, filter)
+    def update_compare_county_yield_map(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
+        return vis.compare_county_map(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
 
 # def home_callbacks(app):

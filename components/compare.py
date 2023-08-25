@@ -11,6 +11,19 @@ layout = dbc.Container([
     dbc.Col([
         dbc.RadioItems(
             options=[
+                {"label": "bu/ac", "value": "bu-ac"},
+                {"label": "lb/ac", "value": "lb-ac"},
+                {"label": "Mg/ha", "value": "mg-ha"},
+                {"label": "kg/ha", "value": "kg-ha"},
+            ],
+            value='bu-ac',
+            id="units-selection",
+            inline=True,
+        ),
+    ]),
+    dbc.Col([
+        dbc.RadioItems(
+            options=[
                 {"label": "Filter by Genotype", "value": "genotype"},
                 {"label": "Filter by Year", "value": "year"},
             ],
@@ -53,8 +66,7 @@ layout = dbc.Container([
     dbc.Row([html.H4(id="add-opt-output")]),
     dbc.Col([
         dbc.Alert(
-            "Data already added!",
-            id="already-added-alert",
+            id="input-alert",
             is_open=True,
             duration=2000,
             color="danger",
@@ -70,12 +82,12 @@ layout = dbc.Container([
         )
     ]),
     dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-county-yield-map')]),
-        dbc.Col([dcc.Graph(id='compare-county-yield-bar-graph')]),
-    ]),
-    dbc.Row([
         dbc.Col([dcc.Graph(id='compare-yield-bar-graph')]),
         dbc.Col([dcc.Graph(id='compare-yield-box-graph')]),
+    ]),
+    dbc.Row([
+        dbc.Col([dcc.Graph(id='compare-county-yield-map')]),
+        dbc.Col([dcc.Graph(id='compare-county-yield-bar-graph')]),
     ]),
 
 

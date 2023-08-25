@@ -24,7 +24,7 @@ def drop_duplicates_by_year(df):
 
 # Corn
 corn.YEAR = corn.YEAR.astype(int)
-
+corn.YEAR = corn.YEAR.astype(str)
 corn = corn.drop_duplicates()
 corn.dropna(subset=["NAME"], inplace=True)
 corn = drop_duplicates_by_year(corn)
@@ -38,16 +38,20 @@ corn = corn[~corn['NAME'].isin(name_elements)]
 corn.reset_index(drop=True, inplace=True)
 
 # Soybean
+soybean.YEAR = soybean.YEAR.astype(str)
 soybean = soybean.drop_duplicates()
 soybean.dropna(subset=["NAME"], inplace=True)
 soybean = drop_duplicates_by_year(soybean)
 
 # Sunflower
+sunflower.YEAR = sunflower.YEAR.astype(str)
 sunflower = sunflower.drop_duplicates()
 sunflower.dropna(subset=["NAME"], inplace=True)
 sunflower = drop_duplicates_by_year(sunflower)
+sunflower.YIELD = sunflower.YIELD * 0.03333829  # Converting from lb/ac to bu/ac
 
 # Wheat
+wheat.YEAR = wheat.YEAR.astype(str)
 wheat = wheat.drop_duplicates()
 wheat.dropna(subset=["NAME"], inplace=True)
 wheat = drop_duplicates_by_year(wheat)
