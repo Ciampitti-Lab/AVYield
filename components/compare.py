@@ -76,18 +76,12 @@ layout = dbc.Container([
     ], className="d-flex justify-content-center"),
 
     dbc.Row([
-        html.H1(
-            "Genotype Yield",
-            style={'text-align': 'center'}
-        )
+        dbc.Col([dcc.Graph(id='compare-yield-bar-graph')], width=6),
+        dbc.Col([dcc.Graph(id='compare-yield-box-graph')], width=6),
     ]),
     dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-yield-bar-graph')]),
-        dbc.Col([dcc.Graph(id='compare-yield-box-graph')]),
-    ]),
-    dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-county-yield-map')]),
-        dbc.Col([dcc.Graph(id='compare-county-yield-bar-graph')]),
+        dbc.Col([dcc.Graph(id='compare-county-yield-map')], width=6),
+        dbc.Col([dcc.Graph(id='compare-county-yield-bar-graph')], width=6),
     ]),
 
 

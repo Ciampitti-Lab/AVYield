@@ -186,6 +186,7 @@ def table(selected_crop):
 def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend_flag):
     df = (datasets[selected_crop]).copy()
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    unit_str = unit.replace('-', '/').replace('m', 'M')
     df.YIELD = df.YIELD * conv_rate  # type: ignore
     df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
@@ -193,13 +194,15 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend
     df = df[df[col1] == first_opt]
     df = df[df[col2].isin(second_opt)].groupby(
         [col2, 'WATER_REGIME'])['YIELD'].mean().reset_index()
+    df['YIELD'] = df['YIELD'].round(2)
     fig = px.bar(df, x=col2, y='YIELD',
                  color_discrete_map=color_map,
                  color='WATER_REGIME', barmode='group',
-                 labels={'NAME': 'Name', 'YIELD': 'Yield',
+                 labels={'NAME': 'Genotype', 'YIELD': f'Yield ({unit_str})',
                          'WATER_REGIME': 'Water Regime', 'YEAR': 'Year'})
     fig.update_layout(showlegend=legend_flag)
-    fig.update_layout(title={'text': f"{first_opt} Yield"})
+    fig.update_layout(title={
+                      'text': f"{first_opt} Average Yield for the Selected {filter.capitalize()}(s)"})
     return fig
 
 
@@ -207,21 +210,26 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend
 def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend_flag):
     df = (datasets[selected_crop]).copy()
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
-    df.YIELD = df.YIELD * conv_rate  # type: ignore
+    unit_str = unit.replace('-', '/').replace('m', 'M')
+    df.YIELD = df.YIELD * conv_rate
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
     df = df.loc[df[col2].isin(second_opt)]
+    df['YIELD'] = df['YIELD'].round(2)
     fig = px.box(
         df,
         x=col2,
         y='YIELD',
         color_discrete_map=color_map,
         color='WATER_REGIME',
-        labels={'MOIST': 'Moist', 'YIELD': 'Yield',
-                'WATER_REGIME': 'Water Regime', 'NAME': 'Name', 'DAYS': 'Days'},
+        labels={'MOIST': 'Moist', 'YIELD': f'Yield ({unit_str})',
+                'WATER_REGIME': 'Water Regime', 'NAME': 'Genotype', 'DAYS': 'Days'},
     )
+
     fig.update_layout(showlegend=legend_flag)
+    fig.update_layout(title={
+                      'text': f"{first_opt} Yield Distribution Box Plot for the Selected {filter.capitalize()}(s)"})
     return fig
 
 
@@ -229,18 +237,26 @@ def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend
 def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, filter):
     df = (datasets[selected_crop]).copy(deep=True)
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    unit_str = unit.replace('-', '/').replace('m', 'M')
     df.YIELD = df.YIELD * conv_rate  # type: ignore
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
     df = df[df[col2].isin(second_opt)][[
         col2, 'WATER_REGIME', 'COUNTY', 'YIELD']]
+    df['YIELD'] = df['YIELD'].round(2)
     fig = px.bar(df, x='COUNTY', y='YIELD',
                  color_discrete_map=color_map,
                  facet_col=col2,
                  color='WATER_REGIME', barmode='group',
-                 labels={'NAME': 'Name', 'YIELD': 'Yield',
+                 labels={'NAME': 'Genotype', 'YIELD': f'Yield ({unit_str})',
                          'WATER_REGIME': 'Water Regime', 'YEAR': 'Year', 'COUNTY': 'County'})
+
+    fig.for_each_annotation(lambda a: a.update(
+        text=a.text.replace("Name=", ""))
+    )
+    fig.update_layout(title={
+                      'text': f"Yield Distribution by County for the Selected {filter.capitalize()}(s)"})
     return fig
 
 
@@ -248,6 +264,7 @@ def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, f
 def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
     df = (datasets[selected_crop]).copy(deep=True)
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
+    unit_str = unit.replace('-', '/').replace('m', 'M')
     df.YIELD = df.YIELD * conv_rate  # type: ignore
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
@@ -263,7 +280,7 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
     missing_names_df = pd.DataFrame(
         {'COUNTY': [name for name in names_list if name not in df['COUNTY'].values], 'YIELD': 0})
     total_yield_county = pd.concat([df, missing_names_df], ignore_index=True)
-
+    total_yield_county['YIELD'] = total_yield_county['YIELD'].round(2)
     fig = px.choropleth_mapbox(
         total_yield_county,
         geojson=geodata,
@@ -274,8 +291,8 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
         zoom=5.5,  # type: ignore
         center={"lat": 38.5, "lon": -98.5},
         mapbox_style="carto-positron",
-        title='Por nome significativo',
-        labels={'name': 'County', 'YIELD': 'Yield'}
+        title='County-Level Genotype Yield Accumulation Map',
+        labels={'COUNTY': 'County', 'YIELD': f'Yield ({unit_str})'}
     )
 
     return fig
