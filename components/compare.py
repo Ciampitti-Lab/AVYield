@@ -12,9 +12,9 @@ layout = dbc.Container([
         dbc.RadioItems(
             options=[
                 {"label": "bu/ac", "value": "bu-ac"},
-                {"label": "lb/ac", "value": "lb-ac"},
+                # {"label": "lb/ac", "value": "lb-ac"},
                 {"label": "Mg/ha", "value": "mg-ha"},
-                {"label": "kg/ha", "value": "kg-ha"},
+                # {"label": "kg/ha", "value": "kg-ha"},
             ],
             value='bu-ac',
             id="units-selection",

@@ -56,3 +56,15 @@
   - [x] I was thinking in making a separate view for the counties, leave 1 for the avg of all of them, another representing them in a box plot so the user can check by themselves, and lastly one to show each county individually.
 - [x] add a filter for genotype with diff years.
   * Should the user input the years or just throw all of them?
+
+
+* fix errors
+  - [x] Genotyopes string in selected list
+  - [x] Change map to avg instead of sum. Change title
+  - [x] Remove counties without data in the map
+  - [ ] Convert units and keep selected list. dont clear it
+  - [ ] filter by county later
+- [x] remove 2 units
+- [ ] better front
+- [ ] cleanup
+- [ ] launch a little prototype

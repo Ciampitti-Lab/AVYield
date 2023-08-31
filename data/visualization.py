@@ -269,7 +269,7 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
     df = df[df[col1] == first_opt]
     df = df[df[col2].isin(second_opt)].groupby(
-        ['COUNTY'])['YIELD'].sum().reset_index()
+        ['COUNTY'])['YIELD'].mean().reset_index()
     df["COUNTY"] = df["COUNTY"].apply(lambda x: x.capitalize())
 
     with open(config.data.geodata_path) as f:
@@ -279,20 +279,38 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
                   for feature in geodata['features']]
     missing_names_df = pd.DataFrame(
         {'COUNTY': [name for name in names_list if name not in df['COUNTY'].values], 'YIELD': 0})
+
     total_yield_county = pd.concat([df, missing_names_df], ignore_index=True)
     total_yield_county['YIELD'] = total_yield_county['YIELD'].round(2)
-    fig = px.choropleth_mapbox(
-        total_yield_county,
+    total_yield_county['YIELD'] = total_yield_county['YIELD'].round(2)
+    zero_yield_df = total_yield_county[total_yield_county['YIELD'] == 0]
+    non_zero_yield_df = total_yield_county[total_yield_county['YIELD'] != 0]
+
+    trace_zero_yield = go.Choroplethmapbox(
         geojson=geodata,
         featureidkey="properties.name",
-        locations="COUNTY",
-        color="YIELD",
-        color_continuous_scale="Sunsetdark",
-        zoom=5.5,  # type: ignore
-        center={"lat": 38.5, "lon": -98.5},
+        locations=zero_yield_df['COUNTY'],
+        z=zero_yield_df['YIELD'],
+        colorscale=[[0, "white"], [1, "white"]],
+        showscale=False
+    )
+
+    trace_non_zero_yield = go.Choroplethmapbox(
+        geojson=geodata,
+        featureidkey="properties.name",
+        locations=non_zero_yield_df['COUNTY'],
+        z=non_zero_yield_df['YIELD'],
+        colorscale="Sunsetdark",
+        showscale=True,
+        colorbar=dict(title=f'Yield ({unit_str})')
+    )
+
+    fig = go.Figure(data=[trace_zero_yield, trace_non_zero_yield])
+    fig.update_layout(
         mapbox_style="carto-positron",
-        title='County-Level Genotype Yield Accumulation Map',
-        labels={'COUNTY': 'County', 'YIELD': f'Yield ({unit_str})'}
+        mapbox_zoom=5.5,
+        mapbox_center={"lat": 38.5, "lon": -98.5},
+        title='County-Level Genotype Average Yield Map'
     )
 
     return fig

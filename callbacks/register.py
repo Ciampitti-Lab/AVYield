@@ -133,30 +133,31 @@ def compare_callbacks(app):
         Output("input-alert", "children"),
         Output("selected-opt-store", "data", allow_duplicate=True),
         Input("compare-add-btn", "n_clicks"),
+        Input('filter-opt', 'value'),
         State("compare-second-dropdown", "value"),
         State("add-opt-output", "children"),
         State("selected-opt-store", "data"),
         State("input-alert", "is_open"),
         prevent_initial_call=True
     )
-    def update_genotype_output(n_clicks, selected_genotype, current_output, stored_genotypes, is_open):
-        if stored_genotypes is None:
-            stored_genotypes = []
+    def update_items_output(n_clicks, filter, selected_items, current_output, stored_items, is_open):
+        if stored_items is None:
+            stored_items = []
 
-        if n_clicks > 0 and selected_genotype:
-            if selected_genotype not in stored_genotypes:
-                if len(stored_genotypes) >= 5:
-                    return current_output, not is_open, 'Max of 5 items', stored_genotypes
+        if n_clicks > 0 and selected_items:
+            if selected_items not in stored_items:
+                if len(stored_items) >= 5:
+                    return current_output, not is_open, 'Max of 5 items', stored_items
 
-                stored_genotypes.append(selected_genotype)
+                stored_items.append(selected_items)
                 if current_output is None:
-                    new_output = f"Genotype(s): {selected_genotype}"
+                    new_output = f"Genotype(s): {selected_items}" if filter == 'genotype' else f"Year(s): {selected_items}" if filter == 'year' else ""
                 else:
-                    new_output = f"{current_output}, {selected_genotype}"
-                return new_output, is_open, None, stored_genotypes
+                    new_output = f"{current_output}, {selected_items}"
+                return new_output, is_open, None, stored_items
             else:
-                return current_output, not is_open, 'Data Already Added', stored_genotypes
-        return current_output, False, None, stored_genotypes
+                return current_output, not is_open, 'Data Already Added', stored_items
+        return current_output, False, None, stored_items
 
     @app.callback(
         Output("add-opt-output", "children"),
