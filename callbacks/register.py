@@ -79,7 +79,7 @@ def data_callbacks(app):
 def handle_triggers(n_clicks, second_opt):
     ctx = dash.callback_context
     trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt' or trigger_id == 'units-selection':
+    if trigger_id == 'compare-clear-btn' or trigger_id == 'compare-first-dropdown' or trigger_id == 'crops-dropdown' or trigger_id == 'filter-opt':
         return go.Figure()
     if n_clicks is None:
         return dash.no_update
@@ -95,9 +95,8 @@ def compare_callbacks(app):
         Output('compare-first-dropdown', 'value'),
         Input('crops-dropdown', 'value'),
         Input('filter-opt', 'value'),
-        Input('units-selection', 'value'),
     )
-    def update_compare_first_dropdown(crops_value, filter, unit):
+    def update_compare_first_dropdown(crops_value, filter):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
             return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
@@ -111,9 +110,8 @@ def compare_callbacks(app):
         Input('crops-dropdown', 'value'),
         Input('compare-first-dropdown', 'value'),
         Input('filter-opt', 'value'),
-        Input('units-selection', 'value'),
     )
-    def update_compare_genotype_dropdown(crops_value, first_dropdown_selection, filter, unit):
+    def update_compare_genotype_dropdown(crops_value, first_dropdown_selection, filter):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
             dataset = dataset[dataset.YEAR == first_dropdown_selection]

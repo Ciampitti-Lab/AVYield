@@ -62,7 +62,7 @@
   - [x] Genotyopes string in selected list
   - [x] Change map to avg instead of sum. Change title
   - [x] Remove counties without data in the map
-  - [ ] Convert units and keep selected list. dont clear it
+  - [x] Convert units and keep selected list. dont clear it
   - [ ] filter by county later
 - [x] remove 2 units
 - [ ] better front
