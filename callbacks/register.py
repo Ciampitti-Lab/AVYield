@@ -181,9 +181,15 @@ def compare_callbacks(app):
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
         Input('units-selection', 'value'),
+        State("selected-opt-store", "data"),
     )
-    def update_compare_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
-        return vis.compare_yield_bar(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
+    def update_compare_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
+        if stored_items is None:
+            fig = go.Figure()
+            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            return fig
+        else:
+            return vis.compare_yield_bar(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
     # Yield Genotype Box graph
     @app.callback(
@@ -195,9 +201,15 @@ def compare_callbacks(app):
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
         Input('units-selection', 'value'),
+        State("selected-opt-store", "data"),
     )
-    def update_compare_yield_box_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
-        return vis.compare_yield_box(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
+    def update_compare_yield_box_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
+        if stored_items is None:
+            fig = go.Figure()
+            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            return fig
+        else:
+            return vis.compare_yield_box(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
     # County Bar Graph
     @app.callback(
@@ -209,9 +221,15 @@ def compare_callbacks(app):
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
         Input('units-selection', 'value'),
+        State("selected-opt-store", "data"),
     )
-    def update_compare_county_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
-        return vis.compare_county_yield_bar_graph(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
+    def update_compare_county_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
+        if stored_items is None:
+            fig = go.Figure()
+            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            return fig
+        else:
+            return vis.compare_county_yield_bar_graph(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
     # County Map
     @app.callback(
@@ -223,9 +241,15 @@ def compare_callbacks(app):
         Input('selected-opt-store', 'data'),
         Input('filter-opt', 'value'),
         Input('units-selection', 'value'),
+        State("selected-opt-store", "data"),
     )
-    def update_compare_county_yield_map(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit):
-        return vis.compare_county_map(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
+    def update_compare_county_yield_map(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
+        if stored_items is None:
+            fig = go.Figure()
+            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            return fig
+        else:
+            return vis.compare_county_map(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
 
 # def home_callbacks(app):

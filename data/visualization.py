@@ -80,8 +80,10 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend
                  labels={'NAME': 'Genotype', 'YIELD': f'Yield ({unit_str})',
                          'WATER_REGIME': 'Water Regime', 'YEAR': 'Year'})
     fig.update_layout(showlegend=legend_flag)
-    fig.update_layout(title={
-                      'text': f"{first_opt} Average Yield for the Selected {filter.capitalize()}(s)"})
+    fig.update_layout(
+        title={'text': f"{first_opt} Average Yield for the Selected {filter.capitalize()}(s)"},
+        paper_bgcolor = "rgba(0,0,0,0)",
+    )
     return fig
 
 
@@ -107,8 +109,10 @@ def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend
     )
 
     fig.update_layout(showlegend=legend_flag)
-    fig.update_layout(title={
-                      'text': f"{first_opt} Yield Distribution Box Plot for the Selected {filter.capitalize()}(s)"})
+    fig.update_layout(
+        title={'text': f"{first_opt} Yield Distribution Box Plot for the Selected {filter.capitalize()}(s)"},
+        paper_bgcolor = "rgba(0,0,0,0)",
+    )
     return fig
 
 
@@ -134,8 +138,10 @@ def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, f
     fig.for_each_annotation(lambda a: a.update(
         text=a.text.replace("Name=", ""))
     )
-    fig.update_layout(title={
-                      'text': f"Yield Distribution by County for the Selected {filter.capitalize()}(s)"})
+    fig.update_layout(
+        title={'text': f"Yield Distribution by County for the Selected {filter.capitalize()}(s)"},
+        paper_bgcolor = "rgba(0,0,0,0)",
+    )
     return fig
 
 
@@ -189,7 +195,8 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
         mapbox_style="carto-positron",
         mapbox_zoom=5.5,
         mapbox_center={"lat": 38.5, "lon": -98.5},
-        title='County-Level Genotype Average Yield Map'
+        title='County-Level Genotype Average Yield Map',
+        paper_bgcolor = "rgba(0,0,0,0)",
     )
 
     return fig

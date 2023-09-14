@@ -12,9 +12,7 @@ layout = dbc.Container([
         dbc.RadioItems(
             options=[
                 {"label": "bu/ac", "value": "bu-ac"},
-                # {"label": "lb/ac", "value": "lb-ac"},
                 {"label": "Mg/ha", "value": "mg-ha"},
-                # {"label": "kg/ha", "value": "kg-ha"},
             ],
             value='bu-ac',
             id="units-selection",
@@ -75,77 +73,43 @@ layout = dbc.Container([
         ),
     ], className="d-flex justify-content-center"),
 
+    # Graphs
     dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-yield-bar-graph')], width=6),
-        dbc.Col([dcc.Graph(id='compare-yield-box-graph')], width=6),
-    ]),
+        dbc.Col([
+            dcc.Graph(
+                id='compare-yield-bar-graph',
+                config={
+                    'displayModeBar': False
+                }
+            )
+        ], className="compare-plot", width=5),
+        dbc.Col([
+            dcc.Graph(
+                id='compare-yield-box-graph',
+                config={
+                    'displayModeBar': False
+                }
+            )
+        ], className="compare-plot", width=5),
+    ], justify="between"),
     dbc.Row([
-        dbc.Col([dcc.Graph(id='compare-county-yield-map')], width=6),
-        dbc.Col([dcc.Graph(id='compare-county-yield-bar-graph')], width=6),
-    ]),
-
-
-    html.Br(),
-    # old home vis down here
-
-    # dbc.Row([
-    #     dbc.Row([
-    #         html.H1(
-    #             'Yield per County by Year',
-    #             style={'text-align': 'center'}
-    #         )
-    #     ]),
-    #     dbc.Row([
-    #         dcc.Dropdown(
-    #             id='yield-county-year-dropdown',
-    #             clearable=False,
-    #         )
-    #     ]),
-    #     dbc.Row([
-    #         dbc.Col([dcc.Graph(id='yield-county-graph')], width=6),
-    #         dbc.Col([dcc.Graph(id='yield-county-map')], width=6),
-    #     ]),
-    # ]),
-
-    # dbc.Row([
-    #     dbc.Row([
-    #         html.H1(
-    #             'Mean Brand Yield per Year',
-    #             style={'text-align': 'center'}
-    #         )
-    #     ]),
-    #     dbc.Row([
-    #         dcc.Dropdown(
-    #             id='brand-year-dropdown',
-    #             clearable=False,
-    #         )
-    #     ]),
-    #     dcc.Graph(id='brand-year-graph'),
-    # ]),
-
-    # dbc.Row([
-    #     dbc.Row([
-    #         html.H1(
-    #             'Yield per Brand',
-    #             style={'text-align': 'center'}
-    #         )
-    #     ]),
-    #     dcc.Dropdown(
-    #         id='yield-brand-dropdown',
-    #         clearable=False,
-    #     ),
-    #     dcc.Graph(id='yield-brand-graph'),
-    # ]),
-
-    # dbc.Row([
-    #     dbc.Row([
-    #         html.H1(
-    #             'Mean Yield per Year',
-    #             style={'text-align': 'center'}
-    #         )
-    #     ]),
-    #     dcc.Graph(id='yield-year-graph'),
-    # ]),
+        dbc.Col([
+            dcc.Graph(
+                id='compare-county-yield-map',
+                config={
+                    'displayModeBar': False
+                }
+            )
+        ], className="compare-plot", width=5),
+        dbc.Col([
+            dcc.Graph(
+                id='compare-county-yield-bar-graph',
+                config={
+                    'displayModeBar': False
+                }
+            )
+        ], className="compare-plot", width=5),
+    ], justify="between"),
 
     # dbc.Row([
     #     dbc.Row([
