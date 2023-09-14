@@ -229,89 +229,6 @@ def compare_callbacks(app):
 
 
 # def home_callbacks(app):
-#     # Brand Yield per year
-#     @app.callback(
-#         [Output('brand-year-dropdown', 'options'),
-#          Output('brand-year-dropdown', 'value')],
-#         [Input('crops-dropdown', 'value')]
-#     )
-#     def update_brand_year_dropdown(crops_value):
-#         dataset = vis.get_dataset(crops_value)
-#         brands = dataset['BRAND'].unique()
-#         brands = [brand for brand in brands if not pd.isna(brand)]
-#         brands.sort()
-
-#         default = ''
-#         if crops_value == 'Corn':
-#             default = 'GOLDEN HARVEST'
-#         elif crops_value == 'Soybean':
-#             default = 'ASGROW'
-#         elif crops_value == 'Sunflower':
-#             default = 'Syngenta'
-#         elif crops_value == 'Wheat':
-#             default = 'AGSECO'
-#         return [{'label': str(brand), 'value': brand} for brand in brands], default
-
-#     @app.callback(
-#         Output('brand-year-graph', 'figure'),
-#         [Input('crops-dropdown', 'value'),
-#          Input('brand-year-dropdown', 'value')]
-#     )
-#     def update_brand_year_graph(crops_value, brand_value):
-#         return vis.brand_year(crops_value, brand_value)
-
-# # Yield per brand per year
-#     @app.callback(
-#         [Output('yield-brand-dropdown', 'options'),
-#          Output('yield-brand-dropdown', 'value')],
-#         [Input('crops-dropdown', 'value')]
-#     )
-#     def update_yield_brand_dropdown(crops_value):
-#         dataset = vis.get_dataset(crops_value)
-#         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
-
-#     @app.callback(
-#         Output('yield-brand-graph', 'figure'),
-#         [Input('crops-dropdown', 'value'),
-#          Input('yield-brand-dropdown', 'value')]
-#     )
-#     def update_yield_brand_graph(crops_value, year_value):
-#         return vis.yield_brand(crops_value, year_value)
-
-# # Mean and Total (map) Yield per County
-#     @app.callback(
-#         [Output('yield-county-year-dropdown', 'options'),
-#          Output('yield-county-year-dropdown', 'value')],
-#         [Input('crops-dropdown', 'value')]
-#     )
-#     def update_yield_county_year_dropdown(crops_value):
-#         dataset = vis.get_dataset(crops_value)
-#         return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
-
-#     @app.callback(
-#         Output('yield-county-graph', 'figure'),
-#         [Input('crops-dropdown', 'value'),
-#          Input('yield-county-year-dropdown', 'value')]
-#     )
-#     def update_yield_county_graph(crops_value, year_value):
-#         return vis.mean_yield_county(crops_value, year_value)
-
-#     @app.callback(
-#         Output('yield-county-map', 'figure'),
-#         [Input('crops-dropdown', 'value'),
-#          Input('yield-county-year-dropdown', 'value')]
-#     )
-#     def update_yield_county_map(crops_value, year_value):
-#         return vis.total_yield_county(crops_value, year_value)
-
-# # Mean Yield per year
-#     @app.callback(
-#         Output('yield-year-graph', 'figure'),
-#         Input('crops-dropdown', 'value')
-#     )
-#     def update_yield_year_graph(crops_value):
-#         return vis.yield_year(crops_value)
-
 # # Table
 #     @app.callback(
 #         Output('table-data', 'data'),
@@ -319,6 +236,29 @@ def compare_callbacks(app):
 #     )
 #     def update_table(crops_value):
 #         return vis.table(crops_value)
+
+def control_callbacks(app):
+    # Update sidebar options color based on curr page
+    @app.callback(
+            Output('sidebar-home', 'active'), 
+            Output('sidebar-home', 'color'), 
+            Output('sidebar-compare', 'active'), 
+            Output('sidebar-compare', 'color'), 
+            Output('sidebar-data', 'active'), 
+            Output('sidebar-data', 'color'), 
+            Output('sidebar-about', 'active'), 
+            Output('sidebar-about', 'color'), 
+            Input('url', 'pathname'))
+    def update_sidebar_color(pathname):
+        if pathname == '/':
+            return True, "purple", False, "black", False, "black", False, "black"
+        elif pathname == '/compare':
+            return False, "black", True, "purple", False, "black", False, "black" 
+        elif pathname == '/data':
+            return False, "black", False, "black", True, "purple", False, "black" 
+        elif pathname == '/about':
+            return False, "black", False, "black", False, "black", True, "purple"
+ 
 
 
 def main_callbacks(app):

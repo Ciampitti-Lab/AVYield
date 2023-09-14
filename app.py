@@ -3,7 +3,7 @@ from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc
 
 from config import config
-from components import hf
+from components import controls
 from callbacks import register
 
 app = Dash(
@@ -16,18 +16,27 @@ app = Dash(
 app.title = config.dash.app_title
 app._favicon = favicon = config.template.fa_logo_src
 
+CONTENT_STYLE = {
+    "margin-left": "12rem",
+    "margin-right": "2rem",
+    "padding": "2rem 1rem",
+    # "background-color": "#FBFBFB",
+}
+
 app.layout = html.Div(
     [
         dcc.Location(id='url', refresh=False),
-        hf.header,
-        html.Div(id='page-content'),
-        hf.footer,
+        controls.header,
+        controls.sidebar,
+        html.Div(id='page-content', style=CONTENT_STYLE),
+        controls.footer,
     ],
 )
 
 register.main_callbacks(app)
 register.data_callbacks(app)
 register.compare_callbacks(app)
+register.control_callbacks(app)
 # register.home_callbacks(app)
 
 if __name__ == "__main__":

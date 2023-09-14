@@ -42,11 +42,10 @@
   text-shadow: rgb(77, 32, 100) 2px 2px 0.005em, 0 0 0.5em rgb(29, 0, 29);
 }
 
-/* Centering dropdown options, maybe remove later */
-.Select-control {
-  text-align: center;
-}
-.VirtualizedSelectOption {
-  display: inline-block;
-  text-align: center;
+.mantine-NavLink-root {
+  /* Make the background round */
+  border: 10px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  color: rgb(120, 120, 120);
 }

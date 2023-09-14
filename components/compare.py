@@ -67,7 +67,7 @@ layout = dbc.Container([
     dbc.Col([
         dbc.Alert(
             id="input-alert",
-            is_open=True,
+            is_open=False,
             duration=2000,
             color="danger",
             className="text-center",
