@@ -1,22 +1,5 @@
 /* styles.css */
 
-/* Add margin to the left of the title */
-.navbar-brand {
-  margin-left: 20px;
-}
-
-/* Create space for the logo */
-.logo {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-}
-
-.dropdown {
-  width: 120px; /* Adjust the width as needed */
-  margin-right: 30px;
-}
-
 /* About page */
 .about-logo {
   width: 350px;
@@ -42,6 +25,43 @@
   text-shadow: rgb(77, 32, 100) 2px 2px 0.005em, 0 0 0.5em rgb(29, 0, 29);
 }
 
+/* Header */
+.mantine-Select-root{
+  margin-left: 20px;
+}
+
+.mantine-Select-withIcon:focus{
+  border-color: #8758FF;
+}
+
+.mantine-Select-item[data-hovered]{
+  border: 40px;
+  border-radius: 40px;
+}
+
+.mantine-Select-item[data-selected]{
+  border: 40px;
+  border-radius: 40px;
+  background-color: #8758FF;
+}
+
+.mantine-Select-item[data-selected]:hover{
+  background-color: #613DBD;
+}  
+
+.mantine-Select-item {
+  font-size: 15px;
+  font-weight: 560;
+  color: rgb(120, 120, 120);
+}
+
+.mantine-Select-withIcon {
+  font-size: 18px;
+  font-weight: 560;
+  color: rgb(120, 120, 120);
+}
+
+/* Sidebar */
 .mantine-NavLink-root {
   /* Make the background round */
   border: 10px;
@@ -50,6 +70,7 @@
   color: rgb(120, 120, 120);
 }
 
+/* Compare page */
 .compare-plot {
   border: 10px;
   border-radius: 40px;

@@ -10,7 +10,7 @@ title = config.dash.app_title
 crops = ["Corn", "Soybean", "Sunflower", "Wheat"]
 
 def get_icon(icon):
-    return DashIconify(icon=icon, height=28)
+    return DashIconify(icon=icon, height=18)
 
 SIDEBAR_STYLE = {
     "position": "fixed",
@@ -111,19 +111,16 @@ header = html.Div(
         html.Nav(
             className="navbar navbar-expand-lg navbar-light bg-light",
             children=[
-                html.Div(
-                    className="nav-item dropdown",
-                    children=[
-                        dcc.Dropdown(
-                            id="crops-dropdown",
-                            options=crops,
-                            value=crops[0],
-                            clearable=False,
-                            className="dropdown-item",
-                        ),
-                    ],
+                dmc.Select(
+                    id="crops-dropdown",
+                    data=crops,
+                    value=crops[0],
+                    className="crops-dropdown",
+                    style={"width": 160},
+                    radius=20,
+                    icon=DashIconify(icon="tdesign:corn", height=26),
                 ),
-            ]
+            ],
         ),
     ], style=CONTENT_STYLE
 )

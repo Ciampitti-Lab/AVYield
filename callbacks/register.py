@@ -3,8 +3,10 @@ import dash
 import plotly.graph_objects as go
 from dash import dcc, html, callback_context
 from dash.dependencies import Input, Output, State
+from dash_iconify import DashIconify
 from components import home, compare, data, about
 from data import visualization as vis
+
 
 
 def data_callbacks(app):
@@ -282,7 +284,20 @@ def control_callbacks(app):
             return False, "black", False, "black", True, "purple", False, "black" 
         elif pathname == '/about':
             return False, "black", False, "black", False, "black", True, "purple"
- 
+    
+    # Update Icon in Header Dropdown
+    @app.callback(
+        Output('crops-dropdown', 'icon'),
+        Input('crops-dropdown', 'value')
+    )
+    def update_header_dropdown_icon(selected_crop):
+        icons = {
+            "Corn": DashIconify(icon="tdesign:corn", height=26), 
+            "Soybean": DashIconify(icon="fluent-emoji-high-contrast:beans", height=26), 
+            "Wheat": DashIconify(icon="lucide:wheat", height=26), 
+            "Sunflower": DashIconify(icon="fluent-emoji-high-contrast:sunflower", height=26), 
+        }
+        return icons[selected_crop]
 
 
 def main_callbacks(app):
