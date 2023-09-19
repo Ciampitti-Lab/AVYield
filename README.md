@@ -68,5 +68,6 @@
   - [ ] filter by county later
 - [x] remove 2 units
 - [ ] better front
+  - [ ] fix compare dropdown width
 - [ ] cleanup
 - [ ] launch a little prototype

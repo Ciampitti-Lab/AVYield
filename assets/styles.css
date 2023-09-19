@@ -26,7 +26,7 @@
 }
 
 /* Header */
-.mantine-Select-root{
+.crops-dropdown.mantine-Select-root{
   margin-left: 20px;
 }
 
@@ -49,15 +49,16 @@
   background-color: #613DBD;
 }  
 
-.mantine-Select-item {
+.mantine-Select-item { /* Inside Dropdown */ 
   font-size: 15px;
   font-weight: 560;
   color: rgb(120, 120, 120);
 }
 
-.mantine-Select-withIcon {
+.mantine-Select-withIcon { /* Actual Dropdown */
   font-size: 18px;
   font-weight: 560;
+  text-align: right;
   color: rgb(120, 120, 120);
 }
 

@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output, State
 from dash_iconify import DashIconify
 from components import home, compare, data, about
 from data import visualization as vis
+from dash_iconify import DashIconify
 
 
 
@@ -93,22 +94,26 @@ def handle_triggers(n_clicks, second_opt):
 def compare_callbacks(app):
     # First dropdown
     @app.callback(
-        Output('compare-first-dropdown', 'options'),
+        Output('compare-first-dropdown', 'data'),
         Output('compare-first-dropdown', 'value'),
+        Output('compare-first-dropdown', 'icon'),
+        Output('compare-first-dropdown', 'style'),
         Input('crops-dropdown', 'value'),
         Input('filter-opt', 'value'),
     )
     def update_compare_first_dropdown(crops_value, filter):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
-            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR']
+            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR'], DashIconify(icon="ph:dna", height=26), {"width": "230"}
         elif filter == 'year':
-            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME']
+            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME'], DashIconify(icon="ph:calendar-light", height=26), {"width": "150"}
 
     # Second dropdown
     @app.callback(
-        Output('compare-second-dropdown', 'options'),
+        Output('compare-second-dropdown', 'data'),
         Output('compare-second-dropdown', 'value'),
+        Output('compare-second-dropdown', 'icon'),
+        Output('compare-second-dropdown', 'style'),
         Input('crops-dropdown', 'value'),
         Input('compare-first-dropdown', 'value'),
         Input('filter-opt', 'value'),
@@ -120,11 +125,11 @@ def compare_callbacks(app):
             names = dataset['NAME'].unique()
             names = [name for name in names if not pd.isna(name)]
             names.sort()
-            return [{'label': str(name), 'value': name} for name in names], names[0]
+            return [{'label': str(name), 'value': name} for name in names], names[0], DashIconify(icon="ph:dna", height=26), {"width": "230"}
         elif filter == 'year':
             dataset = dataset[dataset.NAME == first_dropdown_selection]
             years = dataset['YEAR'].unique()
-            return [{'label': year, 'value': year} for year in years], years[0]
+            return [{'label': year, 'value': year} for year in years], years[0], DashIconify(icon="ph:calendar-light", height=26), {"width": "150"}
 
     # Add and Clear Genotype button
     @app.callback(
