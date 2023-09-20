@@ -91,7 +91,7 @@ layout = dbc.Container([
         ]),
         html.Div([
             dmc.Button(
-                "Add Genotype",
+                "Add data",
                 className="me-4",
                 variant="outline",
                 id="compare-add-btn",
@@ -101,7 +101,7 @@ layout = dbc.Container([
                 n_clicks=0,
             ),
             dmc.Button(
-                "Clear Genotypes",
+                "Clear all data",
                 className="me-4",
                 variant="outline",
                 id="compare-clear-btn",
@@ -115,15 +115,17 @@ layout = dbc.Container([
 
     dmc.Group(id="add-opt-output"),
     dbc.Col([
-        dbc.Alert(
+        dmc.Alert(
+            "This alert will dismiss itself after 3 seconds!",
+            title="Auto Dismissing Alert!",
             id="input-alert",
-            is_open=False,
-            duration=2000,
-            color="danger",
-            className="text-center",
-            style={"display": "inline-block", "margin": "0 auto"}
-        ),
-    ], className="d-flex justify-content-center"),
+            color="violet",
+            duration=3000,
+            hide=True,
+            mt=10,
+            radius=20
+        )
+    ]),
 
     # Graphs
     dbc.Row([

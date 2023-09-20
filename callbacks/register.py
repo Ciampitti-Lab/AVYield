@@ -151,7 +151,8 @@ def compare_callbacks(app):
     # Add and Clear Genotype button
     @app.callback(
         Output("add-opt-output", "children", allow_duplicate=True),
-        Output("input-alert", "is_open"),
+        Output("input-alert", "hide"),
+        Output("input-alert", "title"),
         Output("input-alert", "children"),
         Output("selected-opt-store", "data", allow_duplicate=True),
         Input("compare-add-btn", "n_clicks"),
@@ -159,10 +160,9 @@ def compare_callbacks(app):
         State("compare-second-dropdown", "value"),
         State("add-opt-output", "children"),
         State("selected-opt-store", "data"),
-        State("input-alert", "is_open"),
         prevent_initial_call=True
     )
-    def update_items_output(n_clicks, filter, selected_items, current_output, stored_items, is_open):
+    def update_items_output(n_clicks, filter, selected_items, current_output, stored_items):
         ctx = dash.callback_context
         trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
@@ -173,7 +173,7 @@ def compare_callbacks(app):
         if n_clicks > 0 and selected_items:
             if selected_items not in stored_items:
                 if len(stored_items) >= 5:
-                    return current_output, not is_open, 'Max of 5 items', stored_items
+                    return current_output, False, 'Exceeded item limit!', 'You can only add a maximum of five items.', stored_items
 
                 stored_items.append(selected_items)
                 current_output.append(
@@ -198,12 +198,10 @@ def compare_callbacks(app):
                         children=[dmc.Badge(selected_items, color='purple',size='xl', mt=10)]
                     )
                 )
-               
-                return current_output, is_open, None, stored_items
+                return current_output, True, None, None, stored_items
             elif selected_items in stored_items and trigger_id != 'filter-opt':
-                print(selected_items)
-                return current_output, not is_open, 'Data Already Added', stored_items
-        return current_output, False, None, stored_items
+                return current_output, False, 'Data Already Added!', 'Duplicates entries are not allowed.', stored_items
+        return current_output, True, None, None, stored_items
 
 
     # Yield Genotype Bar graph
