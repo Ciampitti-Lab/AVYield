@@ -2,8 +2,6 @@ import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import dcc, html, dash_table
 from dash_iconify import DashIconify
-from datetime import datetime, date
-
 
 def get_icon(icon):
     return DashIconify(icon=icon, height=18)

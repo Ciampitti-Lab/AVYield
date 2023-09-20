@@ -20,7 +20,6 @@ CONTENT_STYLE = {
     "margin-left": "12rem",
     "margin-right": "2rem",
     "padding": "2rem 1rem",
-    # "background-color": "#FBFBFB",
 }
 
 app.layout = html.Div(

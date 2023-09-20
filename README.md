@@ -36,14 +36,18 @@
 - [x] Create pages layout for home, compare, about and data.
 - [x] Change pages layout using dbc 
 - [x] Data page functionality: Download filtered datasets by year.
-- [ ] Leave home page to introduce the app.
-- [ ] Leave about page to display infos and paper.
-- [ ] Make compare into main view page.
-- [ ] Change header to a sidebar?.
-- [ ] Front-end.
+- [x] Leave home page to introduce the app.
+- [x] Leave about page to display infos and paper.
+- [x] Make compare into main view page.
+- [x] Change header to a sidebar?.
+* Front-end.
+  - [x] Header and Sidebar.
+  - [x] Compare Page.
+  - [ ] Home Page.
+  - [ ] Data Page.
+  - [ ] About Page.
 
 ### Data Analysis
-- [ ] make it in a pop up window?
 - [x] fix hovers, round hovers and add units in titles and hovers.
 - [x] Add units (see in the xlsx files) (add to graph title).
 - [x] Add option to change units.
@@ -59,10 +63,10 @@
 
 
 * fix errors
-  - [x] Genotyopes string in selected list
+  - [x] Genotypes string in selected list
   - [x] Change map to avg instead of sum. Change title
   - [x] Remove counties without data in the map
-  - [x] Convert units and keep selected list. dont clear it
+  - [x] Convert units and keep selected list. don't clear it
   - [x] data already added bug.
   - [ ] check data filtering process if is still right with newer version of pandas.
 - [x] remove 2 units

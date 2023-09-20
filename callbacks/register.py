@@ -14,15 +14,19 @@ import dash_mantine_components as dmc
 def data_callbacks(app):
     # Title
     @app.callback(
-        Output('data-selected-crop', 'children'),
-        Input('crops-dropdown', 'value')
+    Output('data-selected-crop', 'children'),
+    Input('crops-dropdown', 'value')
     )
     def update_data_selected_crop(crop_value):
-        return "You are about to download " + crop_value.lower() + " dataset."
+        text_before = f"Set the parameters to download the "
+        text_modified = html.Span(crop_value.lower(), style={"font-weight": "bold"})
+        text_after = f" dataset:"
+        
+        return html.Div([text_before, text_modified, text_after])
 
     # Start year
     @app.callback(
-        [Output('data-start-year-dropdown', 'options'),
+        [Output('data-start-year-dropdown', 'data'),
          Output('data-start-year-dropdown', 'value')],
         Input('crops-dropdown', 'value')
     )
@@ -32,7 +36,7 @@ def data_callbacks(app):
 
     # End year
     @app.callback(
-        [Output('data-end-year-dropdown', 'options'),
+        [Output('data-end-year-dropdown', 'data'),
          Output('data-end-year-dropdown', 'value')],
         [Input('crops-dropdown', 'value'),
          Input('data-start-year-dropdown', 'value')]
@@ -105,9 +109,9 @@ def compare_callbacks(app):
     def update_compare_first_dropdown(crops_value, filter):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
-            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR'], DashIconify(icon="ph:dna", height=26), {"width": 150}
+            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR'], DashIconify(icon="ph:calendar-light", height=26), {"width": 150}
         elif filter == 'year':
-            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME'], DashIconify(icon="ph:calendar-light", height=26), {"width": 230}
+            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME'], DashIconify(icon="ph:dna", height=26), {"width": 230}
 
     # Second dropdown
     @app.callback(
