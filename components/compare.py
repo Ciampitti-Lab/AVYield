@@ -9,53 +9,87 @@ def get_icon(icon):
     return DashIconify(icon=icon, height=18)
 
 layout = dbc.Container([
-    dbc.Row([
+    html.Div([
         html.H1(
-            'Compare page',
-            style={'text-align': 'center'}
+            'Analytical Overview',
+            style={'text-align': 'left', 'font-weight': '600', 'margin-bottom': '0px'}
+        ),
+        html.H6(
+            'Last Updated: September 19, 2023.',
+            style={'text-align': 'left', 'color': '#7D7D7D', 'margin-top': '0px'}
         )
     ]),
-    dbc.Col([
-        dbc.RadioItems(
-            options=[
-                {"label": "bu/ac", "value": "bu-ac"},
-                {"label": "Mg/ha", "value": "mg-ha"},
-            ],
-            value='bu-ac',
-            id="units-selection",
-            inline=True,
-        ),
-    ]),
-    dbc.Col([
-        dbc.RadioItems(
-            options=[
-                {"label": "Filter by Genotype", "value": "genotype"},
-                {"label": "Filter by Year", "value": "year"},
-            ],
-            value='genotype',
-            id="filter-opt",
-            inline=True,
-        ),
-    ]),
-    dbc.Row([
+    dmc.MantineProvider(
+        theme={
+            "colors": {
+                "purple": [
+                    "#FAF9FD",
+                    "#DED7F2",
+                    "#C2B1EE",
+                    "#A588F2",
+                    "#8758FF",
+                    "#774AEB",
+                    "#6A41D5",
+                    "#613DBD",
+                    "#5C429F",
+                    "#574486",
+                    "#514373"
+                ]
+            },
+        },
+        children=[    
+            dbc.Stack([
+                html.Div([
+                    dmc.SegmentedControl(
+                        id="units-selection",
+                        value="bu-ac",
+                        data=[
+                            {"label": "bu/ac", "value": "bu-ac"},
+                            {"label": "Mg/ha", "value": "mg-ha"},
+                        ],
+                        radius=30,
+                        color="purple",
+                        mt=10,
+                        mb=10,
+                    ),
+                ]),                
+                html.Div([
+                    dmc.SegmentedControl(
+                        id="filter-opt",
+                        value="genotype",
+                        data=[
+                            {"label": "Filter by Genotype", "value": "genotype"},
+                            {"label": "Filter by Year", "value": "year"},
+                        ],
+                        radius=30,
+                        color="purple",
+                        mt=10,
+                        mb=10,
+                    )   
+                ]),
+                
+            ], direction="horizontal", gap=3),
+        ]
+    ),
+    dbc.Stack([
         dcc.Store(id='selected-opt-store'),
-        dbc.Col([
+        html.Div([
             dmc.Select(
                 id='compare-first-dropdown',
-                # style={"width": 150}, 
+                style={"width": 150}, 
                 radius=20,
                 icon=DashIconify(icon="ph:calendar-light", height=26),
             ),
         ]),
-        dbc.Col([
+        html.Div([
             dmc.Select(
                 id='compare-second-dropdown',
-                # style={"width": 230},
+                style={"width": 230},
                 radius=20,
                 icon=DashIconify(icon="ph:dna", height=26),
             ),
         ]),
-        dbc.Col([
+        html.Div([
             dmc.Button(
                 "Add Genotype",
                 className="me-4",
@@ -77,9 +111,9 @@ layout = dbc.Container([
                 n_clicks=0,
             ),
         ]),
-    ]),
+    ], direction="horizontal", gap=3),
 
-    dbc.Row([html.H4(id="add-opt-output")]),
+    dmc.Group(id="add-opt-output"),
     dbc.Col([
         dbc.Alert(
             id="input-alert",

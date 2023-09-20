@@ -132,15 +132,25 @@ def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, f
                  color_discrete_map=color_map,
                  facet_col=col2,
                  color='WATER_REGIME', barmode='group',
-                 labels={'NAME': 'Genotype', 'YIELD': f'Yield ({unit_str})',
+                 labels={'NAME': 'Name', 'YIELD': f'Yield ({unit_str})',
                          'WATER_REGIME': 'Water Regime', 'YEAR': 'Year', 'COUNTY': 'County'})
 
     fig.for_each_annotation(lambda a: a.update(
         text=a.text.replace("Name=", ""))
     )
+    fig.for_each_xaxis(lambda x: x.update({'title': ''}))
     fig.update_layout(
         title={'text': f"Yield Distribution by County for the Selected {filter.capitalize()}(s)"},
         paper_bgcolor = "rgba(0,0,0,0)",
+    )
+    fig.add_annotation(
+        showarrow=False,
+        xanchor='center',
+        xref='paper', 
+        x=0.5, 
+        yref='paper',
+        y=-0.2,
+        text='County'
     )
     return fig
 
@@ -193,7 +203,7 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
     fig = go.Figure(data=[trace_zero_yield, trace_non_zero_yield])
     fig.update_layout(
         mapbox_style="carto-positron",
-        mapbox_zoom=5.5,
+        mapbox_zoom=5.2,
         mapbox_center={"lat": 38.5, "lon": -98.5},
         title='County-Level Genotype Average Yield Map',
         paper_bgcolor = "rgba(0,0,0,0)",

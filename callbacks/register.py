@@ -7,6 +7,7 @@ from dash_iconify import DashIconify
 from components import home, compare, data, about
 from data import visualization as vis
 from dash_iconify import DashIconify
+import dash_mantine_components as dmc
 
 
 
@@ -104,9 +105,9 @@ def compare_callbacks(app):
     def update_compare_first_dropdown(crops_value, filter):
         dataset = vis.get_dataset(crops_value)
         if filter == 'genotype':
-            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR'], DashIconify(icon="ph:dna", height=26), {"width": "230"}
+            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR'], DashIconify(icon="ph:dna", height=26), {"width": 150}
         elif filter == 'year':
-            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME'], DashIconify(icon="ph:calendar-light", height=26), {"width": "150"}
+            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME'], DashIconify(icon="ph:calendar-light", height=26), {"width": 230}
 
     # Second dropdown
     @app.callback(
@@ -125,12 +126,28 @@ def compare_callbacks(app):
             names = dataset['NAME'].unique()
             names = [name for name in names if not pd.isna(name)]
             names.sort()
-            return [{'label': str(name), 'value': name} for name in names], names[0], DashIconify(icon="ph:dna", height=26), {"width": "230"}
+            return [{'label': str(name), 'value': name} for name in names], names[0], DashIconify(icon="ph:dna", height=26), {"width": 230}
         elif filter == 'year':
             dataset = dataset[dataset.NAME == first_dropdown_selection]
             years = dataset['YEAR'].unique()
-            return [{'label': year, 'value': year} for year in years], years[0], DashIconify(icon="ph:calendar-light", height=26), {"width": "150"}
+            return [{'label': year, 'value': year} for year in years], years[0], DashIconify(icon="ph:calendar-light", height=26), {"width": 150}
 
+    # Clear storage
+    @app.callback(
+        Output("add-opt-output", "children"),
+        Output("selected-opt-store", "data"),
+        Input("compare-clear-btn", "n_clicks"),
+        Input("compare-first-dropdown", "value"),
+        Input('filter-opt', 'value'),
+    )
+    def clear_genotype_storage(n_clicks, selected_year, selected_items):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        if trigger_id == 'clear-genotype-btn' or trigger_id == 'filter-opt':
+            return None, None
+        return None, None
+    
     # Add and Clear Genotype button
     @app.callback(
         Output("add-opt-output", "children", allow_duplicate=True),
@@ -146,8 +163,12 @@ def compare_callbacks(app):
         prevent_initial_call=True
     )
     def update_items_output(n_clicks, filter, selected_items, current_output, stored_items, is_open):
+        ctx = dash.callback_context
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
         if stored_items is None:
             stored_items = []
+            current_output = []
 
         if n_clicks > 0 and selected_items:
             if selected_items not in stored_items:
@@ -155,28 +176,35 @@ def compare_callbacks(app):
                     return current_output, not is_open, 'Max of 5 items', stored_items
 
                 stored_items.append(selected_items)
-                if current_output is None:
-                    new_output = f"Genotype(s): {selected_items}" if filter == 'genotype' else f"Year(s): {selected_items}" if filter == 'year' else ""
-                else:
-                    new_output = f"{current_output}, {selected_items}"
-                return new_output, is_open, None, stored_items
-            else:
+                current_output.append(
+                    dmc.MantineProvider(
+                        theme={
+                            "colors": {
+                                "purple": [
+                                    "#FAF9FD",
+                                    "#DED7F2",
+                                    "#C2B1EE",
+                                    "#A588F2",
+                                    "#8758FF",
+                                    "#774AEB",
+                                    "#6A41D5",
+                                    "#613DBD",
+                                    "#5C429F",
+                                    "#574486",
+                                    "#514373"
+                                ]
+                            },
+                        },
+                        children=[dmc.Badge(selected_items, color='purple',size='xl', mt=10)]
+                    )
+                )
+               
+                return current_output, is_open, None, stored_items
+            elif selected_items in stored_items and trigger_id != 'filter-opt':
+                print(selected_items)
                 return current_output, not is_open, 'Data Already Added', stored_items
         return current_output, False, None, stored_items
 
-    @app.callback(
-        Output("add-opt-output", "children"),
-        Output("selected-opt-store", "data"),
-        Input("compare-clear-btn", "n_clicks"),
-        Input("compare-first-dropdown", "value"),
-    )
-    def clear_genotype_storage(n_clicks, selected_year):
-        ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
-        if trigger_id == 'clear-genotype-btn':
-            return None, None
-        return None, None
 
     # Yield Genotype Bar graph
     @app.callback(

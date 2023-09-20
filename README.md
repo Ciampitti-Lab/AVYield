@@ -63,11 +63,11 @@
   - [x] Change map to avg instead of sum. Change title
   - [x] Remove counties without data in the map
   - [x] Convert units and keep selected list. dont clear it
-  - [ ] data already added bug.
+  - [x] data already added bug.
   - [ ] check data filtering process if is still right with newer version of pandas.
-  - [ ] filter by county later
 - [x] remove 2 units
 - [ ] better front
-  - [ ] fix compare dropdown width
+  - [ ] remove hardcode on last update compare page. 
+  - [x] fix compare dropdown width
 - [ ] cleanup
 - [ ] launch a little prototype
