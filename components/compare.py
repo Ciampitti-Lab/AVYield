@@ -3,20 +3,27 @@ import dash_mantine_components as dmc
 from dash import dcc, html, dash_table
 from dash_iconify import DashIconify
 
+
+crops = ["Corn", "Soybean", "Sunflower", "Wheat"]
+
+
 def get_icon(icon):
     return DashIconify(icon=icon, height=18)
 
-layout = dbc.Container([
+
+layout = html.Div([
     html.Div([
         html.H1(
             'Analytical Overview',
-            style={'text-align': 'left', 'font-weight': '600', 'margin-bottom': '0px'}
+            style={'text-align': 'left',
+                   'font-weight': '600', 'margin-bottom': '0px'}
         ),
         html.H6(
             'Last Updated: September 19, 2023.',
             style={'text-align': 'left', 'color': '#7D7D7D', 'margin-top': '0px'}
         )
     ]),
+
     dmc.MantineProvider(
         theme={
             "colors": {
@@ -35,7 +42,7 @@ layout = dbc.Container([
                 ]
             },
         },
-        children=[    
+        children=[
             dbc.Stack([
                 html.Div([
                     dmc.SegmentedControl(
@@ -50,7 +57,7 @@ layout = dbc.Container([
                         mt=10,
                         mb=10,
                     ),
-                ]),                
+                ]),
                 html.Div([
                     dmc.SegmentedControl(
                         id="filter-opt",
@@ -63,18 +70,27 @@ layout = dbc.Container([
                         color="purple",
                         mt=10,
                         mb=10,
-                    )   
+                    )
                 ]),
-                
+
             ], direction="horizontal", gap=3),
         ]
     ),
     dbc.Stack([
         dcc.Store(id='selected-opt-store'),
+        dmc.Select(
+            id="crops-dropdown",
+            data=crops,
+            value=crops[0],
+            className="crops-dropdown",
+            style={"width": 160},
+            radius=20,
+            icon=DashIconify(icon="tdesign:corn", height=26),
+        ),
         html.Div([
             dmc.Select(
                 id='compare-first-dropdown',
-                style={"width": 150}, 
+                style={"width": 150},
                 radius=20,
                 icon=DashIconify(icon="ph:calendar-light", height=26),
             ),
@@ -184,4 +200,4 @@ layout = dbc.Container([
     #         }
     #     ),
     # ]),
-], fluid=True)
+])

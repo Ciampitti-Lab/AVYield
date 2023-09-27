@@ -1,5 +1,20 @@
 /* styles.css */
 
+.homejumbo {
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.4),
+      rgba(0, 0, 0, 0)
+    ),
+    url("cg-kansasstate-farm.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; /* This will center the background image horizontally and vertically */
+}
+
 /* About page */
 .about-logo {
   width: 350px;
@@ -7,59 +22,41 @@
   margin-left: 200px;
 }
 
-.about-header-img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
+.mantine-Avatar-root.about-avatar {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
+    0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  border: 4px solid rgb(97, 61, 189);
+  margin-left: 0px;
 }
 
-.about-title {
-  position: absolute;
-  text-align: center;
-  font-size: 120px;
-  margin: auto;
-  left: 0;
-  right: 0;
-  width: fit-content;
-  color: azure;
-  text-shadow: rgb(77, 32, 100) 2px 2px 0.005em, 0 0 0.5em rgb(29, 0, 29);
+.about-pfp-container {
+  border: 1px;
+  border-radius: 800px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  background-color: #faf9fd;
+  color: #faf9fd;
+  color: #ded7f2;
+  color: #c2b1ee;
+  color: #a588f2;
+  color: #8758ff;
+  color: #774aeb;
+  color: #6a41d5;
+  color: #613dbd;
+  color: #5c429f;
+  color: #574486;
+  color: #514373;
+  height: 80%;
+  width: 85%;
 }
 
-/* Header */
-.crops-dropdown.mantine-Select-root{
-  margin-left: 20px;
-}
-
-.mantine-Select-withIcon:focus{
-  border-color: #8758FF;
-}
-
-.mantine-Select-item[data-hovered]{
-  border: 40px;
-  border-radius: 40px;
-}
-
-.mantine-Select-item[data-selected]{
-  border: 40px;
-  border-radius: 40px;
-  background-color: #8758FF;
-}
-
-.mantine-Select-item[data-selected]:hover{
-  background-color: #613DBD;
-}  
-
-.mantine-Select-item { /* Inside Dropdown */ 
-  font-size: 15px;
-  font-weight: 560;
-  color: rgb(120, 120, 120);
-}
-
-.mantine-Select-withIcon { /* Actual Dropdown */
-  font-size: 18px;
-  font-weight: 560;
-  text-align: right;
-  color: rgb(120, 120, 120);
+.vertical-separator {
+  border: 3px;
+  border-left: 3px solid #a588f2;
+  border-radius: 10px;
+  height: 60px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Sidebar */
@@ -79,4 +76,39 @@
   margin-bottom: 50px;
   margin-top: 20px;
   width: 48%;
+}
+
+/* Dropdowns */
+.mantine-Select-withIcon:focus {
+  border-color: #8758ff;
+}
+
+.mantine-Select-item[data-hovered] {
+  border: 40px;
+  border-radius: 40px;
+}
+
+.mantine-Select-item[data-selected] {
+  border: 40px;
+  border-radius: 40px;
+  background-color: #8758ff;
+}
+
+.mantine-Select-item[data-selected]:hover {
+  background-color: #613dbd;
+}
+
+.mantine-Select-item {
+  /* Inside Dropdown */
+  font-size: 15px;
+  font-weight: 560;
+  color: rgb(120, 120, 120);
+}
+
+.mantine-Select-withIcon {
+  /* Actual Dropdown */
+  font-size: 18px;
+  font-weight: 560;
+  text-align: left;
+  color: rgb(120, 120, 120);
 }

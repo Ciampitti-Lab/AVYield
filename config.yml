@@ -18,5 +18,7 @@ template:
   about_img_src: ../assets/cg-kansasstate-farm.jpg
 
 version: v0.0.1
-github_url: https://github.com/sprmbng
+github_url: https://github.com/cisdeli
 github_repo: sprmbng/
+ciampitti_url: https://ciampittilab.wixsite.com/ciampitti-lab
+paper_url: https://arxiv.org/

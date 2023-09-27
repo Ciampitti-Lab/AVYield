@@ -149,7 +149,7 @@ def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, f
         xref='paper', 
         x=0.5, 
         yref='paper',
-        y=-0.2,
+        y=-0.26,
         text='County'
     )
     return fig

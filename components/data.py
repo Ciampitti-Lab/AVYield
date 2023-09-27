@@ -3,11 +3,15 @@ import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from dash import dcc, html, dash_table
 
-layout = dbc.Container([
+crops = ["Corn", "Soybean", "Sunflower", "Wheat"]
+
+
+layout = html.Div([
     html.Div([
         html.H1(
             'Data',
-            style={'text-align': 'left', 'font-weight': '600', 'margin-bottom': '0px'}
+            style={'text-align': 'left',
+                   'font-weight': '600', 'margin-bottom': '0px'}
         ),
         html.H6(
             'Last Updated: September 19, 2023.',
@@ -18,15 +22,25 @@ layout = dbc.Container([
     html.Div([
         html.H3(
             id='data-selected-crop',
-            style={'text-align': 'left', 'font-weight': '300', 'margin-top': '20px'}
+            style={'text-align': 'left',
+                   'font-weight': '300', 'margin-top': '20px'}
         ),
     ]),
 
     dbc.Stack([
+        dmc.Select(
+            id="crops-dropdown",
+            data=crops,
+            value=crops[0],
+            className="crops-dropdown",
+            style={"width": 160},
+            radius=20,
+            icon=DashIconify(icon="tdesign:corn", height=26),
+        ),
         html.Div([
             dmc.Select(
                 id='data-start-year-dropdown',
-                style={"width": 150}, 
+                style={"width": 150},
                 radius=20,
                 icon=DashIconify(icon="ph:calendar-light", height=26),
             ),
@@ -34,7 +48,7 @@ layout = dbc.Container([
         html.Div([
             dmc.Select(
                 id='data-end-year-dropdown',
-                style={"width": 150}, 
+                style={"width": 150},
                 radius=20,
                 icon=DashIconify(icon="ph:calendar-light", height=26),
             ),
@@ -67,4 +81,4 @@ layout = dbc.Container([
             'text-align': 'left'
         }
     ),
-], fluid=True)
+])

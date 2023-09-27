@@ -25,7 +25,6 @@ CONTENT_STYLE = {
 app.layout = html.Div(
     [
         dcc.Location(id='url', refresh=False),
-        controls.header,
         controls.sidebar,
         html.Div(id='page-content', style=CONTENT_STYLE),
         controls.footer,
