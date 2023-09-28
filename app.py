@@ -35,7 +35,7 @@ register.main_callbacks(app)
 register.data_callbacks(app)
 register.compare_callbacks(app)
 register.control_callbacks(app)
-# register.home_callbacks(app)
+register.home_callbacks(app)
 
 if __name__ == "__main__":
     app.run_server(debug=True)

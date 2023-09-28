@@ -10,18 +10,18 @@ from dash_iconify import DashIconify
 import dash_mantine_components as dmc
 
 
-
 def data_callbacks(app):
     # Title
     @app.callback(
-    Output('data-selected-crop', 'children'),
-    Input('crops-dropdown', 'value')
+        Output('data-selected-crop', 'children'),
+        Input('crops-dropdown', 'value')
     )
     def update_data_selected_crop(crop_value):
         text_before = f"Set the parameters to download the "
-        text_modified = html.Span(crop_value.lower(), style={"font-weight": "bold"})
+        text_modified = html.Span(crop_value.lower(), style={
+                                  "font-weight": "bold"})
         text_after = f" dataset:"
-        
+
         return html.Div([text_before, text_modified, text_after])
 
     # Start year
@@ -151,7 +151,7 @@ def compare_callbacks(app):
         if trigger_id == 'clear-genotype-btn' or trigger_id == 'filter-opt':
             return None, None
         return None, None
-    
+
     # Add and Clear Genotype button
     @app.callback(
         Output("add-opt-output", "children", allow_duplicate=True),
@@ -199,7 +199,8 @@ def compare_callbacks(app):
                                 ]
                             },
                         },
-                        children=[dmc.Badge(selected_items, color='purple',size='xl', mt=10)]
+                        children=[
+                            dmc.Badge(selected_items, color='purple', size='xl', mt=10)]
                     )
                 )
                 return current_output, True, None, None, stored_items
@@ -207,8 +208,8 @@ def compare_callbacks(app):
                 return current_output, False, 'Data Already Added!', 'Duplicates entries are not allowed.', stored_items
         return current_output, True, None, None, stored_items
 
-
     # Yield Genotype Bar graph
+
     @app.callback(
         Output('compare-yield-bar-graph', 'figure'),
         Input('compare-add-btn', 'n_clicks'),
@@ -223,7 +224,7 @@ def compare_callbacks(app):
     def update_compare_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
             return fig
         else:
             return vis.compare_yield_bar(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
@@ -243,7 +244,7 @@ def compare_callbacks(app):
     def update_compare_yield_box_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
             return fig
         else:
             return vis.compare_yield_box(crops_value, first_opt, second_opt, unit, filter, True) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
@@ -263,7 +264,7 @@ def compare_callbacks(app):
     def update_compare_county_yield_bar_graph(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
             return fig
         else:
             return vis.compare_county_yield_bar_graph(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
@@ -283,43 +284,53 @@ def compare_callbacks(app):
     def update_compare_county_yield_map(n_clicks, n_clicks_clear, crops_value, first_opt, second_opt, filter, unit, stored_items):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)")
+            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
             return fig
         else:
             return vis.compare_county_map(crops_value, first_opt, second_opt, unit, filter) if handle_triggers(n_clicks, second_opt) is None else handle_triggers(n_clicks, second_opt)
 
 
-# def home_callbacks(app):
-# # Table
-#     @app.callback(
-#         Output('table-data', 'data'),
-#         Input('crops-dropdown', 'value')
-#     )
-#     def update_table(crops_value):
-#         return vis.table(crops_value)
+def home_callbacks(app):
+    # Table
+    # @app.callback(
+    #     Output('table-data', 'data'),
+    #     Input('crops-dropdown', 'value')
+    # )
+    # def update_table(crops_value):
+    #     return vis.table(crops_value)
+
+    @app.callback(
+        Output("home-modal", "opened"),
+        Input("home-modal-button", "n_clicks"),
+        State("home-modal", "opened"),
+        prevent_initial_call=True,
+    )
+    def toggle_modal(n_clicks, opened):
+        return not opened
+
 
 def control_callbacks(app):
     # Update sidebar options color based on curr page
     @app.callback(
-            Output('sidebar-home', 'active'), 
-            Output('sidebar-home', 'color'), 
-            Output('sidebar-compare', 'active'), 
-            Output('sidebar-compare', 'color'), 
-            Output('sidebar-data', 'active'), 
-            Output('sidebar-data', 'color'), 
-            Output('sidebar-about', 'active'), 
-            Output('sidebar-about', 'color'), 
-            Input('url', 'pathname'))
+        Output('sidebar-home', 'active'),
+        Output('sidebar-home', 'color'),
+        Output('sidebar-compare', 'active'),
+        Output('sidebar-compare', 'color'),
+        Output('sidebar-data', 'active'),
+        Output('sidebar-data', 'color'),
+        Output('sidebar-about', 'active'),
+        Output('sidebar-about', 'color'),
+        Input('url', 'pathname'))
     def update_sidebar_color(pathname):
         if pathname == '/':
             return True, "purple", False, "black", False, "black", False, "black"
         elif pathname == '/compare':
-            return False, "black", True, "purple", False, "black", False, "black" 
+            return False, "black", True, "purple", False, "black", False, "black"
         elif pathname == '/data':
-            return False, "black", False, "black", True, "purple", False, "black" 
+            return False, "black", False, "black", True, "purple", False, "black"
         elif pathname == '/about':
             return False, "black", False, "black", False, "black", True, "purple"
-    
+
     # Update Icon in Header Dropdown
     @app.callback(
         Output('crops-dropdown', 'icon'),
@@ -327,10 +338,10 @@ def control_callbacks(app):
     )
     def update_header_dropdown_icon(selected_crop):
         icons = {
-            "Corn": DashIconify(icon="tdesign:corn", height=26), 
-            "Soybean": DashIconify(icon="fluent-emoji-high-contrast:beans", height=26), 
-            "Wheat": DashIconify(icon="lucide:wheat", height=26), 
-            "Sunflower": DashIconify(icon="fluent-emoji-high-contrast:sunflower", height=26), 
+            "Corn": DashIconify(icon="tdesign:corn", height=26),
+            "Soybean": DashIconify(icon="fluent-emoji-high-contrast:beans", height=26),
+            "Wheat": DashIconify(icon="lucide:wheat", height=26),
+            "Sunflower": DashIconify(icon="fluent-emoji-high-contrast:sunflower", height=26),
         }
         return icons[selected_crop]
 

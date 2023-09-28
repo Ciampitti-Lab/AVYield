@@ -1,18 +1,39 @@
 /* styles.css */
 
-.homejumbo {
+.color {
+  color: #faf9fd;
+  color: #ded7f2;
+  color: #c2b1ee;
+  color: #a588f2;
+  color: #8758ff;
+  color: #774aeb;
+  color: #6a41d5;
+  color: #613dbd;
+  color: #5c429f;
+  color: #574486;
+  color: #514373;
+}
+
+.home-jumbotron {
   background: linear-gradient(
       to right,
-      rgba(255, 255, 255, 0.95),
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.4),
+      rgba(106, 65, 213, 0.75),
+      rgba(106, 65, 213, 0.75),
+      rgba(106, 65, 213, 0.75),
+      rgba(106, 65, 213, 0.75),
+      rgba(106, 65, 213, 0.5),
+      rgba(106, 65, 213, 0.3),
       rgba(0, 0, 0, 0)
     ),
     url("cg-kansasstate-farm.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center; /* This will center the background image horizontally and vertically */
+  background-position: 100% 95%; /* This will center the background image horizontally and vertically */
+}
+
+.shadows-jumbotron {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
+    0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* About page */
@@ -35,17 +56,6 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.12),
     0 1px 3px 0 rgba(0, 0, 0, 0.2);
   background-color: #faf9fd;
-  color: #faf9fd;
-  color: #ded7f2;
-  color: #c2b1ee;
-  color: #a588f2;
-  color: #8758ff;
-  color: #774aeb;
-  color: #6a41d5;
-  color: #613dbd;
-  color: #5c429f;
-  color: #574486;
-  color: #514373;
   height: 80%;
   width: 85%;
 }
