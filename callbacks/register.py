@@ -1,13 +1,12 @@
-import pandas as pd
-import dash
 import plotly.graph_objects as go
-from dash import dcc, html, callback_context
+import dash
+from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from dash_iconify import DashIconify
-from components import home, compare, data, about
-from data import visualization as vis
-from dash_iconify import DashIconify
 import dash_mantine_components as dmc
+from components import home, compare, data, about
+import visualization as vis
+import server
 
 
 def data_callbacks(app):
@@ -31,8 +30,7 @@ def data_callbacks(app):
         Input('crops-dropdown', 'value')
     )
     def update_data_start_year_dropdown(crops_value):
-        dataset = vis.get_dataset(crops_value)
-        return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[0]['YEAR']
+        return server.get_data_dict(crops_value)
 
     # End year
     @app.callback(
@@ -42,13 +40,7 @@ def data_callbacks(app):
          Input('data-start-year-dropdown', 'value')]
     )
     def update_data_end_year_dropdown(crops_value, start_year):
-        dataset = vis.get_dataset(crops_value)
-        available_years = dataset['YEAR'].unique()
-        filtered_years = [
-            year for year in available_years if year >= start_year
-        ]
-        end_year_value = filtered_years[-1] if filtered_years else None
-        return [{'label': str(year), 'value': year} for year in filtered_years], end_year_value
+        return server.get_data_dict(crops_value, start_year)
 
     # Download
     @app.callback(
@@ -61,16 +53,14 @@ def data_callbacks(app):
     )
     def download_dataset(n_clicks, crops_value, start_year, end_year):
         ctx = dash.callback_context
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]  # type: ignore
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
         if trigger_id == 'data-download-btn':
-            dataset = vis.get_dataset(crops_value)
-            dataset = dataset[(dataset['YEAR'] >= start_year)
-                              & (dataset['YEAR'] <= end_year)]
+            dataset = server.get_data(crops_value, start_year, end_year)
             return dcc.send_data_frame(dataset.to_csv, crops_value.lower()+'_dataset.csv', index=False)
         return None
 
-# Preview Table
+    # Preview Table
     @app.callback(
         Output('data-preview-table', 'data'),
         [Input('crops-dropdown', 'value'),
@@ -78,10 +68,7 @@ def data_callbacks(app):
          Input('data-end-year-dropdown', 'value')],
     )
     def update_data_preview_table(crops_value, start_year, end_year):
-        dataset = vis.get_dataset(crops_value)
-        dataset = dataset[(dataset['YEAR'] >= start_year)
-                          & (dataset['YEAR'] <= end_year)]
-        return dataset.to_dict('records')
+        return server.get_data(crops_value, start_year, end_year).to_dict('records')
 
 
 def handle_triggers(n_clicks, second_opt):
@@ -107,11 +94,10 @@ def compare_callbacks(app):
         Input('filter-opt', 'value'),
     )
     def update_compare_first_dropdown(crops_value, filter):
-        dataset = vis.get_dataset(crops_value)
-        if filter == 'genotype':
-            return [{'label': str(year), 'value': year} for year in dataset['YEAR'].unique()], dataset.iloc[-1]['YEAR'], DashIconify(icon="ph:calendar-light", height=26), {"width": 150}
-        elif filter == 'year':
-            return [{'label': str(name), 'value': name} for name in sorted(dataset['NAME'].unique())], dataset.iloc[0]['NAME'], DashIconify(icon="ph:dna", height=26), {"width": 230}
+        icon = 'ph:calendar-light' if filter == 'genotype' else 'ph:dna'
+        width = 150 if filter == 'genotype' else 230
+        d, v = server.get_compare_dict(crops_value, filter)
+        return d, v, DashIconify(icon=icon, height=26), {"width": width}
 
     # Second dropdown
     @app.callback(
@@ -123,18 +109,11 @@ def compare_callbacks(app):
         Input('compare-first-dropdown', 'value'),
         Input('filter-opt', 'value'),
     )
-    def update_compare_genotype_dropdown(crops_value, first_dropdown_selection, filter):
-        dataset = vis.get_dataset(crops_value)
-        if filter == 'genotype':
-            dataset = dataset[dataset.YEAR == first_dropdown_selection]
-            names = dataset['NAME'].unique()
-            names = [name for name in names if not pd.isna(name)]
-            names.sort()
-            return [{'label': str(name), 'value': name} for name in names], names[0], DashIconify(icon="ph:dna", height=26), {"width": 230}
-        elif filter == 'year':
-            dataset = dataset[dataset.NAME == first_dropdown_selection]
-            years = dataset['YEAR'].unique()
-            return [{'label': year, 'value': year} for year in years], years[0], DashIconify(icon="ph:calendar-light", height=26), {"width": 150}
+    def update_compare_genotype_dropdown(crops_value, first_selection, filter):
+        icon = "ph:dna" if filter == 'genotype' else "ph:calendar-light"
+        width = 230 if filter == 'genotype' else 150
+        d, v = server.get_compare_dict(crops_value, filter, first_selection)
+        return d, v, DashIconify(icon=icon, height=26), {"width": width}
 
     # Clear storage
     @app.callback(
