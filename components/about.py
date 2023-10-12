@@ -25,7 +25,7 @@ def createNewPFP(person):
         title = "Ciampitti Lab Leader"
         link = "https://www.agronomy.k-state.edu/about/people/faculty/ciampitti-ignacio/"
     elif person == "Carlos":
-        pic = "https://media.licdn.com/dms/image/D5603AQFxde-3s-7DEA/profile-displayphoto-shrink_800_800/0/1665602270810?e=1701302400&v=beta&t=r0jUqkM1WdqE_njekYXFgVKgpry9a0nEzIQ5Z9nl8fM"
+        pic = "https://media.licdn.com/dms/image/D5603AQH82E5UpIYQAQ/profile-displayphoto-shrink_800_800/0/1696041318961?e=1702512000&v=beta&t=1ry7V3vAiz2fi2RhbXzXBIajhEd-RRadKWktyYgb0R0"
         name = "Carlos Hernandez"
         prof = "Agronomist"
         title = "Research Scholar at Kansas State University"

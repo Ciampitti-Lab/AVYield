@@ -14,7 +14,7 @@ app = Dash(
 )
 
 app.title = config.dash.app_title
-app._favicon = favicon = config.template.fa_logo_src
+app._favicon = favicon = config.template.logo_src
 
 CONTENT_STYLE = {
     "margin-left": "12rem",
