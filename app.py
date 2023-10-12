@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 
 from config import config
 from components import controls
-from callbacks import register
+import register
 
 app = Dash(
     config.dash.app_title,

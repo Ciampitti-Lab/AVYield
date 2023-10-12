@@ -1,10 +1,10 @@
-from data.pre_processing import datasets
 from dash import dash_table
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 from config import config
 import json
+import server
 
 conversion_rates = {  # From bu/ac
     'bu-ac': {
@@ -54,15 +54,11 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
 
-    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
-    df = (datasets[selected_crop]).copy()
-    df.loc[:, 'YEAR'] = df['YEAR'].astype(str)
-    df = df[df[col1] == first_opt]
-    df = df[df[col2].isin(second_opt)].groupby(
-        [col2, 'WATER_REGIME'])['YIELD'].mean().reset_index()
+    df, col2 = server.get_compare_df(
+        selected_crop, filter, first_opt, second_opt, conv_rate
+    )
+    df = df.groupby([col2, 'WATER_REGIME'])['YIELD'].mean().reset_index()
 
-    df.YIELD = df.YIELD * conv_rate
-    df['YIELD'] = df['YIELD'].round(2)
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
     fig = px.bar(df, x=col2, y='YIELD',
                  color_discrete_map=color_map,
@@ -80,15 +76,14 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend
 
 # Compare Yield Box graph
 def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend_flag):
-    df = (datasets[selected_crop]).copy()
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
-    df.YIELD = df.YIELD * conv_rate
+
+    df, col2 = server.get_compare_df(
+        selected_crop, filter, first_opt, second_opt, conv_rate
+    )
+
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
-    df = df[df[col1] == first_opt]
-    df = df.loc[df[col2].isin(second_opt)]
-    df['YIELD'] = df['YIELD'].round(2)
     fig = px.box(
         df,
         x=col2,
@@ -109,16 +104,16 @@ def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend
 
 # Compare County Bar
 def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, filter):
-    df = (datasets[selected_crop]).copy(deep=True)
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
-    df.YIELD = df.YIELD * conv_rate  # type: ignore
+
+    df, col2 = server.get_compare_df(
+        selected_crop, filter, first_opt, second_opt, conv_rate
+    )
+
+    df = df[[col2, 'WATER_REGIME', 'COUNTY', 'YIELD']]
+
     color_map = {'Irrigated': 'darkblue', 'Dryland': 'orange'}
-    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
-    df = df[df[col1] == first_opt]
-    df = df[df[col2].isin(second_opt)][[
-        col2, 'WATER_REGIME', 'COUNTY', 'YIELD']]
-    df['YIELD'] = df['YIELD'].round(2)
     fig = px.bar(df, x='COUNTY', y='YIELD',
                  color_discrete_map=color_map,
                  facet_col=col2,
@@ -149,18 +144,16 @@ def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, f
 
 # Compare County Map
 def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
-    df = (datasets[selected_crop]).copy(deep=True)
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
-    df.YIELD = df.YIELD * conv_rate  # type: ignore
-    col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
-    df = df[df[col1] == first_opt]
-    df = df[df[col2].isin(second_opt)].groupby(
-        ['COUNTY'])['YIELD'].mean().reset_index()
+
+    df, _ = server.get_compare_df(
+        selected_crop, filter, first_opt, second_opt, conv_rate
+    )
+    df = df.groupby(['COUNTY'])['YIELD'].mean().reset_index()
     df["COUNTY"] = df["COUNTY"].apply(lambda x: x.capitalize())
 
-    with open(config.data.geodata_path) as f:
-        geodata = json.load(f)
+    geodata = json.loads(server.get_geodata())
 
     names_list = [feature['properties']['name']
                   for feature in geodata['features']]

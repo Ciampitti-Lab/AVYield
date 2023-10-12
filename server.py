@@ -2,7 +2,7 @@ from pymongo.mongo_client import MongoClient
 from config import sv_config, config
 import pandas as pd
 from bson.json_util import dumps, loads
-
+import json
 
 client = MongoClient(sv_config.mongodb_uri)
 
@@ -84,29 +84,41 @@ def get_compare_dict(dataset_name, filter_field, first_selection=None):
     return formatted_values, formatted_values[-1]['value']
 
 
-#
-def get_compare_yield_bar_df(dataset_name, filter, first_opt, second_opt, conv_rate):
+# Get df for visualizations
+def get_compare_df(dataset_name, filter, first_opt, second_opt, conv_rate):
     db = client['kansas-crop-trials']
     collection = db[dataset_name]
 
     col1, col2 = ('YEAR', 'NAME') if filter == 'genotype' else ('NAME', 'YEAR')
-    # Match documents for the selected crop and convert the YEAR field to a string
-    
+
     pipeline = [
         {"$addFields": {"YEAR": {"$toString": "$YEAR"}}},
         {"$match": {col1: first_opt}},
         {"$match": {col2: {"$in": second_opt}}},
-        {"$group": {"_id": {"$concat": ["$WATER_REGIME", col2]}, "YIELD": {"$avg": "$YIELD"}}},
-        {"$project": {"WATER_REGIME": "$_id", "YIELD": 1, "_id": 0}},
         {"$addFields": {"YIELD": {"$multiply": ["$YIELD", conv_rate]}}},
         {"$addFields": {"YIELD": {"$round": ["$YIELD", 2]}}}
     ]
 
+    return pd.DataFrame(list(collection.aggregate(pipeline))), col2
 
-    # Execute the aggregation pipeline
-    result = list(collection.aggregate(pipeline))
 
-    # Convert the result to a Pandas DataFrame if needed
-    df = pd.DataFrame(result)
+# Get geodata
+def get_geodata():
+    db = client['geodata']
+    collection = db['kansas-counties']
 
-    return df
+    features = list(collection.find({}, projection={'_id': 0}))
+    feature_collection = {
+        "type": "FeatureCollection",
+        "features": features
+    }
+    return json.dumps(feature_collection)
+
+
+# def send_geodata():
+#     db = client['geodata']
+#     collection = db['kansas-counties']
+#     with open(config.data.geodata_path) as f:
+#         geodata = json.load(f)
+#     print("inserting")
+#     collection.insert_many(geodata['features'])
