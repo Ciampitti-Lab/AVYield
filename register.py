@@ -6,7 +6,7 @@ from dash_iconify import DashIconify
 import dash_mantine_components as dmc
 from components import home, compare, data, about
 import visualization as vis
-import server
+import db
 
 
 def data_callbacks(app):
@@ -30,7 +30,7 @@ def data_callbacks(app):
         Input('crops-dropdown', 'value')
     )
     def update_data_start_year_dropdown(crops_value):
-        return server.get_data_dict(crops_value)
+        return db.get_data_dict(crops_value)
 
     # End year
     @app.callback(
@@ -40,7 +40,7 @@ def data_callbacks(app):
          Input('data-start-year-dropdown', 'value')]
     )
     def update_data_end_year_dropdown(crops_value, start_year):
-        return server.get_data_dict(crops_value, start_year)
+        return db.get_data_dict(crops_value, start_year)
 
     # Download
     @app.callback(
@@ -56,7 +56,7 @@ def data_callbacks(app):
         trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
         if trigger_id == 'data-download-btn':
-            dataset = server.get_data(crops_value, start_year, end_year)
+            dataset = db.get_data(crops_value, start_year, end_year)
             return dcc.send_data_frame(dataset.to_csv, crops_value.lower()+'_dataset.csv', index=False)
         return None
 
@@ -68,7 +68,7 @@ def data_callbacks(app):
          Input('data-end-year-dropdown', 'value')],
     )
     def update_data_preview_table(crops_value, start_year, end_year):
-        return server.get_data(crops_value, start_year, end_year).to_dict('records')
+        return db.get_data(crops_value, start_year, end_year).to_dict('records')
 
 
 def handle_triggers(n_clicks, second_opt):
@@ -96,7 +96,7 @@ def compare_callbacks(app):
     def update_compare_first_dropdown(crops_value, filter):
         icon = 'ph:calendar-light' if filter == 'genotype' else 'ph:dna'
         width = 150 if filter == 'genotype' else 230
-        d, v = server.get_compare_dict(crops_value, filter)
+        d, v = db.get_compare_dict(crops_value, filter)
         return d, v, DashIconify(icon=icon, height=26), {"width": width}
 
     # Second dropdown
@@ -112,7 +112,7 @@ def compare_callbacks(app):
     def update_compare_genotype_dropdown(crops_value, first_selection, filter):
         icon = "ph:dna" if filter == 'genotype' else "ph:calendar-light"
         width = 230 if filter == 'genotype' else 150
-        d, v = server.get_compare_dict(crops_value, filter, first_selection)
+        d, v = db.get_compare_dict(crops_value, filter, first_selection)
         return d, v, DashIconify(icon=icon, height=26), {"width": width}
 
     # Clear storage

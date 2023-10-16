@@ -1,10 +1,16 @@
+from box import Box
 from pymongo.mongo_client import MongoClient
-from config import sv_config, config
 import pandas as pd
-from bson.json_util import dumps, loads
 import json
 
+sv_config = Box.from_yaml(filename=".env/sv_config.yml")
 client = MongoClient(sv_config.mongodb_uri)
+
+
+# ========== Env Queries==========#
+def get_config(ff, sf=None):
+    res = client['environment']['config'].find_one({}, {'_id': 0})
+    return res[ff] if sf is None else res[ff][sf]
 
 
 # ========== Data Page Queries==========#
@@ -113,12 +119,3 @@ def get_geodata():
         "features": features
     }
     return json.dumps(feature_collection)
-
-
-# def send_geodata():
-#     db = client['geodata']
-#     collection = db['kansas-counties']
-#     with open(config.data.geodata_path) as f:
-#         geodata = json.load(f)
-#     print("inserting")
-#     collection.insert_many(geodata['features'])

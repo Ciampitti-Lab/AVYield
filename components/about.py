@@ -1,9 +1,8 @@
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import dcc, html
-from config import config
 from dash_iconify import DashIconify
-
+from db import get_config
 
 def createNewPFP(person):
     if person == "Pedro":
@@ -116,7 +115,7 @@ layout = html.Div([
                         color="purple",
                         variant="outline",
                     ),
-                    href=config.paper_url,
+                    href=get_config('paper_url'),
                     target="_blank",
                 ),
                 dmc.Anchor(
@@ -129,14 +128,14 @@ layout = html.Div([
                         color="purple",
                         variant="outline",
                     ),
-                    href=config.github_url,
+                    href=get_config('github_url'),
                     target="_blank",
                 ),
                 dmc.Anchor(
                     dmc.Button(
                         "Ciampitti Lab",
                         leftIcon=dmc.Avatar(
-                            src=config.template.logo_src,
+                            src=get_config('template', 'logo_src'),
                             size=24,
                             radius="xs",
                             mr=0,
@@ -146,7 +145,7 @@ layout = html.Div([
                         color="purple",
                         variant="outline",
                     ),
-                    href=config.ciampitti_url,
+                    href=get_config('ciampitti_url'),
                     target="_blank",
                 ),
             ], style={"margin-bottom": "40px"})

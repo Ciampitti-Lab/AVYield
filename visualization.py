@@ -2,9 +2,8 @@ from dash import dash_table
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-from config import config
 import json
-import server
+import db
 
 conversion_rates = {  # From bu/ac
     'bu-ac': {
@@ -54,7 +53,7 @@ def compare_yield_bar(selected_crop, first_opt, second_opt, unit, filter, legend
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
 
-    df, col2 = server.get_compare_df(
+    df, col2 = db.get_compare_df(
         selected_crop, filter, first_opt, second_opt, conv_rate
     )
     df = df.groupby([col2, 'WATER_REGIME'])['YIELD'].mean().reset_index()
@@ -79,7 +78,7 @@ def compare_yield_box(selected_crop, first_opt, second_opt, unit, filter, legend
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
 
-    df, col2 = server.get_compare_df(
+    df, col2 = db.get_compare_df(
         selected_crop, filter, first_opt, second_opt, conv_rate
     )
 
@@ -107,7 +106,7 @@ def compare_county_yield_bar_graph(selected_crop, first_opt, second_opt, unit, f
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
 
-    df, col2 = server.get_compare_df(
+    df, col2 = db.get_compare_df(
         selected_crop, filter, first_opt, second_opt, conv_rate
     )
 
@@ -147,13 +146,13 @@ def compare_county_map(selected_crop, first_opt, second_opt, unit, filter):
     conv_rate = conversion_rates.get(unit, {}).get(selected_crop, None)
     unit_str = unit.replace('-', '/').replace('m', 'M')
 
-    df, _ = server.get_compare_df(
+    df, _ = db.get_compare_df(
         selected_crop, filter, first_opt, second_opt, conv_rate
     )
     df = df.groupby(['COUNTY'])['YIELD'].mean().reset_index()
     df["COUNTY"] = df["COUNTY"].apply(lambda x: x.capitalize())
 
-    geodata = json.loads(server.get_geodata())
+    geodata = json.loads(db.get_geodata())
 
     names_list = [feature['properties']['name']
                   for feature in geodata['features']]

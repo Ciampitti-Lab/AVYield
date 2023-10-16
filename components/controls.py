@@ -1,11 +1,10 @@
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
-from config import config
 from dash_iconify import DashIconify
+from db import get_config
 
-
-title = config.dash.app_title
+title = get_config('dash', 'app_title')
 
 crops = ["Corn", "Soybean", "Sunflower", "Wheat"]
 
@@ -32,7 +31,7 @@ CONTENT_STYLE = {
 sidebar = html.Div([
     html.Div([
         html.A([
-            html.Img(src=config.template.logo_src, className="sidebarLogo", style={
+            html.Img(src=get_config('template', 'logo_src'), className="sidebarLogo", style={
                 'width': '40%', 'height': 'auto'}),
         ], href="/",)
     ], style={'text-align': 'center'}),
@@ -114,13 +113,13 @@ footer = html.Div(
             " 2023 ",
             html.A(
                 "Ciampitti Lab",
-                href=config.ciampitti_url,
+                href=get_config('ciampitti_url'),
                 target="_blank"
             ),
             ". MIT License. Visit on ",
             html.A(
                 "Github",
-                href=config.github_url,
+                href=get_config('github_url'),
                 target="_blank"
             ),
             ".",
