@@ -19,7 +19,7 @@ template:
   fa_logo_src: ../assets/chart-line-solid.svg
   about_img_src: ../assets/cg-kansasstate-farm.jpg
   corn_img_src: ../assets/CorN.png
-  kansas_corn_logo: ../assets/KsCornLogo.png
+  kansas_corn_logo: "https://kscorn.com/wp-content/uploads/2020/01/KSCornLogo-no-line-png.png"
   CSI_logo: ../assets/CenterSorghumImprov.png
   id3a_logo: ../assets/ID3A.svg
   id3a_vertical_logo: ../assets/ID3A_vertical.svg
