@@ -1,0 +1,35 @@
+dash:
+  app_title: Crop Trials Visualization Tool
+  update_title: Updating...
+  theme: LUMEN
+  debug: True
+
+data:
+  canola_path: ./data/datasets/canola.csv
+  corn_path: ./data/datasets/corn.csv
+  sorghum_path: ./data/datasets/sorghum.csv
+  soybean_path: ./data/datasets/soybean.csv
+  sunflower_path: ./data/datasets/sunflower.csv
+  wheat_path: ./data/datasets/wheat.csv
+  county_path: ./data/datasets/county_data.csv
+  geodata_path: ./data/datasets/us-county-boundaries.geojson
+
+template:
+  logo_src: ../assets/KSU-Crops-logo.png
+  fa_logo_src: ../assets/chart-line-solid.svg
+  about_img_src: ../assets/cg-kansasstate-farm.jpg
+  corn_img_src: ../assets/CorN.png
+  kansas_corn_logo: ../assets/KsCornLogo.png
+  CSI_logo: ../assets/CenterSorghumImprov.png
+  id3a_logo: ../assets/ID3A.svg
+  id3a_vertical_logo: ../assets/ID3A_vertical.svg
+  github_logo: ../assets/github-mark.png
+
+version: v0.0.1
+last_updated: October 25, 2023
+github_url: https://github.com/cisdeli
+ciampitti_url: https://ciampittilab.wixsite.com/ciampitti-lab
+paper_url: https://arxiv.org/
+kansas_corn_url: https://kscorn.com/
+CSI_url: https://www.csisorghum.org/
+id3a_url: https://www.k-state.edu/next-gen/key-initiatives/interdisciplinary-institutes/digital-ag-advanced-analytics/
