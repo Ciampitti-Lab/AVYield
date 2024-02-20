@@ -79,26 +79,13 @@ def run_check(df, col, df_name):
 
 
 name_list = ["corn", "sorghum", "soybean", "sunflower", "wheat"]
-name_list = ["wheat"]
-# name_list = []
-# name_list.append("canola")
 
 for name in name_list:
     df = pd.read_csv("datasets/" + name + ".csv")
-    # Transform the columns: PCODE,YIELD,PAVG,TW,MOIST,HT,HEAD to int
-    # Disregarding NAs
-    # Fill NaN values with 0 before converting to int
-    df.PCODE = df.PCODE.fillna(0).astype(int)
-    df.YIELD = df.YIELD.fillna(0).astype(int)
-    df.PAVG = df.PAVG.fillna(0).astype(int)
-    df.TW = df.TW.fillna(0).astype(int)
-    df.MOIST = df.MOIST.fillna(0).astype(int)
-    df.HT = df.HT.fillna(0).astype(int)
-    df.HEAD = df.HEAD.fillna(0).astype(int)
-
 
     # df = col_to_upper(df, "NAME")
-    df.to_csv("datasets/" + name + ".csv", index=False)
+    # df.to_csv("datasets/" + name + ".csv", index=False)
+
     # run_check(df, 'NAME', unique_entry)
     # coa_name_two(df)
     # input("displayed " + name)
