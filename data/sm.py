@@ -1,39 +1,52 @@
 import pandas as pd
-from thefuzz import fuzz, process
+from thefuzz import process
 
 """
 Conclusions:
-    Canola:
+    Canola: !! done !!
         -- No way of knowing.
-    Corn:
-        --NAME: all are typos
+    Corn: !! done !!
+        --NAME: both cases could be fixed by using upper(NAME)
         --BRAND: casing issues
-    Sorghum:
-        --NAME: only one and is a typo
+    Sorghum: !! done !!
+        --NAME: both cases could be fixed by using upper(NAME)
         --BRAND: casing issues
     Soybean:
         --NAME: pretty confident that they aren't typos, should leave it be. 
         --BRAND: casing issues
-    Sunflower:
-        --NAME: no occurrences of matched names with diff pcodes 
+    Sunflower: !! done !!
+        --NAME: equal pcdoes with diff names could be fixed by using upper(NAME)
         --BRAND: casing issues
-    Wheat:
-        --NAME: all occurences of matched names with diff pcodes looks like
-        casing issues.
+    Wheat: !! done !!
+        --NAME: equal names with diff pcodes could be fixed by using upper(NAME)
         --BRAND: casing issues
 
 Course of Action:
-    NAME:
-        i-Force unique_entry to uppercase?
+    NAME: !!done!!
+        i-Force unique_entry to uppercase.
         ii-Match the names with same pcode.
         iii-Match the names with diff pcode with Soybean as an exception.
         
     BRAND: !!done!!
         Force uppercase in all entries.
 """
-def coa_brand(df):
-    df.BRAND = df.BRAND.str.upper()
+
+
+def col_to_upper(df, col):
+    df[col] = df[col].str.upper()
     return df
+
+
+def coa_name_two(df):
+    unique_entries = df["NAME"].fillna(0).unique()
+    unique_entries = [str(item) for item in unique_entries]
+    for unique_entry in unique_entries:
+        match, score = process.extractOne(unique_entry, unique_entries)
+        if score >= 80:
+            if unique_entry != match:
+                if not is_pcode_diff(df, unique_entry, match):
+                    print(f"Match:{unique_entry, match}")
+
 
 def is_pcode_diff(df, unique_entry, match):
     q1 = df.PCODE[df.NAME == unique_entry]
@@ -59,16 +72,33 @@ def check_string_matching(df, col="NAME"):
         else:
             print(f"Error:{unique_entry}")
 
+
 def run_check(df, col, df_name):
     check_string_matching(df, col)
-    input("Displayed " + df_name)
+    input("displayed " + df_name)
 
 
 name_list = ["corn", "sorghum", "soybean", "sunflower", "wheat"]
+name_list = ["wheat"]
 # name_list = []
-name_list.append("canola")
+# name_list.append("canola")
 
-for unique_entry in name_list:
-    df = pd.read_csv("datasets/" + unique_entry + ".csv")
-    # df.to_csv("datasets/" + unique_entry + ".csv", index=False)
-    run_check(df, 'BRAND', unique_entry)
+for name in name_list:
+    df = pd.read_csv("datasets/" + name + ".csv")
+    # Transform the columns: PCODE,YIELD,PAVG,TW,MOIST,HT,HEAD to int
+    # Disregarding NAs
+    # Fill NaN values with 0 before converting to int
+    df.PCODE = df.PCODE.fillna(0).astype(int)
+    df.YIELD = df.YIELD.fillna(0).astype(int)
+    df.PAVG = df.PAVG.fillna(0).astype(int)
+    df.TW = df.TW.fillna(0).astype(int)
+    df.MOIST = df.MOIST.fillna(0).astype(int)
+    df.HT = df.HT.fillna(0).astype(int)
+    df.HEAD = df.HEAD.fillna(0).astype(int)
+
+
+    # df = col_to_upper(df, "NAME")
+    df.to_csv("datasets/" + name + ".csv", index=False)
+    # run_check(df, 'NAME', unique_entry)
+    # coa_name_two(df)
+    # input("displayed " + name)
