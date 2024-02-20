@@ -30,7 +30,9 @@ Course of Action:
     BRAND:
         Force uppercase in all entries.
 """
-
+def coa_brand(df):
+    df.BRAND = df.BRAND.str.upper()
+    return df
 
 def is_pcode_diff(df, unique_entry, match):
     q1 = df.PCODE[df.NAME == unique_entry]
@@ -56,9 +58,14 @@ def check_string_matching(df, col="NAME"):
         else:
             print(f"Error:{unique_entry}")
 
+def run_check(df, col):
+    check_string_matching(df, col)
+    input("Displayed " + unique_entry)
+
 
 name_list = ["corn", "sorghum", "soybean", "sunflower", "wheat"]
 for unique_entry in name_list:
     df = pd.read_csv("datasets/" + unique_entry + ".csv")
-    check_string_matching(df, col='BRAND')
-    input("Displayed " + unique_entry)
+    # df = coa_brand(df)
+    # df.to_csv("datasets/" + unique_entry + ".csv", index=False)
+    run_check(df, 'BRAND')
