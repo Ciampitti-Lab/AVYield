@@ -24,9 +24,10 @@ Conclusions:
 
 Course of Action:
     NAME:
-        Force unique_entry to uppercase?
-        Match the names with same pcode.
-        Match the names with diff pcode with Soybean as an exception.
+        i-Force unique_entry to uppercase?
+        ii-Match the names with same pcode.
+        iii-Match the names with diff pcode with Soybean as an exception.
+        
     BRAND: !!done!!
         Force uppercase in all entries.
 """
@@ -63,11 +64,11 @@ def run_check(df, col, df_name):
     input("Displayed " + df_name)
 
 
-df = pd.read_csv("datasets/canola.csv")
-df.BRAND = df.BRAND.str.upper()
-run_check(df, 'BRAND', 'canola')
-# name_list = ["corn", "sorghum", "soybean", "sunflower", "wheat"]
-# for unique_entry in name_list:
-#     df = pd.read_csv("datasets/" + unique_entry + ".csv")
-#     # df.to_csv("datasets/" + unique_entry + ".csv", index=False)
-#     run_check(df, 'BRAND')
+name_list = ["corn", "sorghum", "soybean", "sunflower", "wheat"]
+# name_list = []
+name_list.append("canola")
+
+for unique_entry in name_list:
+    df = pd.read_csv("datasets/" + unique_entry + ".csv")
+    # df.to_csv("datasets/" + unique_entry + ".csv", index=False)
+    run_check(df, 'BRAND', unique_entry)
