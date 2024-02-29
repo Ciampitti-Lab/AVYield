@@ -1,7 +1,10 @@
+import io
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 df = pd.read_csv("datasets/corn.csv")
 # df = pd.read_csv("datasets/test.csv")
@@ -37,7 +40,17 @@ def brand_trendline(df):
 
 # brand_trendline(df)
 
+def show_on_plt(fig):
+    img_bytes = fig.to_image(format="png")
+    img = mpimg.imread(io.BytesIO(img_bytes), format='PNG')    
+    plt.figure(figsize=(10, 8))
+    plt.imshow(img)
+    plt.show()
+
 """
+Will be scrapping this visualization for a while. It's not very useful and
+we are already providing that kind of info on the first graph.
+
 Env mean:
     year x county_city = E x_Mean
 
@@ -45,9 +58,8 @@ Questions:
     - Do I need to plot the env_mean attributes (year, county_city)?
     - Is the current implementation correct?
     - What is the user input? Brand?
+    - 
 """
-
-
 def env_mean(df):
     _df = df.copy()
     _df["ENV_MEAN"] = _df.groupby(["YEAR", "COUNTY_CITY"])["YIELD"].transform("mean")
@@ -73,15 +85,14 @@ def env_mean(df):
         x1=max(_df["ENV_MEAN"]),
         y0=min(_df["ENV_MEAN"]),
         y1=max(_df["ENV_MEAN"]),
-        line=dict(color="black", width=2, dash="dash"),  
+        line=dict(color="black", width=2, dash="dash"),
         row="all",
         col="all",
     )
 
     fig.update_traces(marker={"size": 10})
     fig.for_each_annotation(lambda a: a.update(text=a.text.replace("Name=", "")))
-
     fig.show()
-
+    # show_on_plt(fig)
 
 env_mean(df)
