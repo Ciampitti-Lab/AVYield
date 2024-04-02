@@ -136,23 +136,38 @@ def callbacks(app):
 
     # Update Options in Crops Dropdown based on the states !! Change this implementation later !!
     @app.callback(
-        Output("crops-dropdown", "data", allow_duplicate=True),
-        Output("crops-dropdown", "value", allow_duplicate=True),
-        Input("states-dropdown", "value"),
-        prevent_initial_call="initial_duplicate",
+        Output("states-dropdown", "data"),
+        Output("states-dropdown", "value"),
+        Input("crops-dropdown", "value"),
+        Input("custom-data-store", "data"),
     )
-    def update_crops_dropdown_by_state(state):
-        if state == "KS":
-            return [
-                "Canola",
-                "Corn",
-                "Sorghum",
-                "Soybean",
-                "Sunflower",
-                "Wheat",
-            ], "Canola"
+    def update_state_by_crops_dropdown(crops_value, c_data):
+        if crops_value != "Custom":
+            if c_data is not None:
+                user = pd.read_json(io.StringIO(c_data))
+                user.NAME = "USER_" + user.NAME
+
+                db = vis.get_dataset(crops_value)
+
+                dataset = pd.concat([db, user], ignore_index=True)
+            else:
+                dataset = vis.get_dataset(crops_value)
+            dataset.loc[:, "STATE"] = dataset["STATE"].astype(str)
         else:
-            return ["Canola"], "Canola"
+            dataset = pd.read_json(io.StringIO(c_data))
+        print(
+            [
+                {"label": str(state), "value": state}
+                for state in sorted(dataset["STATE"].unique())
+            ]
+        )
+        return (
+            [
+                {"label": str(state), "value": state}
+                for state in sorted(dataset["STATE"].unique())
+            ],
+            "KS",
+        )
 
     # Update Options in Crops Dropdown
     @app.callback(
@@ -211,10 +226,8 @@ def callbacks(app):
     def update_compare_first_dropdown(c_data, crops_value, filter, state):
         if crops_value != "Custom":
             if c_data is not None:
-                print("Merging")
                 user = pd.read_json(io.StringIO(c_data))
                 user.NAME = "USER_" + user.NAME
-                print(user.head())
 
                 db = vis.get_dataset(crops_value)
 
