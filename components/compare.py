@@ -177,7 +177,7 @@ layout = html.Div([
                     html.Hr(),
                     dmc.RadioGroup(
                         [dmc.Radio(l, value=l) for l in [
-                            "Corn", "Sorghum", "Soybean", "Sunflower", "Wheat"]],
+                            "Canola", "Corn", "Sorghum", "Soybean", "Sunflower", "Wheat"]],
                         id="custom-crop",
                         value="Corn",
                         label="Ensure accurate unit conversion by selecting your crop:",
