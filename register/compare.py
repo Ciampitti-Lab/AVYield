@@ -213,13 +213,14 @@ def callbacks(app):
         Output("compare-first-dropdown", "icon"),
         Output("compare-first-dropdown", "style"),
         Input("custom-data-store", "data"),
+        Input("custom-crop", "value"),
         Input("crops-dropdown", "value"),
         Input("filter-opt", "value"),
         Input("states-dropdown", "value"),
     )
-    def update_compare_first_dropdown(c_data, crops_value, filter, state):
+    def update_compare_first_dropdown(c_data, custom_crop, crops_value, filter, state):
         if crops_value != "Custom":
-            if c_data is not None:
+            if c_data is not None and custom_crop == crops_value:
                 user = pd.read_json(io.StringIO(c_data))
                 user.NAME = "USER_" + user.NAME
 
@@ -264,16 +265,17 @@ def callbacks(app):
         Output("compare-second-dropdown", "icon"),
         Output("compare-second-dropdown", "style"),
         Input("custom-data-store", "data"),
+        Input("custom-crop", "value"),
         Input("crops-dropdown", "value"),
         Input("compare-first-dropdown", "value"),
         Input("filter-opt", "value"),
         Input("states-dropdown", "value"),
     )
     def update_compare_second_dropdown(
-        c_data, crops_value, first_dropdown_selection, filter, state
+        c_data, custom_crop, crops_value, first_dropdown_selection, filter, state
     ):
         if crops_value != "Custom":
-            if c_data is not None:
+            if c_data is not None and custom_crop == crops_value:
                 user = pd.read_json(io.StringIO(c_data))
                 user.NAME = "USER_" + user.NAME
 
