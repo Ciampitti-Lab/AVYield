@@ -1,3 +1,4 @@
+from pandas.core.common import count_not_none
 from data.pre_processing import datasets
 import plotly.express as px
 import pandas as pd
@@ -42,6 +43,26 @@ def table(selected_crop):
     return df.to_dict("records")
 
 
+def load_dataset(selected_crop, c_data, custom_crop_value, state):
+    if selected_crop != "Custom":
+        if c_data is not None and selected_crop == custom_crop_value:
+            print(c_data)
+            c_data.NAME = "USER_" + c_data.NAME
+            df = (datasets[selected_crop]).copy(deep=True)
+            df = pd.concat([df, c_data], ignore_index=True)
+            df.sort_values(by=["YEAR"])
+            df = df[df.STATE == state]
+        else:
+            df = (datasets[selected_crop]).copy(deep=True)
+            df = df[df.STATE == state]
+        c_unit = selected_crop
+    else:
+        df = c_data
+        df = df[df.STATE == state]
+        c_unit = custom_crop_value
+    return df, c_unit
+
+
 # Compare Yield Bar Graph
 def compare_yield_bar(
     selected_crop,
@@ -54,14 +75,7 @@ def compare_yield_bar(
     c_data,
     custom_crop_value,
 ):
-    if selected_crop != "Custom":
-        df = (datasets[selected_crop]).copy(deep=True)
-        df = df[df.STATE == state]
-        c_unit = selected_crop
-    else:
-        df = c_data
-        c_unit = custom_crop_value
-
+    df, c_unit = load_dataset(selected_crop, c_data, custom_crop_value, state)
     conv_rate = conversion_rates.get(unit, {}).get(c_unit, None)
 
     unit_str = unit.replace("-", "/").replace("m", "M")
@@ -119,14 +133,7 @@ def compare_yield_box(
     c_data,
     custom_crop_value,
 ):
-    if selected_crop != "Custom":
-        df = (datasets[selected_crop]).copy(deep=True)
-        df = df[df.STATE == state]
-        c_unit = selected_crop
-    else:
-        df = c_data
-        c_unit = custom_crop_value
-
+    df, c_unit = load_dataset(selected_crop, c_data, custom_crop_value, state)
     conv_rate = conversion_rates.get(unit, {}).get(c_unit, None)
 
     unit_str = unit.replace("-", "/").replace("m", "M")
@@ -171,14 +178,7 @@ def compare_yield_box(
 def compare_county_yield_bar_graph(
     selected_crop, first_opt, second_opt, state, unit, filter, c_data, custom_crop_value
 ):
-    if selected_crop != "Custom":
-        df = (datasets[selected_crop]).copy(deep=True)
-        df = df[df.STATE == state]
-        c_unit = selected_crop
-    else:
-        df = c_data
-        c_unit = custom_crop_value
-
+    df, c_unit = load_dataset(selected_crop, c_data, custom_crop_value, state)
     conv_rate = conversion_rates.get(unit, {}).get(c_unit, None)
 
     unit_str = unit.replace("-", "/").replace("m", "M")
