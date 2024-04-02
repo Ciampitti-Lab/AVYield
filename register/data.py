@@ -141,19 +141,3 @@ def callbacks(app):
         empty_dataframe = pd.DataFrame(data, columns=column_names)
         return empty_dataframe.to_dict("records"), True
 
-
-def handle_triggers(n_clicks, second_opt):
-    ctx = dash.callback_context
-    trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
-    if (
-        trigger_id == "compare-clear-btn"
-        or trigger_id == "compare-first-dropdown"
-        or trigger_id == "crops-dropdown"
-        or trigger_id == "filter-opt"
-    ):
-        return go.Figure()
-    if n_clicks is None:
-        return dash.no_update
-    if second_opt is None:
-        return dash.no_update
-    return None
