@@ -6,9 +6,6 @@ from config import config
 
 
 crops = ["Canola", "Corn", "Sorghum", "Soybean", "Sunflower", "Wheat"]
-# states = ['AL', 'AR', 'CO', 'GA', 'IA', 'IL', 'IN', 'KS', 'KY', 'LA', 'MD',
-#           'MN', 'MO', 'MS', 'MT', 'NC', 'NE', 'NJ', 'NM', 'OH', 'OK', 'OR',
-#           'PA', 'SC', 'SD', 'TN', 'TX', 'VA', 'VT', 'WA', 'WY']
 
 
 def get_icon(icon):

@@ -155,12 +155,6 @@ def callbacks(app):
             dataset.loc[:, "STATE"] = dataset["STATE"].astype(str)
         else:
             dataset = pd.read_json(io.StringIO(c_data))
-        print(
-            [
-                {"label": str(state), "value": state}
-                for state in sorted(dataset["STATE"].unique())
-            ]
-        )
         return (
             [
                 {"label": str(state), "value": state}
