@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 
 from config import config
 from components import controls
-import register
+from register import main, data, compare, control, home
 
 app = Dash(
     config.dash.app_title,
@@ -24,11 +24,11 @@ app.layout = html.Div(
     ],
 )
 
-register.main_callbacks(app)
-register.data_callbacks(app)
-register.compare_callbacks(app)
-register.control_callbacks(app)
-register.home_callbacks(app)
+main.callbacks(app)
+data.callbacks(app)
+compare.callbacks(app)
+control.callbacks(app)
+home.callbacks(app)
 
 if __name__ == "__main__":
     # app.run_server(host='0.0.0.0', port=8050) # local-host
