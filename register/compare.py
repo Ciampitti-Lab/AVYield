@@ -274,10 +274,8 @@ def callbacks(app):
     ):
         if crops_value != "Custom":
             if c_data is not None:
-                print("Merging")
                 user = pd.read_json(io.StringIO(c_data))
                 user.NAME = "USER_" + user.NAME
-                print(user.head())
 
                 db = vis.get_dataset(crops_value)
 
