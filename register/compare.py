@@ -27,6 +27,87 @@ def handle_triggers(n_clicks, second_opt):
         return dash.no_update
     return None
 
+
+def parse_contents(content, filename):
+    _content_type, content_string = content.split(",")
+
+    decoded = base64.b64decode(content_string)
+
+    if "csv" not in filename and "xls" not in filename:
+        df = None
+        children = html.Div(
+            [
+                dmc.Alert(
+                    "Make sure that you are uploading a .xls or .csv file.",
+                    title=dcc.Markdown(f"Failed to load file: *{filename}*"),
+                    color="red",
+                    withCloseButton=False,
+                ),
+            ]
+        )
+    else:
+        if "csv" in filename:
+            # Assume that the user uploaded a CSV file
+            df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
+        elif "xls" in filename:
+            # Assume that the user uploaded an excel file
+            df = pd.read_excel(io.BytesIO(decoded))
+
+        required_columns = ["YEAR", "WATER_REGIME", "NAME", "COUNTY_CITY"]
+
+        # Check if all required columns are present in the DataFrame
+        missing_columns = [col for col in required_columns if col not in df.columns]
+        if missing_columns:
+            children = html.Div(
+                [
+                    dmc.Alert(
+                        f"Missing columns {', '.join(missing_columns)}, some visualizations may be affected.",
+                        title=dcc.Markdown(f"File successfully loaded: *{filename}*"),
+                        color="orange",
+                        withCloseButton=False,
+                    ),
+                    dash_table.DataTable(
+                        df.to_dict("records"),
+                        [{"name": i, "id": i} for i in df.columns],
+                        page_size=10,
+                        style_data_conditional=[
+                            {
+                                "if": {"row_index": "even"},
+                                "backgroundColor": "rgb(220, 220, 220)",
+                            }
+                        ],
+                        style_cell={"text-align": "left"},
+                    ),
+                ]
+            )
+        else:
+            children = html.Div(
+                [
+                    dmc.Alert(
+                        f"All required columns found.",
+                        title=dcc.Markdown(f"File successfully loaded: *{filename}*"),
+                        color="violet",
+                        withCloseButton=False,
+                        mb=10,
+                    ),
+                    dash_table.DataTable(
+                        df.to_dict("records"),
+                        [{"name": i, "id": i} for i in df.columns],
+                        page_size=10,
+                        style_data_conditional=[
+                            {
+                                "if": {"row_index": "even"},
+                                "backgroundColor": "rgb(220, 220, 220)",
+                            }
+                        ],
+                        style_cell={"text-align": "left"},
+                    ),
+                ]
+            )
+
+    return df, children
+
+
 def callbacks(app):
     # Upload Data Modal
     @app.callback(
@@ -39,89 +120,6 @@ def callbacks(app):
         return not opened
 
     # Upload Data
-    def parse_contents(content, filename):
-        content_type, content_string = content.split(",")
-
-        decoded = base64.b64decode(content_string)
-
-        if "csv" not in filename and "xls" not in filename:
-            df = None
-            children = html.Div(
-                [
-                    dmc.Alert(
-                        "Make sure that you are uploading a .xls or .csv file.",
-                        title=dcc.Markdown(f"Failed to load file: *{filename}*"),
-                        color="red",
-                        withCloseButton=False,
-                    ),
-                ]
-            )
-        else:
-            if "csv" in filename:
-                # Assume that the user uploaded a CSV file
-                df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
-            elif "xls" in filename:
-                # Assume that the user uploaded an excel file
-                df = pd.read_excel(io.BytesIO(decoded))
-
-            required_columns = ["YEAR", "WATER_REGIME", "NAME", "COUNTY_CITY"]
-
-            # Check if all required columns are present in the DataFrame
-            missing_columns = [col for col in required_columns if col not in df.columns]
-            if missing_columns:
-                children = html.Div(
-                    [
-                        dmc.Alert(
-                            f"Missing columns {', '.join(missing_columns)}, some visualizations may be affected.",
-                            title=dcc.Markdown(
-                                f"File successfully loaded: *{filename}*"
-                            ),
-                            color="orange",
-                            withCloseButton=False,
-                        ),
-                        dash_table.DataTable(
-                            df.to_dict("records"),
-                            [{"name": i, "id": i} for i in df.columns],
-                            page_size=10,
-                            style_data_conditional=[
-                                {
-                                    "if": {"row_index": "even"},
-                                    "backgroundColor": "rgb(220, 220, 220)",
-                                }
-                            ],
-                            style_cell={"text-align": "left"},
-                        ),
-                    ]
-                )
-            else:
-                children = html.Div(
-                    [
-                        dmc.Alert(
-                            f"All required columns found.",
-                            title=dcc.Markdown(
-                                f"File successfully loaded: *{filename}*"
-                            ),
-                            color="violet",
-                            withCloseButton=False,
-                            mb=10,
-                        ),
-                        dash_table.DataTable(
-                            df.to_dict("records"),
-                            [{"name": i, "id": i} for i in df.columns],
-                            page_size=10,
-                            style_data_conditional=[
-                                {
-                                    "if": {"row_index": "even"},
-                                    "backgroundColor": "rgb(220, 220, 220)",
-                                }
-                            ],
-                            style_cell={"text-align": "left"},
-                        ),
-                    ]
-                )
-
-        return df, children
-
     @app.callback(
         Output("custom-data-store", "data"),
         Output("upload-modal-children", "children"),
@@ -212,10 +210,23 @@ def callbacks(app):
     )
     def update_compare_first_dropdown(c_data, crops_value, filter, state):
         if crops_value != "Custom":
-            dataset = vis.get_dataset(crops_value)
-            dataset = dataset[dataset.STATE == state]
+            if c_data is not None:
+                print("Merging")
+                user = pd.read_json(io.StringIO(c_data))
+                user.NAME = "USER_" + user.NAME
+                print(user.head())
+
+                db = vis.get_dataset(crops_value)
+
+                dataset = pd.concat([db, user], ignore_index=True)
+                dataset.sort_values(by=["YEAR"])
+                dataset = dataset[dataset.STATE == state]
+            else:
+                dataset = vis.get_dataset(crops_value)
+                dataset = dataset[dataset.STATE == state]
         else:
             dataset = pd.read_json(io.StringIO(c_data))
+            dataset = dataset[dataset.STATE == state]
 
         if filter == "genotype":
             return (
@@ -255,10 +266,23 @@ def callbacks(app):
         c_data, crops_value, first_dropdown_selection, filter, state
     ):
         if crops_value != "Custom":
-            dataset = vis.get_dataset(crops_value)
-            dataset = dataset[dataset.STATE == state]
+            if c_data is not None:
+                print("Merging")
+                user = pd.read_json(io.StringIO(c_data))
+                user.NAME = "USER_" + user.NAME
+                print(user.head())
+
+                db = vis.get_dataset(crops_value)
+
+                dataset = pd.concat([db, user], ignore_index=True)
+                dataset.sort_values(by=["YEAR"])
+                dataset = dataset[dataset.STATE == state]
+            else:
+                dataset = vis.get_dataset(crops_value)
+                dataset = dataset[dataset.STATE == state]
         else:
             dataset = pd.read_json(io.StringIO(c_data))
+            dataset = dataset[dataset.STATE == state]
 
         if filter == "genotype":
             dataset = dataset[dataset.YEAR == first_dropdown_selection]
