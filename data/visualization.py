@@ -56,7 +56,7 @@ def load_dataset(selected_crop, c_data, custom_crop_value, state):
             df = df[df.STATE == state]
         c_unit = selected_crop
     else:
-        df = c_data
+        df = c_data.copy(deep=True)
         df = df[df.STATE == state]
         c_unit = custom_crop_value
     return df, c_unit
