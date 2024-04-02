@@ -6,9 +6,9 @@ from config import config
 
 
 crops = ["Canola", "Corn", "Sorghum", "Soybean", "Sunflower", "Wheat"]
-states = ['AL', 'AR', 'CO', 'GA', 'IA', 'IL', 'IN', 'KS', 'KY', 'LA', 'MD',
-          'MN', 'MO', 'MS', 'MT', 'NC', 'NE', 'NJ', 'NM', 'OH', 'OK', 'OR',
-          'PA', 'SC', 'SD', 'TN', 'TX', 'VA', 'VT', 'WA', 'WY']
+# states = ['AL', 'AR', 'CO', 'GA', 'IA', 'IL', 'IN', 'KS', 'KY', 'LA', 'MD',
+#           'MN', 'MO', 'MS', 'MT', 'NC', 'NE', 'NJ', 'NM', 'OH', 'OK', 'OR',
+#           'PA', 'SC', 'SD', 'TN', 'TX', 'VA', 'VT', 'WA', 'WY']
 
 
 def get_icon(icon):
@@ -82,16 +82,6 @@ layout = html.Div([
         ]
     ),
     dbc.Stack([
-        dmc.Select(
-            id="states-dropdown",
-            data=states,
-            value="KS",
-            className="crops-dropdown",
-            style={"width": 160},
-            radius=20,
-            icon=DashIconify(
-                icon="emojione:flag-for-united-states", height=26),
-        ),
         dcc.Store(id='selected-opt-store'),
         dmc.Select(
             id="crops-dropdown",
@@ -101,6 +91,16 @@ layout = html.Div([
             style={"width": 160},
             radius=20,
             icon=DashIconify(icon="tdesign:corn", height=26),
+        ),
+        dmc.Select(
+            id="states-dropdown",
+            # data=states,
+            value="KS",
+            className="crops-dropdown",
+            style={"width": 160},
+            radius=20,
+            icon=DashIconify(
+                icon="emojione:flag-for-united-states", height=26),
         ),
         html.Div([
             dmc.Select(
