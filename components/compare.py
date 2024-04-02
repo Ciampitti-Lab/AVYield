@@ -141,7 +141,7 @@ layout = html.Div([
         ]),
         html.Div([
             dmc.Button(
-                "Upload your own all data",
+                "Upload your own data",
                 className="me-4",
                 id="upload-modal-button",
                 variant="outline",
