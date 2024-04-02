@@ -46,7 +46,6 @@ def table(selected_crop):
 def load_dataset(selected_crop, c_data, custom_crop_value, state):
     if selected_crop != "Custom":
         if c_data is not None and selected_crop == custom_crop_value:
-            print(c_data)
             c_data.NAME = "USER_" + c_data.NAME
             df = (datasets[selected_crop]).copy(deep=True)
             df = pd.concat([df, c_data], ignore_index=True)
