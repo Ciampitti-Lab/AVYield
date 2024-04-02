@@ -11,8 +11,8 @@
 
 ## Bugs
 
-- [ ] Custom Data is probably broken.
-- [ ] The lazy state dropdown implemenation causes a bug when:
+- [x] Custom Data is probably broken. FIXED
+- [x] The lazy state dropdown implemenation causes a bug when: FIXED
   - Select a crop in kansas.
   - Change to crop to canola.
   - doesn't seem to break anything though.
@@ -25,6 +25,7 @@
 - [x] hide some useless columns and make a user friendly standard.
 - [x] Add Lucas as a contributor.
 - [x] Fix Carlos pictures.
+- [ ] Better modal design (custom data)
 - [ ] Change the picture getter.
 - [ ] Add visual clue to indicate that the first dropdown is "fixed" while the second isn't; on analysis page.
 - [ ] Home page refactor.
@@ -36,13 +37,9 @@
   - [x] make it use the max yield to determine line and dot size.
 - [ ] annual trend.
 
-* Should we? there are brands that doesn't even exist anymore.
-
-- [ ] add brands as filters.
-
 ### Database
 
-- [ ] Remove duplicates/make the entries on NAME and BRAND standard.
+- [x] Remove duplicates/make the entries on NAME and BRAND standard.
 - [x] round everything to no decimal places
 - [x] st county: stanton to stafford.
 - [x] Fix FN - Finney, PH Phillips, Greeley GR
@@ -51,8 +48,8 @@
   - [x] Add State filter.
   - [x] Pre process all the data.
   - [x] Add data.
-  - [ ] THE YIELD IS IS lb/acre - convert it to bu/acre and add option to change. THE CURRENT CONVERSION AND UNIT IS WRONG!
-  - [ ] for some reason some entries filtering by year messes up the y axis a little, check on that later.
+  - [x] THE YIELD IS IS lb/acre - convert it to bu/acre and add option to change. THE CURRENT CONVERSION AND UNIT IS WRONG!
+  - [x] for some reason some entries filtering by year messes up the y axis a little, check on that later.
 
 #### Corn
 
@@ -79,14 +76,8 @@
 
 * Should we really display this information?
 
-- [ ] LOC S-soft wheat also NAME will have (S) at the end.
 - [x] Remove entries with NC, EC, NWD, SWD, IRR, SC NE, SE in LOC.\
 - [ ] Remove entries with MEAN on NAME.
-
-* The data is actually missing. Should we remove entries with no yield data?
-
-- [ ] No data on Year 1999 Finney and Thomas Irrigated.
-- [ ] No data on Year 2001 Stafford.
 
 ## To-do
 
@@ -103,7 +94,6 @@
 - [x] Fix, LOC, WATER_REGIME and COUNTY fields.
 - [x] Fix harvest_date unit.
 - [x] Figure site/loc acronyms: The location "code" is the 2-letter county abbreviation and "D" for dryland or "I" for irrigated for all crops. A "S" in wheat or corn is a soft test or a short season test and "C" and "O" are confectionary and oilseed respectively for sunflower.
-- [ ] Store only a fixed set of columns. Setup this columns in config.
 
 ### Front-end
 
