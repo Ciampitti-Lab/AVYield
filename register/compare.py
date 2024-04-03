@@ -145,7 +145,7 @@ def callbacks(app):
         if crops_value != "Custom":
             if c_data is not None:
                 user = pd.read_json(io.StringIO(c_data))
-                user.NAME = "USER_" + user.NAME
+                user.NAME = "[USER] " + user.NAME
 
                 db = vis.get_dataset(crops_value)
 
@@ -222,7 +222,7 @@ def callbacks(app):
         if crops_value != "Custom":
             if c_data is not None and custom_crop == crops_value:
                 user = pd.read_json(io.StringIO(c_data))
-                user.NAME = "USER_" + user.NAME
+                user.NAME = "[USER] " + user.NAME
 
                 db = vis.get_dataset(crops_value)
 
@@ -277,7 +277,7 @@ def callbacks(app):
         if crops_value != "Custom":
             if c_data is not None and custom_crop == crops_value:
                 user = pd.read_json(io.StringIO(c_data))
-                user.NAME = "USER_" + user.NAME
+                user.NAME = "[USER] " + user.NAME
 
                 db = vis.get_dataset(crops_value)
 
