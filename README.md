@@ -32,7 +32,6 @@
 
 ### Features
 
-- [ ] when data is not available at the county add a symbol or something like that
 - [x] add an avg line from the county
   - [x] make it use the max yield to determine line and dot size.
 - [ ] annual trend.
@@ -77,7 +76,7 @@
 * Should we really display this information?
 
 - [x] Remove entries with NC, EC, NWD, SWD, IRR, SC NE, SE in LOC.\
-- [ ] Remove entries with MEAN on NAME.
+- [x] Remove entries with MEAN on NAME.
 
 ## To-do
 
