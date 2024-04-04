@@ -54,105 +54,107 @@ layout = html.Div(
                 },
             },
             children=[
-                html.Div(
-                    [
-                        dmc.Button(
-                            "Upload your own data",
-                            className="me-4",
-                            id="upload-modal-button",
-                            variant="filled",
-                            leftIcon=DashIconify(icon="lucide:upload"),
-                            color="purple",
-                            radius=20,
-                            n_clicks=0,
-                        ),
-                        dmc.Modal(
-                            id="upload-modal",
-                            centered=True,
-                            zIndex=10000,
-                            size="xl",
-                            withCloseButton=False,
-                            children=[
-                                html.H1(
-                                    "Upload your own dataset!",
-                                    style={
-                                        "text-align": "left",
-                                        "font-weight": "600",
-                                        "margin-bottom": "0px",
-                                    },
-                                ),
-                                html.H5(
-                                    f"The dataset must contain the following columns so visualizations are as expected:",
-                                    style={
-                                        "text-align": "left",
-                                        "color": "#00000",
-                                        "margin-top": "10px",
-                                    },
-                                ),
-                                html.Ul(
-                                    [
-                                        html.Li("YEAR: year of the trial."),
-                                        html.Li(
-                                            "COUNTY: name of the location of the trial."
-                                        ),
-                                        html.Li("NAME: genotype name of the trial."),
-                                        html.Li(
-                                            "WATER_REGIME: water regime of the trial, accepted values are Irrigated or Dryland."
-                                        ),
-                                    ]
-                                ),
-                                html.Hr(),
-                                dmc.RadioGroup(
-                                    [
-                                        dmc.Radio(l, value=l)
-                                        for l in [
-                                            "Canola",
-                                            "Corn",
-                                            "Sorghum",
-                                            "Soybean",
-                                            "Sunflower",
-                                            "Wheat",
-                                        ]
-                                    ],
-                                    id="custom-crop",
-                                    value="Corn",
-                                    label="Ensure accurate unit conversion by selecting your crop:",
-                                    size="md",
-                                    mt=10,
-                                    mb=20,
-                                ),
-                                dcc.Upload(
-                                    id="upload-btn",
-                                    children=html.Div(
-                                        [
-                                            html.Div(
-                                                [  # Upload Btn
-                                                    "Drag and Drop or ",
-                                                    html.A("Select File"),
-                                                ],
-                                                style={
-                                                    "width": "100%",
-                                                    "height": "60px",
-                                                    "lineHeight": "60px",
-                                                    "borderWidth": "1px",
-                                                    "borderStyle": "dashed",
-                                                    "borderRadius": "5px",
-                                                    "textAlign": "center",
-                                                    "margin": "10px",
-                                                },
-                                            )
-                                        ]
-                                    ),
-                                    multiple=False,
-                                ),
-                                dcc.Store(id="custom-data-store"),
-                                html.Div(id="upload-modal-children"),
-                            ],
-                        ),
-                    ]
-                ),
                 dbc.Stack(
                     [
+                        html.Div(
+                            [
+                                dmc.Button(
+                                    "Upload your own data",
+                                    className="",
+                                    id="upload-modal-button",
+                                    variant="filled",
+                                    leftIcon=DashIconify(icon="lucide:upload"),
+                                    color="purple",
+                                    radius=20,
+                                    n_clicks=0,
+                                ),
+                                dmc.Modal(
+                                    id="upload-modal",
+                                    centered=True,
+                                    zIndex=10000,
+                                    size="xl",
+                                    withCloseButton=False,
+                                    children=[
+                                        html.H1(
+                                            "Upload your own dataset!",
+                                            style={
+                                                "text-align": "left",
+                                                "font-weight": "600",
+                                                "margin-bottom": "0px",
+                                            },
+                                        ),
+                                        html.H5(
+                                            f"The dataset must contain the following columns so visualizations are as expected:",
+                                            style={
+                                                "text-align": "left",
+                                                "color": "#00000",
+                                                "margin-top": "10px",
+                                            },
+                                        ),
+                                        html.Ul(
+                                            [
+                                                html.Li("YEAR: year of the trial."),
+                                                html.Li(
+                                                    "COUNTY: name of the location of the trial."
+                                                ),
+                                                html.Li(
+                                                    "NAME: genotype name of the trial."
+                                                ),
+                                                html.Li(
+                                                    "WATER_REGIME: water regime of the trial, accepted values are Irrigated or Dryland."
+                                                ),
+                                            ]
+                                        ),
+                                        html.Hr(),
+                                        dmc.RadioGroup(
+                                            [
+                                                dmc.Radio(l, value=l)
+                                                for l in [
+                                                    "Canola",
+                                                    "Corn",
+                                                    "Sorghum",
+                                                    "Soybean",
+                                                    "Sunflower",
+                                                    "Wheat",
+                                                ]
+                                            ],
+                                            id="custom-crop",
+                                            value="Corn",
+                                            label="Ensure accurate unit conversion by selecting your crop:",
+                                            size="md",
+                                            mt=10,
+                                            mb=20,
+                                        ),
+                                        dcc.Upload(
+                                            id="upload-btn",
+                                            children=html.Div(
+                                                [
+                                                    html.Div(
+                                                        [  # Upload Btn
+                                                            "Drag and Drop or ",
+                                                            html.A("Select File"),
+                                                        ],
+                                                        style={
+                                                            "width": "100%",
+                                                            "height": "60px",
+                                                            "lineHeight": "60px",
+                                                            "borderWidth": "1px",
+                                                            "borderStyle": "dashed",
+                                                            "borderRadius": "5px",
+                                                            "textAlign": "center",
+                                                            "margin": "10px",
+                                                        },
+                                                    )
+                                                ]
+                                            ),
+                                            multiple=False,
+                                        ),
+                                        dcc.Store(id="custom-data-store"),
+                                        html.Div(id="upload-modal-children"),
+                                    ],
+                                ),
+                            ]
+                        ),
                         html.Div(
                             [
                                 dmc.SegmentedControl(
