@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
-from dash import dcc, html, dash_table
+from dash import dcc, html
 from dash_iconify import DashIconify
 from config import config
 
@@ -210,7 +210,6 @@ layout = html.Div(
                 ),
                 dmc.Select(
                     id="states-dropdown",
-                    # data=states,
                     value="KS",
                     className="crops-dropdown",
                     style={"width": 160},
@@ -221,7 +220,6 @@ layout = html.Div(
                     [
                         dmc.Select(
                             id="compare-first-dropdown",
-                            # searchable=True,
                             style={"width": 150},
                             radius=20,
                             icon=DashIconify(icon="ph:calendar-light", height=26),
@@ -232,7 +230,6 @@ layout = html.Div(
                     [
                         dmc.Select(
                             id="compare-second-dropdown",
-                            # searchable=True,
                             style={"width": 230},
                             radius=20,
                             icon=DashIconify(icon="ph:dna", height=26),
@@ -351,26 +348,5 @@ layout = html.Div(
             ],
             justify="between",
         ),
-        # dbc.Row([
-        #     dbc.Row([
-        #         html.H1(
-        #             'Table',
-        #             style={'text-align': 'center'}
-        #         )
-        #     ]),
-        #     dash_table.DataTable(
-        #         id='table-data',
-        #         page_size=5,
-        #         style_data_conditional=[
-        #             {
-        #                 'if': {'row_index': 'even'},
-        #                 'backgroundColor': 'rgb(220, 220, 220)',
-        #             }
-        #         ],
-        #         style_cell={
-        #             'text-align': 'left'
-        #         }
-        #     ),
-        # ]),
     ]
 )

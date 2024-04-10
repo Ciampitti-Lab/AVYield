@@ -212,6 +212,7 @@ def callbacks(app):
         Output("compare-first-dropdown", "value"),
         Output("compare-first-dropdown", "icon"),
         Output("compare-first-dropdown", "style"),
+        Output("compare-first-dropdown", "searchable"),
         Input("custom-data-store", "data"),
         Input("custom-crop", "value"),
         Input("crops-dropdown", "value"),
@@ -245,6 +246,7 @@ def callbacks(app):
                 dataset.iloc[-1]["YEAR"],
                 DashIconify(icon="ph:calendar-light", height=26),
                 {"width": 150},
+                False,
             )
         elif filter == "year":
             dataset.loc[:, "NAME"] = dataset["NAME"].astype(str)
@@ -256,6 +258,7 @@ def callbacks(app):
                 dataset.iloc[0]["NAME"],
                 DashIconify(icon="ph:dna", height=26),
                 {"width": 230},
+                True,
             )
 
     # Second dropdown
@@ -264,6 +267,7 @@ def callbacks(app):
         Output("compare-second-dropdown", "value"),
         Output("compare-second-dropdown", "icon"),
         Output("compare-second-dropdown", "style"),
+        Output("compare-second-dropdown", "searchable"),
         Input("custom-data-store", "data"),
         Input("custom-crop", "value"),
         Input("crops-dropdown", "value"),
@@ -301,6 +305,7 @@ def callbacks(app):
                 names[0],
                 DashIconify(icon="ph:dna", height=26),
                 {"width": 230},
+                True,
             )
         elif filter == "year":
             dataset = dataset[dataset.NAME == first_dropdown_selection]
@@ -310,6 +315,7 @@ def callbacks(app):
                 years[0],
                 DashIconify(icon="ph:calendar-light", height=26),
                 {"width": 150},
+                False,
             )
 
     # Clear storage
