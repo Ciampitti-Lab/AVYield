@@ -248,7 +248,7 @@ def compare_county_yield_bar_graph(
     fig.for_each_xaxis(lambda x: x.update({"title": ""}))
     fig.update_layout(
         title={
-            "text": f"Yield Distribution by County/City for the Selected {filter.capitalize()}(s)"
+            "text": f"{first_opt} Yield Distribution by County/City for the Selected {filter.capitalize()}(s)"
         },
         paper_bgcolor="rgba(0,0,0,0)",
     )
