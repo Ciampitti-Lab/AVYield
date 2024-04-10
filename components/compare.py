@@ -221,6 +221,7 @@ layout = html.Div(
                         dmc.Select(
                             id="compare-first-dropdown",
                             style={"width": 150},
+                            searchable=True,
                             radius=20,
                             icon=DashIconify(icon="ph:calendar-light", height=26),
                         ),
@@ -231,6 +232,7 @@ layout = html.Div(
                         dmc.Select(
                             id="compare-second-dropdown",
                             style={"width": 230},
+                            searchable=True,
                             radius=20,
                             icon=DashIconify(icon="ph:dna", height=26),
                         ),
@@ -287,7 +289,7 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-county-yield-bar-graph",
-                                config={"displayModeBar": False},
+                                # config={"displayModeBar": False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
@@ -312,7 +314,7 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-yield-bar-graph",
-                                config={"displayModeBar": False},
+                                # config={"displayModeBar": False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
@@ -331,7 +333,7 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-yield-box-graph",
-                                config={"displayModeBar": False},
+                                # config={"displayModeBar": False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
