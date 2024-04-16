@@ -51,23 +51,29 @@ def createNewPFP(person):
         title = "MSc. Student at Kansas State University"
         link = "https://github.com/GustavoSantiago113"
     elif person == "Ignacio":
-        pic = "https://media.licdn.com/dms/image/C5603AQGw9vPFTyNuXA/profile-displayphoto-shrink_800_800/0/1627047084122?e=1707350400&v=beta&t=knXW8Kcs8xNyt7klGiQq-bkITxDyLeSlzM6wp1LPh4o"
+        pic = config.template.ignacio_pfp
         name = "Ignacio Ciampitti"
         prof = "Agronomist"
         title = "Ciampitti Lab Leader"
         link = "https://www.agronomy.k-state.edu/about/people/faculty/ciampitti-ignacio/"
     elif person == "Carlos":
-        pic = "https://media.licdn.com/dms/image/D5603AQH82E5UpIYQAQ/profile-displayphoto-shrink_200_200/0/1696041319368?e=1708560000&v=beta&t=smxE4cXQy0NKFCjrOjKWmzIIBLL8JlDIsMSma5wyCBY"
+        pic = config.template.carlos_pfp
         name = "Carlos Hernandez"
         prof = "Agronomist"
         title = "Research Associate at Kansas State University"
         link = "https://www.linkedin.com/in/carlos-hernandez-265797a1/"
     elif person == "Lucas":
-        pic = "https://media.licdn.com/dms/image/C4D03AQEbWSyuWIwVgQ/profile-displayphoto-shrink_200_200/0/1660946478693?e=1708560000&v=beta&t=ytDtIQR2S6Ob3SYsS8GTWw3SteoG63Ip0ATbhyjh9sc"
+        pic = config.template.lucas_pfp
         name = "Lucas Hiroshi Suguiura"
         prof = "Agronomist"
         title = "Research Scholar at Kansas State University"
         link = "https://www.linkedin.com/in/lucas-hiroshi-suguiura-60260a162/"
+    else:
+        pic = ""
+        name = ""
+        prof = ""
+        title = ""
+        link = ""
 
     return [
         dmc.Anchor(
@@ -100,7 +106,8 @@ def createNewPFP(person):
                     "margin-bottom": "10px",
                 }
             ),
-        ], spacing=1),
+        ], spacing=1, className="hide-on-small-screen"),
+
     ]
 
 

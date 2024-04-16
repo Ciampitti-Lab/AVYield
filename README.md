@@ -26,7 +26,7 @@
 - [x] Add Lucas as a contributor.
 - [x] Fix Carlos pictures.
 - [ ] Better modal design (custom data)
-- [ ] Change the picture getter.
+- [x] Change the picture getter.
 - [ ] Add visual clue to indicate that the first dropdown is "fixed" while the second isn't; on analysis page.
 - [ ] Home page refactor.
 

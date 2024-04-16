@@ -1,140 +1,146 @@
 /* styles.css */
 .home-jumbotron {
-  background: linear-gradient(
-      to right,
-      /* rgba(106, 65, 213, 0.75),
+    background: linear-gradient(to right,
+            /* rgba(106, 65, 213, 0.75),
       rgba(106, 65, 213, 0.75),
       rgba(106, 65, 213, 0.75),
       rgba(106, 65, 213, 0.75),
       rgba(106, 65, 213, 0.5),
       rgba(106, 65, 213, 0.3),
       rgba(0, 0, 0, 0) */
-        rgba(0, 0, 0, 0.6),
-      rgba(0, 0, 0, 0.6)
-    ),
-    url("cg-kansasstate-farm.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 100% 95%; /* This will center the background image horizontally and vertically */
-  margin-left: 0rem;
-  margin-right: 0rem;
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.6)),
+        url("cg-kansasstate-farm.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100% 95%;
+    /* This will center the background image horizontally and vertically */
+    margin-left: 0rem;
+    margin-right: 0rem;
 }
 
 .shadows-jumbotron {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
-    0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
+        0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* About page */
 .about-logo {
-  width: 350px;
-  height: auto;
-  margin-left: 200px;
+    width: 350px;
+    height: auto;
+    margin-left: 200px;
+}
+
+@media screen and (max-width: 1500px) {
+    .hide-on-small-screen {
+        display: none;
+    }
 }
 
 .mantine-Avatar-root.about-avatar {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5), 0 3px 4px 0 rgba(0, 0, 0, 0.08),
-    0 1px 5px 0 rgba(0, 0, 0, 0.1);
-  border: 4px solid rgb(97, 61, 189);
-  margin-left: 0px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5), 0 3px 4px 0 rgba(0, 0, 0, 0.08),
+        0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    border: 4px solid rgb(97, 61, 189);
+    margin-left: 0px;
 }
 
 .about-pfp-container {
-  border: 1px;
-  border-radius: 800px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.08),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  background-color: #faf9fd;
-  height: 80%;
-  width: 85%;
+    border: 1px;
+    border-radius: 800px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.08),
+        0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    background-color: #faf9fd;
+    height: 80%;
+    width: 85%;
 }
 
 .vertical-separator {
-  border: 3px;
-  border-left: 3px solid #a588f2;
-  border-radius: 10px;
-  height: 60px;
-  margin-left: 5px;
-  margin-right: 5px;
+    border: 3px;
+    border-left: 3px solid #a588f2;
+    border-radius: 10px;
+    height: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 /* Sidebar */
 .mantine-NavLink-root {
-  /* Make the background round */
-  border: 10px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-  color: rgb(120, 120, 120);
+    /* Make the background round */
+    border: 10px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    color: rgb(120, 120, 120);
 }
 
 /* Footer */
 .footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  padding: 0px; /* Adjust the padding as needed */
-  text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 0px;
+    /* Adjust the padding as needed */
+    text-align: center;
 }
 
 .sidebarLogo {
-  margin-bottom: 10px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 /* Compare page */
 .compare-plot {
-  border: 10px;
-  outline: 4px solid #ededed;
-  border-radius: 40px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
-  margin-bottom: 50px;
-  margin-top: 20px;
-  width: 48%;
+    border: 10px;
+    outline: 4px solid #ededed;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    margin-bottom: 50px;
+    margin-top: 20px;
+    width: 48%;
 }
 
 .compare-big-plot {
-  border: 10px;
-  outline: 4px solid #ededed;
-  border-radius: 40px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
-  margin-bottom: 20px;
-  margin-top: 20px;
-  width: 100%;
+    border: 10px;
+    outline: 4px solid #ededed;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
 }
 
 /* Dropdowns */
 .mantine-Select-withIcon:focus {
-  border-color: #8758ff;
+    border-color: #8758ff;
 }
 
 .mantine-Select-item[data-hovered] {
-  border: 40px;
-  border-radius: 40px;
+    border: 40px;
+    border-radius: 40px;
 }
 
 .mantine-Select-item[data-selected] {
-  border: 40px;
-  border-radius: 40px;
-  background-color: #8758ff;
+    border: 40px;
+    border-radius: 40px;
+    background-color: #8758ff;
 }
 
 .mantine-Select-item[data-selected]:hover {
-  background-color: #613dbd;
+    background-color: #613dbd;
 }
 
 .mantine-Select-item {
-  /* Inside Dropdown */
-  font-size: 15px;
-  font-weight: 560;
-  color: rgb(120, 120, 120);
+    /* Inside Dropdown */
+    font-size: 15px;
+    font-weight: 560;
+    color: rgb(120, 120, 120);
 }
 
 .mantine-Select-withIcon {
-  /* Actual Dropdown */
-  font-size: 18px;
-  font-weight: 560;
-  text-align: left;
-  color: rgb(120, 120, 120);
+    /* Actual Dropdown */
+    font-size: 18px;
+    font-weight: 560;
+    text-align: left;
+    color: rgb(120, 120, 120);
 }
