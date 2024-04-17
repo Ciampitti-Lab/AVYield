@@ -34,6 +34,7 @@
 
 - [x] add an avg line from the county
   - [x] make it use the max yield to determine line and dot size.
+- [ ] docs on data page.
 - [ ] annual trend.
 
 ### Database
