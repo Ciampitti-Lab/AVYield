@@ -5,15 +5,39 @@ import dash_player as dp
 from dash_iconify import DashIconify
 from config import config
 
-page_style = {
-    "margin-left": "2rem",
-    "margin-right": "0rem",
-    "padding": "1rem 1rem",
-}
 
-header_style = {
-    "margin-left": "10rem",
-}
+cards = [
+    {
+        "key": "1",
+        "header": "CornYield0N",
+        "caption": "The corny0 tool is based on a Machine Learning model to predict corn yield without N fertilizer as an approximation of soil N supply developed by Correndo et al. (2021).",
+        "src": "https://static.wixstatic.com/media/deef4b_d950a38feeaa49d2986a067c424da4f1~mv2.png/v1/fill/w_654,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/paste-39B54D97.png",
+        "caption_class_name": "custom-caption rounded lead",
+        "img_class_name": "w-100 custom-img",
+        "href": "https://ciampittilab.shinyapps.io/cornyield0N/",
+        "target": "_blank"
+    },
+    {
+        "key": "2",
+        "header": "DONMaiz",
+        "caption": "Compilation and analysis of 788 corn N fertilization trials carried out under a wide spectrum of soil and weather conditions across the Pampas.",
+        "src": "https://static.wixstatic.com/media/deef4b_805fb6f94df5406eb231f72d8313efbd~mv2.png/v1/fill/w_656,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/paste-2E73617F.png",
+        "caption_class_name": "custom-caption rounded lead",
+        "img_class_name": "w-100 custom-img",
+        "href": "https://ciampittilab.shinyapps.io/DONMaiz/#section-principal",
+        "target": "_blank"
+    },
+    {
+        "key": "3",
+        "header": "CorN",
+        "caption": "Using this tool, a farmer can know, based on their region, the economical and agronomic optimum rate for his/her corn.",
+        "src": config.template.corn_img_src,
+        "caption_class_name": "custom-caption rounded lead",
+        "img_class_name": "w-100 custom-img",
+        "href": "https://ciampittilab.shinyapps.io/CorN/",
+        "target": "_blank"
+    }
+]
 
 
 def getCard(name, description, imageURL, url):
@@ -42,14 +66,14 @@ def getCard(name, description, imageURL, url):
                         dmc.CardSection(
                             dmc.Image(
                                 src=imageURL,
-                                height=200,
+                                height=350,
                             )
                         ),
                         dmc.Group(
                             [
                                 dmc.Text(name, weight=500),
-                                # dmc.Badge("NEW", color="green",
-                                #           variant="light"),
+                                dmc.Badge("NEW", color="green",
+                                          variant="light"),
                             ],
                             position="center",
                             mt="md",
@@ -65,7 +89,7 @@ def getCard(name, description, imageURL, url):
                     withBorder=True,
                     shadow="sm",
                     radius="md",
-                    style={"width": 400},
+                    style={"width": 600},
                 ),
                 href=url,
                 target="_blank",
@@ -75,30 +99,45 @@ def getCard(name, description, imageURL, url):
 
 
 layout = html.Div([
-    html.Div(
-        dbc.Container([
-            html.H1(
-                "Crop Trials Analysis Tool",
-                className="display-1",
-                style={
-                    "color": "white",
-                    "text-shadow": "3px 3px 4px rgba(0, 0, 0, 0.4)",
-                    "font-weight": "400",
-                    "margin-bottom": "0px"
-                }
-            ),
-            html.H1(
-                "Year-to-year crop genotype yield analysis made simple.",
-                className="display-5",
-                style={
-                    "color": "white",
-                    "text-shadow": "2px 2px 3px rgba(0, 0, 0, 0.45)",
-                    "margin-top": "0px",
-                }
-            ),
-            html.Hr(className="lead", style={
-                    "color": "white", "width": "60%", "margin-right": "2em"}),
+    html.Div([
+        html.H1(
+            "Crop Trials Analysis Tool",
+            style={'text-align': 'left',
+                   'font-weight': '600', 'margin-bottom': '0px'}
+        ),
+        html.H2(
+            "Year-to-year crop genotype yield analysis made simple.",
+            style={'text-align': 'left',
+                   'font-style': 'italic', 'margin-top': '0px', 'margin-bottom': '0px'}
+        ),
+        html.H6(
+            f'Last Updated: {config.last_updated}.',
+            style={'text-align': 'left', 'color': '#7D7D7D', 'margin-top': '0px'}
+        )
+    ]),
 
+    dbc.Row([
+        dbc.Col([
+            html.Div([
+                html.H2(
+                    "Overview",
+                    style={
+                        "text-align": "left",
+                        "font-weight": "600",
+                        "margin-bottom": "0px",
+                        "margin-top": "20px",
+                    },
+                ),
+                html.H6(
+                    "Dashboard guide.",
+                    style={
+                        "text-align": "left",
+                        "color": "#7D7D7D",
+                        "margin-top": "0px",
+                        "margin-bottom": "0px",
+                    },
+                ),
+            ]),
             html.Div([
                 dmc.Button(
                     "Learn more",
@@ -122,66 +161,55 @@ layout = html.Div([
                         )
                     ],
                 ),
-            ]),
-        ], fluid=True, className=""),
-        className="p-3 bg-light home-jumbotron shadows-jumbotron mb-1"
-    ),
-
-    dbc.Row([
-        dbc.Stack([
-            html.Div([
-                html.H1(
-                    "Overview",
-                    style={
-                        "text-align": "left",
-                        "font-weight": "600",
-                        "margin-bottom": "0px",
-                        "margin-top": "5px",
-                    },
+            ], style={"margin-top": "10px"}),
+            dbc.Stack([
+                dcc.Markdown(
+                    "***Analysis Tool:*** Explore genotype-specific yield insights across multiple years and analyze the impact of water regimes and geographic locations on yields. Select the settings for the first three dropdowns, and use the last dropdown exclusively to adjust the data you wish to filter, choosing between genotype or year. For genotype filtering, fix the crop, state, and year, and alternate among various genotypes. For year filtering, keep the crop, state and genotype dropdowns constant, and cycle through different years. Additionally, you can upload your own data to compare with the existing datasets.",
+                    style={"font-size": "20px", "margin-top": "10px"}
                 ),
-                html.H6(
-                    "Dashboard guide.",
-                    style={
-                        "text-align": "left",
-                        "color": "#7D7D7D",
-                        "margin-top": "0px",
-                        "margin-bottom": "0px",
-                    },
+                dcc.Markdown(
+                    "***Data***: Download the data for your personal use. Access our extensive database to support your individual analysis and projects. Furthermore, we are providing some basic documentation and context to help you understand the data better. If you need more information, please contact us.",
+                    style={"font-size": "20px", "margin-top": "5px"}
+                ),
+                #
+                dcc.Markdown(
+                    "***Contact Us***: Get in touch with us easily using the provided contact information. We're here to assist you and answer any questions.",
+                    style={"font-size": "20px", "margin-top": "5px"}
                 ),
             ]),
-            dcc.Markdown(
-                "* ***Analysis Tool:*** Explore genotype-specific yield insights across multiple years. Analyze the impact of water regimes and geographic locations on yields.",
-                style={"font-size": "20px", "margin-top": "10px"}
+        ], width=6),
+        dbc.Col([
+            html.H2(
+                "Related Resources",
+                style={
+                    "text-align": "left",
+                    "font-weight": "600",
+                    "margin-bottom": "0px",
+                    "margin-top": "20px",
+                },
             ),
-            dcc.Markdown(
-                "* ***Data***: Download the data for your personal use. Access our extensive database to support your individual analysis and projects.",
-                style={"font-size": "20px", "margin-top": "5px"}
+            html.H6(
+                "Try out some other tools from our Lab/external sources.",
+                style={
+                    "text-align": "left",
+                    "color": "#7D7D7D",
+                    "margin-top": "0px",
+                    "margin-bottom": "30px",
+                },
             ),
-            #
-            dcc.Markdown(
-                "* ***Contact Us***: Get in touch with us easily using the provided contact information. We're here to assist you and answer any questions.",
-                style={"font-size": "20px", "margin-top": "5px"}
-            ),
-        ]),
-    ], style=page_style),
-    dbc.Row([
-        html.H1(
-            "Related Projects",
-            style={
-                "text-align": "left",
-                "font-weight": "600",
-                "margin-bottom": "10px",
-                "margin-top": "0px",
-            },
-        ),
-        dmc.Group([
-            getCard("CornYield0N", "The corny0 tool is based on a Machine Learning model to predict corn yield without N fertilizer as an approximation of soil N supply developed by Correndo et al. (2021).",
-                    "https://static.wixstatic.com/media/deef4b_d950a38feeaa49d2986a067c424da4f1~mv2.png/v1/fill/w_654,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/paste-39B54D97.png", "https://ciampittilab.shinyapps.io/cornyield0N/"),
-            getCard("DONMaiz", "Compilation and analysis of 788 corn N fertilization trials carried out under a wide spectrum of soil and weather conditions across the Pampas.",
-                    "https://static.wixstatic.com/media/deef4b_805fb6f94df5406eb231f72d8313efbd~mv2.png/v1/fill/w_656,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/paste-2E73617F.png", "https://ciampittilab.shinyapps.io/DONMaiz/#section-principal"),
-            getCard("CorN", "Using this tool, a farmer can know, based on their region, the economical and agronomic optimum rate for his/her corn.",
-                    config.template.corn_img_src, "https://ciampittilab.shinyapps.io/CorN/"),
-        ], position='center', grow=True, style={"margin-top": "15px", "margin-bottom": "15px"})
-
-    ], style=page_style),
-], style=header_style)
+            dbc.Row([
+                dbc.Carousel(
+                    items=[
+                        card for card in cards
+                    ],
+                    class_name="carousel-fade",
+                    variant="dark",
+                    controls=False,
+                    indicators=True,
+                    ride='carousel',
+                    interval=3000,
+                )
+            ]),
+        ], width=6),
+    ]),
+])

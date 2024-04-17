@@ -24,10 +24,9 @@ def callbacks(app):
         Input("url", "pathname"),
     )
     def update_style(pathname):
-        if pathname != "/":
-            return {
-                "margin-left": "12rem",
-                "margin-right": "2rem",
-                "padding": "2rem 1rem",
-                "padding-bottom": "0px",
-            }
+        return {
+            "margin-left": "12rem",
+            "margin-right": "2rem",
+            "padding": "2rem 1rem",
+            "padding-bottom": "0px",
+        }

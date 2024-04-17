@@ -1,28 +1,24 @@
 /* styles.css */
-.home-jumbotron {
-    background: linear-gradient(to right,
-            /* rgba(106, 65, 213, 0.75),
-      rgba(106, 65, 213, 0.75),
-      rgba(106, 65, 213, 0.75),
-      rgba(106, 65, 213, 0.75),
-      rgba(106, 65, 213, 0.5),
-      rgba(106, 65, 213, 0.3),
-      rgba(0, 0, 0, 0) */
-            rgba(0, 0, 0, 0.6),
-            rgba(0, 0, 0, 0.6)),
-        url("cg-kansasstate-farm.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 100% 95%;
-    /* This will center the background image horizontally and vertically */
-    margin-left: 0rem;
-    margin-right: 0rem;
+
+
+/* Home page */
+.custom-caption {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 3px;
+    border-style: solid;
+    border-color: #6B43D3;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+
 }
 
-.shadows-jumbotron {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
-        0 1px 5px 0 rgba(0, 0, 0, 0.2);
+.custom-img {
+    border: 6px;
+    border-style: solid;
+    border-color: #EDEDED;
+    border-radius: 20px;
 }
+
 
 /* About page */
 .about-logo {
