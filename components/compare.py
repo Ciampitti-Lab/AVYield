@@ -242,7 +242,7 @@ layout = html.Div(
                     [
                         dmc.Button(
                             "Add data",
-                            className="me-4",
+                            className="me-3",
                             variant="outline",
                             id="compare-add-btn",
                             leftIcon=DashIconify(icon="gala:add"),
