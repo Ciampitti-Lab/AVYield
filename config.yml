@@ -12,6 +12,7 @@ data:
   sunflower_path: ./data/datasets/sunflower.csv
   wheat_path: ./data/datasets/wheat.csv
   county_path: ./data/datasets/county_data.csv
+  docs_path: ./data/datasets/docs.csv
   geodata_path: ./data/datasets/us-county-boundaries.geojson
 
 template:

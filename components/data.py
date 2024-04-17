@@ -57,7 +57,7 @@ layout = html.Div([
         html.Div([
             dmc.Button(
                 "Download Dataset",
-                className="me-4",
+                className="me-1",
                 variant="outline",
                 id="data-download-btn",
                 leftIcon=DashIconify(icon="material-symbols:download"),
@@ -66,6 +66,49 @@ layout = html.Div([
                 n_clicks=0,
             ),
             dcc.Download(id="data-download"),
+        ]),
+        html.Div([
+            dmc.Button(
+                "Show Documentation",
+                variant="outline",
+                id="data-docs-btn",
+                leftIcon=DashIconify(icon="oui:documentation"),
+                color='violet',
+                radius=20,
+                n_clicks=0,
+            ),
+            dmc.Modal(
+                id="data-docs-modal",
+                centered=True,
+                zIndex=10000,
+                size="1500px",
+                withCloseButton=False,
+                children=[
+                    dmc.Skeleton(
+                        dash_table.DataTable(
+                            id='data-docs-table',
+                            page_size=20,
+                            style_data_conditional=[
+                                {
+                                    'if': {'row_index': 'even'},
+                                    'backgroundColor': 'rgb(220, 220, 220)',
+                                }
+                            ],
+                            style_cell={
+                                'text-align': 'left',
+                                'white-space': 'normal',
+                                'height': 'auto',
+                                'minWidth': '150px',
+                                'width': '150px',
+                                'maxWidth': '150px',
+                            },
+                        ),
+                        id='data-docs-skeleton',
+                        visible=False
+                    )
+                ],
+            ),
+
         ]),
     ], direction="horizontal", gap=3, style={"margin-bottom": 20}),
 

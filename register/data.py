@@ -6,23 +6,27 @@ from dash.dependencies import Input, Output, State
 from dash_iconify import DashIconify
 from data import visualization as vis
 from dash_iconify import DashIconify
+from config import config
 
 
 def callbacks(app):
     # Title
     @app.callback(
-        Output("data-selected-crop", "children"), Input("data-crops-dropdown", "value")
+        Output("data-selected-crop",
+               "children"), Input("data-crops-dropdown", "value")
     )
     def update_data_selected_crop(crop_value):
         text_before = f"Set the parameters to download the "
-        text_modified = html.Span(crop_value.lower(), style={"font-weight": "bold"})
+        text_modified = html.Span(crop_value.lower(), style={
+                                  "font-weight": "bold"})
         text_after = f" dataset:"
 
         return html.Div([text_before, text_modified, text_after])
 
     # Update Icon in Crops Dropdown
     @app.callback(
-        Output("data-crops-dropdown", "icon"), Input("data-crops-dropdown", "value")
+        Output("data-crops-dropdown",
+               "icon"), Input("data-crops-dropdown", "value")
     )
     def update_header_dropdown_icon(selected_crop):
         icons = {
@@ -66,7 +70,8 @@ def callbacks(app):
     def update_data_end_year_dropdown(crops_value, start_year):
         dataset = vis.get_dataset(crops_value)
         available_years = dataset["YEAR"].unique()
-        filtered_years = [year for year in available_years if year >= start_year]
+        filtered_years = [
+            year for year in available_years if year >= start_year]
         end_year_value = filtered_years[-1] if filtered_years else None
         return [
             {"label": str(year), "value": year} for year in filtered_years
@@ -107,6 +112,39 @@ def callbacks(app):
             )
         return None
 
+    # Docs modal
+    @app.callback(
+        Output("data-docs-modal", "opened"),
+        Input("data-docs-btn", "n_clicks"),
+        State("data-docs-modal", "opened"),
+        prevent_initial_call=True,
+    )
+    def toggle_modal(n_clicks, opened):
+        return not opened
+
+    # Docs Table
+    @app.callback(
+        Output("data-docs-table", "data"),
+        Output("data-docs-skeleton", "visible"),
+        [
+            Input("data-crops-dropdown", "value"),
+            Input("update-interval", "n_intervals"),
+        ],
+    )
+    def update_data_docs_table(crops_value, n_intervals):
+        column_names = ["Attribute", "Type", "Description"]
+        if n_intervals > 1:
+            # Show only column names with an empty table for the first 5 seconds
+            dataset = pd.read_csv(config.data.docs_path)
+            dataset = dataset[dataset["Dataset"].isin([crops_value, "All"])]
+            dataset = dataset[column_names]
+            return dataset.to_dict("records"), False
+
+        data = [[""] * len(column_names) for _ in range(20)]
+        empty_dataframe = pd.DataFrame(
+            data, columns=column_names)
+        return empty_dataframe.to_dict("records"), True
+
     # Preview Table
     @app.callback(
         Output("data-preview-table", "data"),
@@ -140,4 +178,3 @@ def callbacks(app):
         data = [[""] * len(column_names) for _ in range(20)]
         empty_dataframe = pd.DataFrame(data, columns=column_names)
         return empty_dataframe.to_dict("records"), True
-
