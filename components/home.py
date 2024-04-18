@@ -40,64 +40,6 @@ cards = [
 ]
 
 
-def getCard(name, description, imageURL, url):
-    return dmc.MantineProvider(
-        theme={
-            "colors": {
-                "purple": [
-                    "#FAF9FD",
-                    "#DED7F2",
-                    "#C2B1EE",
-                    "#A588F2",
-                    "#8758FF",
-                    "#774AEB",
-                    "#6A41D5",
-                    "#613DBD",
-                    "#5C429F",
-                    "#574486",
-                    "#514373",
-                ],
-            },
-        },
-        children=[
-            html.A(
-                dmc.Card(
-                    children=[
-                        dmc.CardSection(
-                            dmc.Image(
-                                src=imageURL,
-                                height=350,
-                            )
-                        ),
-                        dmc.Group(
-                            [
-                                dmc.Text(name, weight=500),
-                                dmc.Badge("NEW", color="green",
-                                          variant="light"),
-                            ],
-                            position="center",
-                            mt="md",
-                            mb="xs",
-                        ),
-                        dmc.Text(
-                            description,
-                            size="sm",
-                            color="dimmed",
-                            style={"text-align": "center"}
-                        ),
-                    ],
-                    withBorder=True,
-                    shadow="sm",
-                    radius="md",
-                    style={"width": 600},
-                ),
-                href=url,
-                target="_blank",
-                style={"text-decoration": "none"}
-            )
-        ])
-
-
 layout = html.Div([
     html.Div([
         html.H1(
@@ -164,7 +106,11 @@ layout = html.Div([
             ], style={"margin-top": "10px"}),
             dbc.Stack([
                 dcc.Markdown(
-                    "***Analysis Tool:*** Explore genotype-specific yield insights across multiple years and analyze the impact of water regimes and geographic locations on yields. Select the settings for the first three dropdowns, and use the last dropdown exclusively to adjust the data you wish to filter, choosing between genotype or year. For genotype filtering, fix the crop, state, and year, and alternate among various genotypes. For year filtering, keep the crop, state and genotype dropdowns constant, and cycle through different years. Additionally, you can upload your own data to compare with the existing datasets.",
+                    "***Overview Page***: Access yield data across genotypes, combining crop type, state, year, and county/city. Gain quick insights by visualizing the performance of different genotypes in locations and under water regimes similar to yours.",
+                    style={"font-size": "20px", "margin-top": "5px"}
+                ),
+                dcc.Markdown(
+                    "***Compare Page***: Explore genotype-specific yield insights across multiple years and analyze the impact of water regimes and geographic locations on yields. Select the settings for the first three dropdowns, and use the last dropdown exclusively to adjust the data you wish to filter, choosing between genotype or year. For genotype filtering, fix the crop, state, and year, and alternate among various genotypes. For year filtering, keep the crop, state and genotype dropdowns constant, and cycle through different years. Additionally, you can upload your own data to compare with the existing datasets.",
                     style={"font-size": "20px", "margin-top": "10px"}
                 ),
                 dcc.Markdown(
