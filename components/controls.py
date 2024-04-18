@@ -76,8 +76,17 @@ sidebar = html.Div([
                     id='sidebar-home'
                 ),
                 dmc.NavLink(
+                    icon=get_icon(icon="fluent-mdl2:calendar-year"),
+                    label=dmc.Text("Overview", weight=400),
+                    href="/overview",
+                    variant="filled",
+                    active=True,
+                    color="purple",
+                    id='sidebar-overview'
+                ),
+                dmc.NavLink(
                     icon=get_icon(icon="ph:presentation-chart"),
-                    label=dmc.Text("Analysis", weight=400),
+                    label=dmc.Text("Compare", weight=400),
                     href="/compare",
                     variant="filled",
                     active=True,

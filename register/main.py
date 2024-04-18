@@ -1,5 +1,5 @@
 from dash.dependencies import Input, Output
-from components import home, compare, data, about, controls
+from components import home, overview, compare, data, about, controls
 
 
 def callbacks(app):
@@ -8,6 +8,8 @@ def callbacks(app):
     def display_page(pathname):
         if pathname == "/":
             return [home.layout, controls.footer]
+        elif pathname == "/overview":
+            return [overview.layout, controls.footer]
         elif pathname == "/compare":
             return [compare.layout, controls.footer]
         elif pathname == "/data":

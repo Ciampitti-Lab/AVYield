@@ -3,12 +3,13 @@ import dash_bootstrap_components as dbc
 
 from config import config
 from components import controls
-from register import main, data, compare, control, home
+from register import main, data, overview, compare, control, home
 
 app = Dash(
     config.dash.app_title,
     suppress_callback_exceptions=True,
-    external_stylesheets=[getattr(dbc.themes, config.dash.theme), "styles.css"],
+    external_stylesheets=[
+        getattr(dbc.themes, config.dash.theme), "styles.css"],
 )
 
 server = app.server
@@ -26,6 +27,7 @@ app.layout = html.Div(
 
 main.callbacks(app)
 data.callbacks(app)
+overview.callbacks(app)
 compare.callbacks(app)
 control.callbacks(app)
 home.callbacks(app)

@@ -6,6 +6,8 @@ def callbacks(app):
     @app.callback(
         Output("sidebar-home", "active"),
         Output("sidebar-home", "color"),
+        Output("sidebar-overview", "active"),
+        Output("sidebar-overview", "color"),
         Output("sidebar-compare", "active"),
         Output("sidebar-compare", "color"),
         Output("sidebar-data", "active"),
@@ -16,10 +18,12 @@ def callbacks(app):
     )
     def update_sidebar_color(pathname):
         if pathname == "/":
-            return True, "purple", False, "black", False, "black", False, "black"
+            return True, "purple", False, "black", False, "black", False, "black", False, "black"
+        elif pathname == "/overview":
+            return False, "black", True, "purple", False, "black", False, "black", False, "black"
         elif pathname == "/compare":
-            return False, "black", True, "purple", False, "black", False, "black"
+            return False, "black", False, "black", True, "purple", False, "black", False, "black"
         elif pathname == "/data":
-            return False, "black", False, "black", True, "purple", False, "black"
+            return False, "black", False, "black", False, "black", True, "purple", False, "black"
         elif pathname == "/about":
-            return False, "black", False, "black", False, "black", True, "purple"
+            return False, "black", False, "black", False, "black", False, "black", True, "purple"

@@ -62,6 +62,38 @@ def load_dataset(selected_crop, c_data, custom_crop_value, state):
     return df, c_unit
 
 
+def ov_yield_bar(selected_crop, year, loc, state, unit):
+    df, c_unit = load_dataset(selected_crop, "", "", state)
+    conv_rate = conversion_rates.get(unit, {}).get(c_unit, None)
+
+    unit_str = unit.replace("-", "/").replace("m", "M")
+    df.YIELD = df.YIELD * conv_rate
+    df = df[(df["YEAR"] == year) & (df["COUNTY_CITY"] == loc)].groupby(
+        ["NAME", "WATER_REGIME", "COUNTY_CITY"]
+    )["YIELD"].mean().reset_index()
+
+    color_map = {"Irrigated": "darkblue", "Dryland": "orange"}
+    fig = px.bar(df, x="YIELD", y="NAME", color="WATER_REGIME",
+                 barmode="group",
+                 color_discrete_map=color_map,
+                 labels={
+                     "YEAR": "Year",
+                     "YIELD": f"Yield ({unit_str})",
+                     "WATER_REGIME": "Water Regime",
+                     "NAME": "Genotype",
+                 },
+                 title="Yearly Yield Trend")
+
+    fig.update_layout(
+        title={
+            "text": f"{year} {selected_crop} Yield by Genotype in {loc.title()}, {state}"
+        },
+        paper_bgcolor="rgba(0,0,0,0)",
+        height=900,
+    )
+    return fig
+
+
 # Compare Yield Bar Graph
 def compare_yield_bar(
     selected_crop,
@@ -90,7 +122,8 @@ def compare_yield_bar(
         .reset_index()
     )
     df = df.sort_values(
-        by=col2, key=lambda x: x.map(dict(zip(second_opt, range(len(second_opt)))))
+        by=col2, key=lambda x: x.map(
+            dict(zip(second_opt, range(len(second_opt)))))
     )
 
     if filter == "year":
@@ -142,7 +175,8 @@ def compare_yield_box(
     df = df[df[col1] == first_opt]
     df = df.loc[df[col2].isin(second_opt)]
     df = df.sort_values(
-        by=col2, key=lambda x: x.map(dict(zip(second_opt, range(len(second_opt)))))
+        by=col2, key=lambda x: x.map(
+            dict(zip(second_opt, range(len(second_opt)))))
     )
 
     df.YEAR = df.YEAR.astype(str)
@@ -197,7 +231,8 @@ def compare_county_yield_bar_graph(
     )
 
     df = df.sort_values(
-        by=col2, key=lambda x: x.map(dict(zip(second_opt, range(len(second_opt)))))
+        by=col2, key=lambda x: x.map(
+            dict(zip(second_opt, range(len(second_opt)))))
     )
     fig = px.bar(
         df,
@@ -244,7 +279,8 @@ def compare_county_yield_bar_graph(
         )
 
     # Setting the cosmetics
-    fig.for_each_annotation(lambda a: a.update(text=a.text.replace("Name=", "")))
+    fig.for_each_annotation(lambda a: a.update(
+        text=a.text.replace("Name=", "")))
     fig.for_each_xaxis(lambda x: x.update({"title": ""}))
     fig.update_layout(
         title={
