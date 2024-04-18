@@ -17,7 +17,7 @@ layout = html.Div(
         html.Div(
             [
                 html.H1(
-                    "Analytical Overview",
+                    "In Depth Comparison",
                     style={
                         "text-align": "left",
                         "font-weight": "600",
@@ -93,7 +93,8 @@ layout = html.Div(
                                         ),
                                         html.Ul(
                                             [
-                                                html.Li("YEAR: year of the trial."),
+                                                html.Li(
+                                                    "YEAR: year of the trial."),
                                                 html.Li(
                                                     "COUNTY: name of the location of the trial."
                                                 ),
@@ -132,7 +133,8 @@ layout = html.Div(
                                                     html.Div(
                                                         [  # Upload Btn
                                                             "Drag and Drop or ",
-                                                            html.A("Select File"),
+                                                            html.A(
+                                                                "Select File"),
                                                         ],
                                                         style={
                                                             "width": "100%",
@@ -181,7 +183,8 @@ layout = html.Div(
                                             "label": "Filter by Genotype",
                                             "value": "genotype",
                                         },
-                                        {"label": "Filter by Year", "value": "year"},
+                                        {"label": "Filter by Year",
+                                            "value": "year"},
                                     ],
                                     radius=30,
                                     color="purple",
@@ -214,7 +217,8 @@ layout = html.Div(
                     className="crops-dropdown",
                     style={"width": 160},
                     radius=20,
-                    icon=DashIconify(icon="emojione:flag-for-united-states", height=26),
+                    icon=DashIconify(
+                        icon="emojione:flag-for-united-states", height=26),
                 ),
                 html.Div(
                     [
@@ -223,7 +227,8 @@ layout = html.Div(
                             style={"width": 150},
                             searchable=True,
                             radius=20,
-                            icon=DashIconify(icon="ph:calendar-light", height=26),
+                            icon=DashIconify(
+                                icon="ph:calendar-light", height=26),
                         ),
                     ]
                 ),
@@ -289,7 +294,7 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-county-yield-bar-graph",
-                                # config={"displayModeBar": False},
+                                config={"displayModeBar": False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
@@ -314,7 +319,7 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-yield-bar-graph",
-                                # config={"displayModeBar": False},
+                                config={"displayModeBar": False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
@@ -333,7 +338,7 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-yield-box-graph",
-                                # config={"displayModeBar": False},
+                                config={"displayModeBar": False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
