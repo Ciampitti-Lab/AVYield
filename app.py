@@ -1,5 +1,6 @@
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
+import os
 
 from config import config
 from components import controls
@@ -34,4 +35,5 @@ home.callbacks(app)
 
 if __name__ == "__main__":
     # app.run_server(host='0.0.0.0', port=8050) # local-host
-    app.run_server(debug=True)
+    # app.run_server(debug=True)
+    app.run_server(debug=True, host="0.0.0.0", port=8080, use_reloader=False)
