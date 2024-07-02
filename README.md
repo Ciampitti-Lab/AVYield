@@ -9,6 +9,12 @@
 - [Reference app](https://analytics.iasoybeans.com/cool-apps/ISOFAST/)
 - [Geo Data](https://public.opendatasoft.com/explore/dataset/us-county-boundaries)
 
+## Last to-Do list hopefully
+
+- [ ] Prepare README file.
+- [ ] Better UI on upload custom data.
+- [ ] Add site selection feature on compare tab. Use a check to hide the dropdown and the feature.
+
 ## Bugs
 
 - [x] Custom Data is probably broken. FIXED
