@@ -1,15 +1,9 @@
-import pandas as pd
-import dash
-import plotly.graph_objects as go
-from dash import dcc, html, dash_table
-from dash.dependencies import Input, Output, State
+from dash import html
+from dash.dependencies import Input, Output
 from dash_iconify import DashIconify
 from data import visualization as vis
 from dash_iconify import DashIconify
-import dash_mantine_components as dmc
-import base64
-import io
-
+from config import config
 
 def callbacks(app):
     # Update Icon in Crops Dropdown
@@ -19,7 +13,7 @@ def callbacks(app):
             "Canola": DashIconify(icon="mdi:oil-saver", height=26),
             "Corn": DashIconify(icon="mdi:corn", height=26),
             "Sorghum": DashIconify(icon="fluent:food-grains-20-filled", height=26),
-            "Soybean": DashIconify(icon="fluent-emoji-high-contrast:beans", height=26),
+            "Soybean": html.Img(src=config.template.soybean_vector, height=26),
             "Wheat": DashIconify(icon="lucide:wheat", height=26),
             "Sunflower": DashIconify(
                 icon="fluent-emoji-high-contrast:sunflower", height=26

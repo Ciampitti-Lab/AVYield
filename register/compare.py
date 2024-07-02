@@ -9,6 +9,7 @@ from dash_iconify import DashIconify
 import dash_mantine_components as dmc
 import base64
 import io
+from config import config
 
 
 def handle_triggers(n_clicks, second_opt):
@@ -56,13 +57,15 @@ def parse_contents(content, filename):
         required_columns = ["YEAR", "WATER_REGIME", "NAME", "COUNTY_CITY"]
 
         # Check if all required columns are present in the DataFrame
-        missing_columns = [col for col in required_columns if col not in df.columns]
+        missing_columns = [
+            col for col in required_columns if col not in df.columns]
         if missing_columns:
             children = html.Div(
                 [
                     dmc.Alert(
                         f"Missing columns {', '.join(missing_columns)}, some visualizations may be affected.",
-                        title=dcc.Markdown(f"File successfully loaded: *{filename}*"),
+                        title=dcc.Markdown(
+                            f"File successfully loaded: *{filename}*"),
                         color="orange",
                         withCloseButton=False,
                     ),
@@ -85,7 +88,8 @@ def parse_contents(content, filename):
                 [
                     dmc.Alert(
                         f"All required columns found.",
-                        title=dcc.Markdown(f"File successfully loaded: *{filename}*"),
+                        title=dcc.Markdown(
+                            f"File successfully loaded: *{filename}*"),
                         color="violet",
                         withCloseButton=False,
                         mb=10,
@@ -197,7 +201,7 @@ def callbacks(app):
             "Canola": DashIconify(icon="mdi:oil-saver", height=26),
             "Corn": DashIconify(icon="mdi:corn", height=26),
             "Sorghum": DashIconify(icon="fluent:food-grains-20-filled", height=26),
-            "Soybean": DashIconify(icon="fluent-emoji-high-contrast:beans", height=26),
+            "Soybean": html.Img(src=config.template.soybean_vector, height=26),
             "Wheat": DashIconify(icon="lucide:wheat", height=26),
             "Sunflower": DashIconify(
                 icon="fluent-emoji-high-contrast:sunflower", height=26
@@ -384,7 +388,8 @@ def callbacks(app):
                             },
                         },
                         children=[
-                            dmc.Badge(selected_items, color="purple", size="xl", mt=10)
+                            dmc.Badge(selected_items, color="purple",
+                                      size="xl", mt=10)
                         ],
                     )
                 )
@@ -433,7 +438,8 @@ def callbacks(app):
             return fig
         else:
             custom_df = (
-                pd.read_json(io.StringIO(c_data)) if c_data is not None else None
+                pd.read_json(io.StringIO(c_data)
+                             ) if c_data is not None else None
             )
             return (
                 vis.compare_yield_bar(
@@ -485,7 +491,8 @@ def callbacks(app):
             return fig
         else:
             custom_df = (
-                pd.read_json(io.StringIO(c_data)) if c_data is not None else None
+                pd.read_json(io.StringIO(c_data)
+                             ) if c_data is not None else None
             )
             return (
                 vis.compare_yield_box(
@@ -537,7 +544,8 @@ def callbacks(app):
             return fig
         else:
             custom_df = (
-                pd.read_json(io.StringIO(c_data)) if c_data is not None else None
+                pd.read_json(io.StringIO(c_data)
+                             ) if c_data is not None else None
             )
             return (
                 vis.compare_county_yield_bar_graph(
