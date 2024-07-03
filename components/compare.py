@@ -96,13 +96,15 @@ layout = html.Div(
                                                 html.Li(
                                                     "YEAR: year of the trial."),
                                                 html.Li(
-                                                    "COUNTY: name of the location of the trial."
+                                                    "STATE: US state where the trial was conducted."),
+                                                html.Li(
+                                                    "COUNTY_CITY: name of the location of the trial."
                                                 ),
                                                 html.Li(
                                                     "NAME: genotype name of the trial."
                                                 ),
                                                 html.Li(
-                                                    "WATER_REGIME: water regime of the trial, accepted values are Irrigated or Dryland."
+                                                    "WATER_REGIME: water regime of the trial, accepted values are Irrigated, Dryland or Unknown."
                                                 ),
                                             ]
                                         ),
