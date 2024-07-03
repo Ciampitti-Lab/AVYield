@@ -1,6 +1,8 @@
 from pandas.core.common import count_not_none
 from data.pre_processing import datasets
 import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 import pandas as pd
 
 
@@ -234,58 +236,137 @@ def compare_county_yield_bar_graph(
         by=col2, key=lambda x: x.map(
             dict(zip(second_opt, range(len(second_opt)))))
     )
-    fig = px.bar(
-        df,
-        x="COUNTY_CITY",
-        y="YIELD",
-        color_discrete_map=color_map,
-        facet_col=col2,
-        color="WATER_REGIME",
-        barmode="group",
-        labels={
-            "NAME": "Name",
-            "YIELD": f"Yield ({unit_str})",
-            "WATER_REGIME": "Water Regime",
-            "YEAR": "Year",
-            "COUNTY_CITY": "County/City",
-        },
+
+    unique_names = df[col2].unique()
+    fig = make_subplots(
+        rows=1, cols=len(unique_names), shared_yaxes=True, subplot_titles=[str(name) for name in unique_names],
+        horizontal_spacing=0.01
     )
 
-    # Add a line trace for each county's average yield
-    avg_yield_county.rename(
-        columns={"avg": "Average Yield", "COUNTY_CITY": "County/City"}, inplace=True
-    )
-    for i, county in enumerate(df["COUNTY_CITY"].unique()):
-        curr = avg_yield_county[avg_yield_county["County/City"] == county]
-        fig.add_trace(
-            px.scatter(
-                curr,
-                x="County/City",
-                y="Average Yield",
-                color_discrete_sequence=["#6A41D5"],
-            ).data[0],
-            row="all",
-            col="all",
+    added_legend_items = set()
+    # Add bar plots and average yield lines to each subplot
+    for i, name in enumerate(unique_names):
+        df_facet = df[df[col2] == name]
+        bar_fig = px.bar(
+            df_facet,
+            x="COUNTY_CITY",
+            y="YIELD",
+            color="WATER_REGIME",
+            labels={
+                "NAME": "Name",
+                "YIELD": f"Yield ({unit_str})",
+                "WATER_REGIME": "Water Regime",
+                "YEAR": "Year",
+                "COUNTY_CITY": "County/City",
+            },
+            color_discrete_map=color_map,
+            barmode="group",
         )
-        fig.add_shape(
-            type="line",
-            x0=i - 0.3,
-            x1=i + 0.3,
-            y0=curr["Average Yield"].min(),
-            y1=curr["Average Yield"].min(),
-            row="all",
-            col="all",
-            line=dict(color="#6A41D5", width=3, dash="dashdot"),
-        )
+
+        # Add bar traces
+        for trace in bar_fig.data:
+            # Show legend only for the first subplot
+            if trace.name not in added_legend_items:
+                trace.showlegend = True
+                added_legend_items.add(trace.name)
+            else:
+                trace.showlegend = False
+
+            trace.width = 0.3
+            fig.add_trace(trace, row=1, col=i+1)
+
+        # Add average yield line and scatter point
+        for county in df_facet["COUNTY_CITY"].unique():
+            curr = avg_yield_county[avg_yield_county["COUNTY_CITY"] == county]
+            fig.add_trace(
+                go.Scatter(
+                    x=[county],
+                    y=[curr["avg"].values[0]],
+                    mode='markers',
+                    marker=dict(color="#000000"),
+                    # Show legend only for the first subplot
+                    name='Average Yield' if i == 0 else None,
+                    showlegend=False
+                ),
+                row=1,
+                col=i+1
+            )
+
+            fig.add_shape(
+                type="line",
+                x0=county,
+                x1=county,
+                y0=0,
+                y1=curr["avg"].values[0],
+                line=dict(color="#000000", width=5, dash="dashdot"),
+                row=1,
+                col=i+1
+            )
 
     # Setting the cosmetics
-    fig.for_each_annotation(lambda a: a.update(
-        text=a.text.replace("Name=", "")))
-    fig.for_each_xaxis(lambda x: x.update({"title": ""}))
     fig.update_layout(
+        height=450,
         title={
             "text": f"{first_opt} Yield Distribution by County/City for the Selected {filter.capitalize()}(s)"
         },
         paper_bgcolor="rgba(0,0,0,0)",
+        showlegend=True,
+        legend=dict(orientation='h', yanchor='bottom',
+                    y=-0.3, xanchor='center', x=0.5)
     )
+
+    # fig = px.bar(
+    #     df,
+    #     x="COUNTY_CITY",
+    #     y="YIELD",
+    #     color_discrete_map=color_map,
+    #     facet_col=col2,
+    #     color="WATER_REGIME",
+    #     barmode="group",
+    #     labels={
+    #         "NAME": "Name",
+    #         "YIELD": f"Yield ({unit_str})",
+    #         "WATER_REGIME": "Water Regime",
+    #         "YEAR": "Year",
+    #         "COUNTY_CITY": "County/City",
+    #     },
+    # )
+    #
+    # # Add a line trace for each county's average yield
+    # avg_yield_county.rename(
+    #     columns={"avg": "Average Yield", "COUNTY_CITY": "County/City"}, inplace=True
+    # )
+    # for i, county in enumerate(df["COUNTY_CITY"].unique()):
+    #     curr = avg_yield_county[avg_yield_county["County/City"] == county]
+    #     fig.add_trace(
+    #         px.scatter(
+    #             curr,
+    #             x="County/City",
+    #             y="Average Yield",
+    #             color_discrete_sequence=["#6A41D5"],
+    #         ).data[0],
+    #         row="all",
+    #         col="all",
+    #     )
+    #     fig.add_shape(
+    #         type="line",
+    #         x0=i - 0.3,
+    #         x1=i + 0.3,
+    #         y0=curr["Average Yield"].min(),
+    #         y1=curr["Average Yield"].min(),
+    #         row="all",
+    #         col="all",
+    #         line=dict(color="#6A41D5", width=3, dash="dashdot"),
+    #     )
+    #
+    # # Setting the cosmetics
+    # fig.for_each_annotation(lambda a: a.update(
+    #     text=a.text.replace("Name=", "")))
+    # fig.for_each_xaxis(lambda x: x.update({"title": ""}))
+    # fig.update_layout(
+    #     title={
+    #         "text": f"{first_opt} Yield Distribution by County/City for the Selected {filter.capitalize()}(s)"
+    #     },
+    #     paper_bgcolor="rgba(0,0,0,0)",
+    # )
     return fig
