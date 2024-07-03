@@ -113,7 +113,7 @@ layout = html.Div([
             dmc.LoadingOverlay(
                 dcc.Graph(
                     id="ov-bar-graph",
-                    config={"displayModeBar": False},
+                    config={"displayModeBar": True, "displaylogo": False},
                     style={"margin-top": "20px"},
                 ),
                 loaderProps={

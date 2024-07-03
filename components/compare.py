@@ -296,7 +296,8 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-county-yield-bar-graph",
-                                config={"displayModeBar": False},
+                                config={"displayModeBar": True,
+                                        'displaylogo': False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
@@ -321,7 +322,8 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-yield-bar-graph",
-                                config={"displayModeBar": False},
+                                config={"displayModeBar": True,
+                                        'displaylogo': False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={
@@ -340,7 +342,8 @@ layout = html.Div(
                         dmc.LoadingOverlay(
                             dcc.Graph(
                                 id="compare-yield-box-graph",
-                                config={"displayModeBar": False},
+                                config={"displayModeBar": True,
+                                        'displaylogo': False},
                                 style={"margin-top": "20px"},
                             ),
                             loaderProps={

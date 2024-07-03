@@ -12,6 +12,10 @@ import io
 from config import config
 
 
+modebar_config = ["toImage", "zoom", "lasso", "pan", "zoomIn", "zoomOut",
+                  "autoscale", "resetScale", "select2d", "logo"]
+
+
 def handle_triggers(n_clicks, second_opt):
     ctx = dash.callback_context
     trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
@@ -434,7 +438,7 @@ def callbacks(app):
     ):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+            fig.update_layout(modebar_remove=modebar_config)
             return fig
         else:
             custom_df = (
@@ -487,7 +491,7 @@ def callbacks(app):
     ):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+            fig.update_layout(modebar_remove=modebar_config)
             return fig
         else:
             custom_df = (
@@ -540,7 +544,7 @@ def callbacks(app):
     ):
         if stored_items is None:
             fig = go.Figure()
-            fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
+            fig.update_layout(modebar_remove=modebar_config)
             return fig
         else:
             custom_df = (

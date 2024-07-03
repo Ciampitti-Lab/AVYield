@@ -26,7 +26,12 @@ conversion_rates = {  # From bu/ac
 }
 
 
+config = ["zoom", "lasso", "pan", "zoomIn", "zoomOut",
+          "autoscale", "resetScale", "select2d", "logo"]
+
 # General methods
+
+
 def get_dataset(selected_crop):
     return datasets[selected_crop]
 
@@ -90,8 +95,8 @@ def ov_yield_bar(selected_crop, year, loc, state, unit):
         title={
             "text": f"{year} {selected_crop} Yield by Genotype in {loc.title()}, {state}"
         },
-        paper_bgcolor="rgba(0,0,0,0)",
         height=900,
+        modebar_remove=config,
     )
     return fig
 
@@ -150,7 +155,7 @@ def compare_yield_bar(
         title={
             "text": f"{first_opt} Average Yield for the Selected {filter.capitalize()}(s)"
         },
-        paper_bgcolor="rgba(0,0,0,0)",
+        modebar_remove=config,
     )
     return fig
 
@@ -204,7 +209,7 @@ def compare_yield_box(
         title={
             "text": f"{first_opt} Yield Distribution Box Plot for the Selected {filter.capitalize()}(s)"
         },
-        paper_bgcolor="rgba(0,0,0,0)",
+        modebar_remove=config,
     )
     return fig
 
@@ -285,7 +290,7 @@ def compare_county_yield_bar_graph(
                     mode='markers',
                     marker=dict(color="#000000"),
                     # Show legend only for the first subplot
-                    name='Average Yield' if i == 0 else None,
+                    name='Average Yield',
                     showlegend=False
                 ),
                 row=1,
@@ -303,70 +308,27 @@ def compare_county_yield_bar_graph(
                 col=i+1
             )
 
+    # Dummy scatter to add to the legend
+    fig.add_trace(
+        go.Scatter(
+            x=[None],
+            y=[None],
+            mode='markers',
+            marker=dict(color="#000000"),
+            name='Average Yield on the respective Location',
+            showlegend=True
+        )
+    )
     # Setting the cosmetics
     fig.update_layout(
         height=450,
         title={
             "text": f"{first_opt} Yield Distribution by County/City for the Selected {filter.capitalize()}(s)"
         },
-        paper_bgcolor="rgba(0,0,0,0)",
         showlegend=True,
         legend=dict(orientation='h', yanchor='bottom',
-                    y=-0.3, xanchor='center', x=0.5)
+                    y=-0.3, xanchor='center', x=0.5),
+        modebar_remove=config,
     )
 
-    # fig = px.bar(
-    #     df,
-    #     x="COUNTY_CITY",
-    #     y="YIELD",
-    #     color_discrete_map=color_map,
-    #     facet_col=col2,
-    #     color="WATER_REGIME",
-    #     barmode="group",
-    #     labels={
-    #         "NAME": "Name",
-    #         "YIELD": f"Yield ({unit_str})",
-    #         "WATER_REGIME": "Water Regime",
-    #         "YEAR": "Year",
-    #         "COUNTY_CITY": "County/City",
-    #     },
-    # )
-    #
-    # # Add a line trace for each county's average yield
-    # avg_yield_county.rename(
-    #     columns={"avg": "Average Yield", "COUNTY_CITY": "County/City"}, inplace=True
-    # )
-    # for i, county in enumerate(df["COUNTY_CITY"].unique()):
-    #     curr = avg_yield_county[avg_yield_county["County/City"] == county]
-    #     fig.add_trace(
-    #         px.scatter(
-    #             curr,
-    #             x="County/City",
-    #             y="Average Yield",
-    #             color_discrete_sequence=["#6A41D5"],
-    #         ).data[0],
-    #         row="all",
-    #         col="all",
-    #     )
-    #     fig.add_shape(
-    #         type="line",
-    #         x0=i - 0.3,
-    #         x1=i + 0.3,
-    #         y0=curr["Average Yield"].min(),
-    #         y1=curr["Average Yield"].min(),
-    #         row="all",
-    #         col="all",
-    #         line=dict(color="#6A41D5", width=3, dash="dashdot"),
-    #     )
-    #
-    # # Setting the cosmetics
-    # fig.for_each_annotation(lambda a: a.update(
-    #     text=a.text.replace("Name=", "")))
-    # fig.for_each_xaxis(lambda x: x.update({"title": ""}))
-    # fig.update_layout(
-    #     title={
-    #         "text": f"{first_opt} Yield Distribution by County/City for the Selected {filter.capitalize()}(s)"
-    #     },
-    #     paper_bgcolor="rgba(0,0,0,0)",
-    # )
     return fig
