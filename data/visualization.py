@@ -315,7 +315,7 @@ def compare_county_yield_bar_graph(
             y=[None],
             mode='markers',
             marker=dict(color="#000000"),
-            name='Average Yield on the respective Location',
+            name='Average Yield by Location',
             showlegend=True
         )
     )
