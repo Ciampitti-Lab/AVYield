@@ -91,6 +91,7 @@
     outline: 4px solid #ededed;
     border-radius: 40px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    padding-bottom: 12px;
     margin-bottom: 50px;
     margin-top: 20px;
     width: 48%;
@@ -102,6 +103,7 @@
     border-radius: 40px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
     margin-bottom: 20px;
+    padding-bottom: 12px;
     margin-top: 20px;
     width: 100%;
 }
