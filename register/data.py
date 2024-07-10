@@ -1,5 +1,6 @@
 import pandas as pd
 import dash
+from flask import jsonify
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from dash_iconify import DashIconify
@@ -75,6 +76,19 @@ def callbacks(app):
         return [
             {"label": str(year), "value": year} for year in filtered_years
         ], end_year_value
+
+    # Raw view routing
+    @app.server.route("/data/raw/<query>")
+    def display_raw_data(query):
+        crop = query.split("-")[0]
+        year = query.split("-")[1]
+        end_year = query.split("-")[2]
+        dataset = vis.get_dataset(crop.capitalize())
+        # Need to add error handling here later
+        dataset = dataset[
+            (dataset["YEAR"] >= int(year)) & (dataset["YEAR"] <= int(end_year))
+        ]
+        return jsonify(dataset.to_dict(orient="records"))
 
     # Download
     @app.callback(
