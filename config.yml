@@ -21,7 +21,6 @@ template:
   about_img_src: ../assets/cg-kansasstate-farm.jpg
   corn_img_src: ../assets/CorN.png
   kansas_corn_logo: "https://kscorn.com/wp-content/uploads/2020/01/KSCornLogo-no-line-png.png"
-  CSI_logo: ../assets/CenterSorghumImprov.png
   id3a_logo: ../assets/ID3A.svg
   id3a_vertical_logo: ../assets/ID3A_vertical.svg
   github_logo: ../assets/github-mark.png
@@ -36,5 +35,4 @@ github_url: https://github.com/cisdeli
 ciampitti_url: https://ciampittilab.wixsite.com/ciampitti-lab
 paper_url: https://arxiv.org/
 kansas_corn_url: https://kscorn.com/
-CSI_url: https://www.csisorghum.org/
 id3a_url: https://www.k-state.edu/next-gen/key-initiatives/interdisciplinary-institutes/digital-ag-advanced-analytics/

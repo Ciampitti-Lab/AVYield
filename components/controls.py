@@ -126,10 +126,6 @@ footer = html.Div(
                     'width': '5%', 'height': 'auto'}),
             ], href=config.kansas_corn_url, target='_blank'),
             html.A([
-                html.Img(src=config.template.CSI_logo, className="sidebarLogo", style={
-                    'width': '7%', 'height': 'auto'}),
-            ], href=config.CSI_url, target='_blank'),
-            html.A([
                 html.Img(src=config.template.logo_src, className="sidebarLogo", style={
                     'width': '3%', 'height': 'auto'}),
             ], href=config.ciampitti_url, target='_blank'),
