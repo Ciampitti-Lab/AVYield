@@ -62,7 +62,7 @@ layout = html.Div([
         dbc.Col([
             html.Div([
                 html.H2(
-                    "Overview",
+                    "Home",
                     style={
                         "text-align": "left",
                         "font-weight": "600",
