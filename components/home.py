@@ -43,7 +43,7 @@ cards = [
 layout = html.Div([
     html.Div([
         html.H1(
-            "Crop Trials Analysis Tool",
+            "AVYield Analysis and Visualization of Crop Yield Trials",
             style={'text-align': 'left',
                    'font-weight': '600', 'margin-bottom': '0px'}
         ),

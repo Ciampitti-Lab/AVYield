@@ -32,12 +32,10 @@ CONTENT_STYLE = {
 sidebar = html.Div([
     html.Div([
         html.A([
-            html.Img(src=config.template.logo_src, className="sidebarLogo", style={
-                'width': '40%', 'height': 'auto'}),
-            html.Img(src=config.template.id3a_vertical_logo, className="sidebarLogo", style={
-                'width': '90%', 'height': 'auto'}),
-        ], href="/",)
-    ], style={'text-align': 'center'}),
+            html.Img(src=config.template.avyield_logo_src, className="sidebarLogo", style={
+                'width': '140px', 'height': 'auto'}),
+        ], href="/", style={'display': 'flex', 'justify-content': 'center', 'align-items': 'center'})
+    ]),
     html.Div(
         style={'display': 'flex', 'justify-content': 'center',
                'align-items': 'center'},

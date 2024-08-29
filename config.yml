@@ -17,6 +17,7 @@ data:
 
 template:
   logo_src: ../assets/KSU-Crops-logo.png
+  avyield_logo_src: ../assets/avyield-logo.png
   fa_logo_src: ../assets/chart-line-solid.svg
   about_img_src: ../assets/cg-kansasstate-farm.jpg
   corn_img_src: ../assets/CorN.png
