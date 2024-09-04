@@ -117,8 +117,8 @@ sidebar = html.Div([
 
 
 footer = html.Div(
-    html.Footer(
-        [
+    html.Footer([
+        html.Div([
             html.A([
                 html.Img(src=config.template.kansas_corn_logo, className="sidebarLogo", style={
                     'width': '5%', 'height': 'auto'}),
@@ -131,7 +131,50 @@ footer = html.Div(
                 html.Img(src=config.template.id3a_logo, className="sidebarLogo", style={
                     'width': '18%', 'height': 'auto'}),
             ], href=config.id3a_url, target='_blank'),
-        ],
-        className="text-center footer",
-    ),
+        ]),
+        html.Div([
+            html.P([
+                html.A("AVYield",
+                       href="http://avyield.com",
+                       rel="cc:attributionURL",
+                       style={"color": "#4F2683"}
+                       ),
+                " by ",
+                html.A("Pedro Henrique Cisdeli",
+                       href="http://www.cisdeli.dev",
+                       rel="cc:attributionURL dct:creator",
+                       target="_blank",
+                       style={"color": "#4F2683"}
+                       ),
+                " and ",
+                html.A("Ignacio Ciampitti",
+                       href="https://ciampittilab.wixsite.com/ciampitti-lab",
+                       rel="cc:attributionURL dct:creator",
+                       target="_blank",
+                       style={"color": "#4F2683"}
+                       ),
+                " is licensed under ",
+                html.A([
+                    "Creative Commons Attribution 4.0 International",
+                    html.Img(
+                        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1",
+                        style={"height": "22px", "marginLeft": "3px",
+                               "verticalAlign": "text-bottom"},
+                        alt=""
+                    ),
+                    html.Img(
+                        src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1",
+                        style={"height": "22px", "marginLeft": "3px",
+                               "verticalAlign": "text-bottom"},
+                        alt=""
+                    )
+                ],
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1",
+                    target="_blank",
+                    rel="license noopener noreferrer",
+                    style={"display": "inline-block", "color": "#4F2683"}
+                )
+            ])
+        ])
+    ], className="text-center footer")
 )
