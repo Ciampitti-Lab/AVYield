@@ -116,6 +116,11 @@ def parse_contents(content, filename):
     return df, children
 
 
+MIN_STEP = 0
+MAX_STEP = 3
+DEFAULT_ACTIVE = 1
+
+
 def callbacks(app):
     # Upload Data Modal
     @app.callback(
@@ -127,7 +132,51 @@ def callbacks(app):
     def custom_data_modal(n_clicks, opened):
         return not opened
 
-    # Upload Data
+    # Stepper
+    @app.callback(
+        Output("stepper", "active"),
+        Output("stepper-children", "children", allow_duplicate=True),
+        Input("stepper-back", "n_clicks"),
+        Input("stepper-next", "n_clicks"),
+        State("stepper", "active"),
+        State("custom-data-store", "data"),
+        prevent_initial_call=True,
+    )
+    def update_stepper(back, next_, current, storage_data):
+        ctx = dash.callback_context
+        button_id = ctx.triggered_id
+        step = current if current is not None else DEFAULT_ACTIVE
+
+        # Handle back button
+        if button_id == "stepper-back":
+            step = step - 1 if step > MIN_STEP else step
+            return step, None
+
+        # Handle next button
+        if button_id == "stepper-next":
+            # Check if we're trying to move to the final step
+            if step == MAX_STEP - 1:  # If we're on the second-to-last step
+                # Only allow progression if data has been uploaded
+                if storage_data and len(storage_data) > 0:
+                    step = step + 1
+                    return step, None
+                else:
+                    # Return alert if no file was uploaded
+                    alert = dmc.Alert(
+                        "Please upload a file before proceeding to the final step. This ensures we have the necessary data to complete your analysis.",
+                        title="No File Uploaded",
+                        color="red",
+                        withCloseButton=False,
+                        duration=3000,
+                    )
+                    return step, alert
+            else:
+                # For all other steps, allow normal progression
+                step = step + 1 if step < MAX_STEP else step
+                return step, None
+
+        return step, None    # Upload Data
+
     @app.callback(
         Output("custom-data-store", "data"),
         Output("upload-modal-children", "children"),

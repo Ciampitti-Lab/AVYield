@@ -72,89 +72,139 @@ layout = html.Div(
                                     id="upload-modal",
                                     centered=True,
                                     zIndex=10000,
-                                    size="xl",
+                                    size="70%",
                                     withCloseButton=False,
                                     children=[
                                         html.H1(
-                                            "Upload your own dataset!",
+                                            "Upload your own dataset",
                                             style={
                                                 "text-align": "left",
                                                 "font-weight": "600",
-                                                "margin-bottom": "0px",
+                                                "margin-bottom": "20px",
                                             },
                                         ),
-                                        html.H5(
-                                            f"The dataset must contain the following columns so visualizations are as expected:",
-                                            style={
-                                                "text-align": "left",
-                                                "color": "#00000",
-                                                "margin-top": "10px",
-                                            },
-                                        ),
-                                        html.Ul(
-                                            [
-                                                html.Li(
-                                                    "YEAR: year of the trial."),
-                                                html.Li(
-                                                    "STATE: US state where the trial was conducted."),
-                                                html.Li(
-                                                    "COUNTY_CITY: name of the location of the trial."
+                                        dmc.Stepper(
+                                            id="stepper",
+                                            active=0,
+                                            color="purple",
+                                            children=[
+                                                dmc.StepperStep(
+                                                    label="First step",
+                                                    description="Ensure csv file is correct",
+                                                    children=[
+                                                        dmc.Text(
+                                                            "The dataset must contain the following columns so visualizations are as expected:",
+                                                            style={
+                                                                "margin-bottom": "10px",
+                                                                "text-align": "left",
+                                                            },
+                                                        ),
+                                                        html.Ul(
+                                                            [
+                                                                html.Li(
+                                                                    "YEAR: year of the trial."),
+                                                                html.Li(
+                                                                    "STATE: US state where the trial was conducted."),
+                                                                html.Li(
+                                                                    "COUNTY_CITY: name of the location of the trial."
+                                                                ),
+                                                                html.Li(
+                                                                    "NAME: genotype name of the trial."
+                                                                ),
+                                                                html.Li(
+                                                                    "WATER_REGIME: water regime of the trial, accepted values are Irrigated, Dryland or Unknown."
+                                                                ),
+                                                            ]
+                                                        ),
+
+                                                    ]
                                                 ),
-                                                html.Li(
-                                                    "NAME: genotype name of the trial."
+                                                dmc.StepperStep(
+                                                    label="Second step",
+                                                    description="Select your Crop",
+                                                    children=[
+                                                        dmc.RadioGroup(
+                                                            [
+                                                                dmc.Radio(
+                                                                    l, value=l)
+                                                                for l in [
+                                                                    "Canola",
+                                                                    "Corn",
+                                                                    "Sorghum",
+                                                                    "Soybean",
+                                                                    "Sunflower",
+                                                                    "Wheat",
+                                                                ]
+                                                            ],
+                                                            id="custom-crop",
+                                                            value="Corn",
+                                                            label="Ensure accurate unit conversion by selecting your crop:",
+                                                            size="md",
+                                                            mt=10,
+                                                            mb=20,
+                                                        ),
+                                                    ]
                                                 ),
-                                                html.Li(
-                                                    "WATER_REGIME: water regime of the trial, accepted values are Irrigated, Dryland or Unknown."
+                                                dmc.StepperStep(
+                                                    label="Final step",
+                                                    description="Upload your dataset",
+                                                    children=[
+                                                        dcc.Upload(
+                                                            id="upload-btn",
+                                                            children=html.Div(
+                                                                [
+                                                                    html.Div(
+                                                                        [  # Upload Btn
+                                                                            "Drag and Drop or ",
+                                                                            html.A(
+                                                                                "Select File"),
+                                                                        ],
+                                                                        style={
+                                                                            "width": "100%",
+                                                                            "height": "60px",
+                                                                            "lineHeight": "60px",
+                                                                            "borderWidth": "1px",
+                                                                            "borderStyle": "dashed",
+                                                                            "borderRadius": "5px",
+                                                                            "textAlign": "center",
+                                                                            "margin": "10px",
+                                                                        },
+                                                                    )
+                                                                ]
+                                                            ),
+                                                            multiple=False,
+                                                        ),
+                                                        dcc.Store(
+                                                            id="custom-data-store"),
+                                                        html.Div(
+                                                            id="stepper-children"),
+                                                        html.Div(
+                                                            id="upload-modal-children"),
+                                                    ]
+
                                                 ),
-                                            ]
-                                        ),
-                                        html.Hr(),
-                                        dmc.RadioGroup(
-                                            [
-                                                dmc.Radio(l, value=l)
-                                                for l in [
-                                                    "Canola",
-                                                    "Corn",
-                                                    "Sorghum",
-                                                    "Soybean",
-                                                    "Sunflower",
-                                                    "Wheat",
-                                                ]
-                                            ],
-                                            id="custom-crop",
-                                            value="Corn",
-                                            label="Ensure accurate unit conversion by selecting your crop:",
-                                            size="md",
-                                            mt=10,
-                                            mb=20,
-                                        ),
-                                        dcc.Upload(
-                                            id="upload-btn",
-                                            children=html.Div(
-                                                [
-                                                    html.Div(
-                                                        [  # Upload Btn
-                                                            "Drag and Drop or ",
-                                                            html.A(
-                                                                "Select File"),
-                                                        ],
-                                                        style={
-                                                            "width": "100%",
-                                                            "height": "60px",
-                                                            "lineHeight": "60px",
-                                                            "borderWidth": "1px",
-                                                            "borderStyle": "dashed",
-                                                            "borderRadius": "5px",
-                                                            "textAlign": "center",
-                                                            "margin": "10px",
-                                                        },
+                                                dmc.StepperCompleted(
+                                                    children=dmc.Text(
+                                                        "Completed, click back button to get to previous step",
+                                                        ta="center",
                                                     )
-                                                ]
-                                            ),
-                                            multiple=False,
+                                                ),
+                                            ],
                                         ),
-                                        dcc.Store(id="custom-data-store"),
-                                        html.Div(id="upload-modal-children"),
+                                        dmc.Group(
+                                            position="center",
+                                            mt="xl",
+                                            children=[
+                                                dmc.Button(
+                                                    "Back", id="stepper-back",
+                                                    color="purple",
+                                                    variant="default"),
+                                                dmc.Button(
+                                                    "Next step",
+                                                    color="purple",
+                                                    id="stepper-next"),
+                                            ],
+                                        ),
                                     ],
                                 ),
                             ]
