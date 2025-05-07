@@ -32,7 +32,7 @@ Try it out at [AVYield](https://www.avyield.com)!
 
 - Filter and visualize trial data by crop, location, year, genotype, and water regime.
 - Overlay custom farmer data on trial benchmarks.
-- Perform on-the-fly economic and genotype comparison analyses.
+- Perform on-the-fly genotype comparison analyses.
 - Download datasets and export plots.
 
 ---
